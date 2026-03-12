@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Performance - Workout Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
+</head>
+<body class="dark-theme">
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">⚡</span>
+                    <span class="logo-text">ELITE</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-view="dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-label">Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-view="stats">
+                    <span class="nav-icon">📈</span>
+                    <span class="nav-label">Statistics</span>
+                </a>
+                <a href="#" class="nav-item" data-view="settings">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-label">Settings</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="streak-card">
+                    <div class="streak-label">Current Streak</div>
+                    <div class="streak-value" id="streak-count">0 Days</div>
+                </div>
+                <button id="theme-toggle" class="theme-toggle">
+                    <span class="toggle-icon">🌙</span>
+                    <span class="toggle-text">Dark Mode</span>
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <h1>Workout Dashboard</h1>
+                    <p class="date-display" id="current-date"></p>
+                </div>
+                <div class="header-right">
+                    <div class="progress-stats">
+                        <div class="stat-group">
+                            <span class="stat-value" id="total-completed">0/28</span>
+                            <span class="stat-label">Completed</span>
+                        </div>
+                        <div class="progress-ring-container">
+                            <svg class="progress-ring" width="60" height="60">
+                                <circle class="progress-ring-bg" stroke="currentColor" stroke-width="4" fill="transparent" r="26" cx="30" cy="30"/>
+                                <circle class="progress-ring-fill" id="progress-circle" stroke="currentColor" stroke-width="4" fill="transparent" r="26" cx="30" cy="30" stroke-dasharray="163.36" stroke-dashoffset="163.36"/>
+                            </svg>
+                            <span class="progress-percentage" id="progress-percent">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <section class="dashboard-view">
+                <div class="view-header">
+                    <h2>4-Week Transformation</h2>
+                    <div class="view-actions">
+                        <button class="btn btn-secondary" id="export-csv">
+                            <span>📥</span> Export CSV
+                        </button>
+                        <button class="btn btn-danger-outline" id="reset-all">
+                            <span>🔄</span> Reset
+                        </button>
+                    </div>
+                </div>
+
+                <div class="weeks-grid" id="tracker-body">
+                    <!-- JS will inject weeks here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="notes-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Workout Notes</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-day-info"></p>
+                <textarea id="day-notes" placeholder="How did it go? (Sets, reps, energy levels...)"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary close-modal">Cancel</button>
+                <button class="btn btn-primary" id="save-notes">Save Notes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
