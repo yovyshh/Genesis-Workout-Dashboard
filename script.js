@@ -1,11 +1,11 @@
 const workoutData = [
-    { day: "Day 1", focus: "Upper Body (Push/Pull)", link: "https://www.youtube.com/watch?v=eGo4IYlbE5g", icon: "🔥" },
-    { day: "Day 2", focus: "Lower Body & Core", link: "https://www.youtube.com/watch?v=MeIiIdhvXT4", icon: "🦵" },
-    { day: "Day 3", focus: "Active Rest", link: null, icon: "🧘‍♂️" },
-    { day: "Day 4", focus: "Upper Body (Strength)", link: "https://www.youtube.com/watch?v=iW9u_yVbaS0", icon: "💪" },
-    { day: "Day 5", focus: "Full Body & Mobility", link: "https://www.youtube.com/watch?v=vjKW_Z_vX_M", icon: "⚡" },
-    { day: "Day 6", focus: "Rest & Recovery", link: null, icon: "💤" },
-    { day: "Day 7", focus: "Rest & Recovery", link: null, icon: "💤" }
+    { day: "Day 1", focus: "Upper Body (Push/Pull)", link: "https://www.youtube.com/watch?v=eGo4IYlbE5g" },
+    { day: "Day 2", focus: "Lower Body & Core", link: "https://www.youtube.com/watch?v=MeIiIdhvXT4" },
+    { day: "Day 3", focus: "Active Rest", link: null },
+    { day: "Day 4", focus: "Upper Body (Strength)", link: "https://www.youtube.com/watch?v=iW9u_yVbaS0" },
+    { day: "Day 5", focus: "Full Body & Mobility", link: "https://www.youtube.com/watch?v=vjKW_Z_vX_M" },
+    { day: "Day 6", focus: "Rest & Recovery", link: null },
+    { day: "Day 7", focus: "Rest & Recovery", link: null }
 ];
 
 const exerciseData = {
@@ -107,10 +107,32 @@ function init() {
     updateUI();
     setupEventListeners();
     updateSettingsUI();
+    registerServiceWorker();
     
     // Set date
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     currentDateEl.innerText = new Date().toLocaleDateString(undefined, options);
+}
+
+function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(reg => console.log('Service Worker registered'))
+                .catch(err => console.log('Service Worker registration failed', err));
+        });
+    }
+}
+
+async function requestNotificationPermission() {
+    if ('Notification' in window) {
+        const permission = await Notification.requestPermission();
+        if (permission === 'granted') {
+            console.log('Notification permission granted');
+            return true;
+        }
+    }
+    return false;
 }
 
 function loadState() {
@@ -158,15 +180,16 @@ function renderTracker() {
             const row = document.createElement('div');
             row.className = `day-row ${isCompleted ? 'completed' : ''}`;
             row.id = `row-${id}`;
+            row.onclick = (event) => showDetails(id, event);
             
             row.innerHTML = `
                 <div class="checkbox-custom" onclick="toggleDay('${id}', event)"></div>
-                <div class="day-content" onclick="showDetails('${id}', event)">
+                <div class="day-content">
                     <div class="day-header">
-                        <span class="day-title">${workout.day} ${workout.icon}</span>
+                        <span class="day-title">${workout.day}</span>
                         <div class="day-actions">
-                            ${workout.link ? `<button class="action-btn" title="Watch Tutorial" onclick="window.open('${workout.link}', '_blank'); event.stopPropagation();">▶️</button>` : ''}
-                            <button class="action-btn ${hasNotes ? 'has-notes' : ''}" title="Notes" onclick="openNotes('${id}', event)">📝</button>
+                            ${workout.link ? `<button class="action-btn" title="Tutorial" onclick="window.open('${workout.link}', '_blank'); event.stopPropagation();">Video</button>` : ''}
+                            <button class="action-btn ${hasNotes ? 'has-notes' : ''}" title="Notes" onclick="openNotes('${id}', event)">Note</button>
                         </div>
                     </div>
                     <div class="day-focus">${workout.focus}</div>
@@ -177,7 +200,8 @@ function renderTracker() {
     }
 }
 
-function showDetails(id) {
+function showDetails(id, event) {
+    if (event) event.stopPropagation();
     const weekNum = id.match(/w(\d+)/)[1];
     const dayNum = parseInt(id.match(/d(\d+)/)[1]);
     const workout = workoutData[dayNum - 1];
@@ -193,7 +217,7 @@ function showDetails(id) {
             <span class="exercise-name">${ex.name}</span>
             <div class="exercise-details">
                 <span>${ex.details}</span>
-                ${ex.video ? `<a href="${ex.video}" target="_blank" class="exercise-video" onclick="event.stopPropagation();">▶ Video</a>` : ''}
+                ${ex.video ? `<a href="${ex.video}" target="_blank" class="exercise-video" onclick="event.stopPropagation();">Watch Video</a>` : ''}
             </div>
         `;
         exerciseListContainer.appendChild(exItem);
@@ -229,7 +253,6 @@ function calculateStreak() {
     let currentStreak = 0;
     let maxStreak = 0;
     
-    // Calculate best streak across all time
     for (let w = 1; w <= 8; w++) {
         for (let d = 1; d <= 7; d++) {
             if (state.progress[`w${w}d${d}`]) {
@@ -242,7 +265,6 @@ function calculateStreak() {
     }
     state.bestStreak = maxStreak;
     
-    // Calculate current consecutive streak from Day 1
     let simpleStreak = 0;
     for (let w = 1; w <= 8; w++) {
         for (let d = 1; d <= 7; d++) {
@@ -258,7 +280,7 @@ function calculateStreak() {
 }
 
 function updateUI() {
-    const total = 56; // 8 weeks * 7 days
+    const total = 56;
     const completed = Object.values(state.progress).filter(Boolean).length;
     const percentage = Math.round((completed / total) * 100);
     
@@ -338,7 +360,7 @@ function renderStats() {
 
     focusDistribution.innerHTML = '';
     Object.entries(focusCounts).forEach(([focus, count]) => {
-        const percentage = Math.round((count / totalCompleted) * 100);
+        const percentage = totalCompleted > 0 ? Math.round((count / totalCompleted) * 100) : 0;
         const focusItem = document.createElement('div');
         focusItem.className = 'focus-item';
         focusItem.innerHTML = `
@@ -426,13 +448,10 @@ function setupEventListeners() {
 
 function updateThemeToggleUI() {
     const icon = themeToggleBtn.querySelector('.toggle-icon');
-    const text = themeToggleBtn.querySelector('.toggle-text');
     if (state.theme === 'dark') {
-        icon.innerText = '🌙';
-        text.innerText = 'Dark Mode';
+        icon.innerText = 'MODE';
     } else {
-        icon.innerText = '☀️';
-        text.innerText = 'Light Mode';
+        icon.innerText = 'MODE';
     }
 }
 
@@ -440,8 +459,8 @@ function openNotes(id, event) {
     if (event) event.stopPropagation();
     activeNoteId = id;
     
-    const weekMatch = id.match(/w(\d+)/);
     const dayMatch = id.match(/d(\d+)/);
+    const weekMatch = id.match(/w(\d+)/);
     const week = weekMatch[1];
     const day = dayMatch[1];
     modalDayInfo.innerText = `Week ${week}, Day ${day} - ${workoutData[parseInt(day)-1].focus}`;
@@ -475,5 +494,4 @@ function exportToCSV() {
     document.body.removeChild(link);
 }
 
-// Start
 init();

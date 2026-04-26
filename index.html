@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0a0a">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔥</text></svg>">
 </head>
 <body class="dark-theme">
@@ -15,21 +17,18 @@
         <header class="top-navbar">
             <div class="nav-content">
                 <div class="logo">
-                    <span class="logo-icon">⚡</span>
+                    <span class="logo-icon">L</span>
                     <span class="logo-text">ELITE</span>
                 </div>
                 
                 <nav class="navbar-nav">
                     <a href="#" class="nav-item active" data-view="dashboard">
-                        <span class="nav-icon">📊</span>
                         <span class="nav-label">Dashboard</span>
                     </a>
                     <a href="#" class="nav-item" data-view="stats">
-                        <span class="nav-icon">📈</span>
                         <span class="nav-label">Statistics</span>
                     </a>
                     <a href="#" class="nav-item" data-view="settings">
-                        <span class="nav-icon">⚙️</span>
                         <span class="nav-label">Settings</span>
                     </a>
                 </nav>
@@ -40,7 +39,7 @@
                         <span class="streak-value" id="streak-count">0 Days</span>
                     </div>
                     <button id="theme-toggle" class="theme-toggle">
-                        <span class="toggle-icon">🌙</span>
+                        <span class="toggle-icon">Mode</span>
                     </button>
                 </div>
             </div>
@@ -74,10 +73,10 @@
                     <h2>8-Week Transformation</h2>
                     <div class="view-actions">
                         <button class="btn btn-secondary" id="export-csv">
-                            <span>📥</span> Export CSV
+                            Export CSV
                         </button>
                         <button class="btn btn-danger-outline" id="reset-all">
-                            <span>🔄</span> Reset
+                            Reset
                         </button>
                     </div>
                 </div>
