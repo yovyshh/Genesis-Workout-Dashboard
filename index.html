@@ -17,8 +17,7 @@
         <header class="top-navbar">
             <div class="nav-content">
                 <div class="logo">
-                    <span class="logo-icon">L</span>
-                    <span class="logo-text">ELITE</span>
+                    <span class="logo-text">GENESIS</span>
                 </div>
                 
                 <nav class="navbar-nav">
@@ -38,8 +37,8 @@
                         <span class="streak-label">Streak:</span>
                         <span class="streak-value" id="streak-count">0 Days</span>
                     </div>
-                    <button id="theme-toggle" class="theme-toggle">
-                        <span class="toggle-icon">Mode</span>
+                    <button class="nav-settings-btn" data-view="settings" title="Settings">
+                        Settings
                     </button>
                 </div>
             </div>
@@ -48,7 +47,7 @@
         <main class="main-content">
             <header class="top-header">
                 <div class="header-left">
-                    <h1>Workout Dashboard</h1>
+                    <h1>Genesis Dashboard</h1>
                     <p class="date-display" id="current-date"></p>
                 </div>
                 <div class="header-right">
@@ -148,6 +147,12 @@
 
                     <div class="settings-group">
                         <h3>Preferences</h3>
+                        <div class="setting-item">
+                            <span>Theme Mode</span>
+                            <button id="theme-toggle" class="theme-toggle">
+                                <span class="toggle-icon">Dark Mode</span>
+                            </button>
+                        </div>
                         <div class="setting-item">
                             <span>Notifications</span>
                             <label class="switch">

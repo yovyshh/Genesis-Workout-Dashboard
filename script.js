@@ -51,10 +51,10 @@ const exerciseData = {
     ]
 };
 
-const STORAGE_KEY = 'eliteFitnessPro_v1';
+const STORAGE_KEY = 'genesisFitness_v1';
 let state = {
-    progress: {}, // { id: boolean }
-    notes: {},    // { id: string }
+    progress: {}, 
+    notes: {},    
     theme: 'dark',
     streak: 0,
     settings: {
@@ -82,7 +82,7 @@ const detailsTitle = document.getElementById('details-title');
 const exerciseListContainer = document.getElementById('exercise-list-container');
 
 // View elements
-const navItems = document.querySelectorAll('.nav-item');
+const navItems = document.querySelectorAll('.nav-item, .nav-settings-btn');
 const viewSections = document.querySelectorAll('.view-section');
 const dashboardTitle = document.querySelector('.header-left h1');
 
@@ -109,7 +109,6 @@ function init() {
     updateSettingsUI();
     registerServiceWorker();
     
-    // Set date
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     currentDateEl.innerText = new Date().toLocaleDateString(undefined, options);
 }
@@ -127,10 +126,7 @@ function registerServiceWorker() {
 async function requestNotificationPermission() {
     if ('Notification' in window) {
         const permission = await Notification.requestPermission();
-        if (permission === 'granted') {
-            console.log('Notification permission granted');
-            return true;
-        }
+        return permission === 'granted';
     }
     return false;
 }
@@ -144,8 +140,11 @@ function loadState() {
     if (state.theme === 'light') {
         document.body.classList.remove('dark-theme');
         document.body.classList.add('light-theme');
-        updateThemeToggleUI();
+    } else {
+        document.body.classList.remove('light-theme');
+        document.body.classList.add('dark-theme');
     }
+    updateThemeToggleUI();
 }
 
 function saveState() {
@@ -202,8 +201,8 @@ function renderTracker() {
 
 function showDetails(id, event) {
     if (event) event.stopPropagation();
-    const weekNum = id.match(/w(\d+)/)[1];
     const dayNum = parseInt(id.match(/d(\d+)/)[1]);
+    const weekNum = id.match(/w(\d+)/)[1];
     const workout = workoutData[dayNum - 1];
     const exercises = exerciseData[workout.day];
     
@@ -241,7 +240,6 @@ function toggleDay(id, event) {
     updateUI();
     saveState();
     
-    // Update week mini progress
     const weekNum = id.match(/w(\d+)/)[1];
     const weekContainer = row.closest('.week-container');
     const weekHeader = weekContainer.querySelector('.week-progress-mini');
@@ -295,9 +293,9 @@ function updateUI() {
     streakCountEl.innerText = `${state.streak} Day${state.streak === 1 ? '' : 's'}`;
     
     if (state.settings.userName) {
-        dashboardTitle.innerText = `${state.settings.userName}'s Dashboard`;
+        dashboardTitle.innerText = `${state.settings.userName}'s Genesis`;
     } else {
-        dashboardTitle.innerText = `Workout Dashboard`;
+        dashboardTitle.innerText = `Genesis Dashboard`;
     }
 }
 
@@ -432,7 +430,7 @@ function setupEventListeners() {
     document.getElementById('export-csv').addEventListener('click', exportToCSV);
 
     document.getElementById('test-notif').addEventListener('click', () => {
-        sendNotification("Elite Workout Tracker", "This is a test notification! It works.");
+        sendNotification("Genesis Fitness", "This is a test notification! It works.");
     });
 
     saveSettingsBtn.addEventListener('click', async () => {
@@ -449,6 +447,11 @@ function setupEventListeners() {
         updateUI();
         alert('Settings saved!');
     });
+
+    window.onclick = (event) => {
+        if (event.target == notesModal) notesModal.style.display = 'none';
+        if (event.target == detailsModal) detailsModal.style.display = 'none';
+    };
 }
 
 function sendNotification(title, body) {
@@ -456,34 +459,29 @@ function sendNotification(title, body) {
         navigator.serviceWorker.ready.then(registration => {
             registration.showNotification(title, {
                 body: body,
-                icon: 'https://cdn-icons-png.flaticon.com/512/2964/2964514.png',
                 vibrate: [200, 100, 200]
             });
         });
-    } else if (state.settings.notifications && 'Notification' in window) {
-        new Notification(title, { body });
     }
 }
 
 function updateThemeToggleUI() {
     const icon = themeToggleBtn.querySelector('.toggle-icon');
     if (state.theme === 'dark') {
-        icon.innerText = 'MODE';
+        icon.innerText = 'Dark Mode';
     } else {
-        icon.innerText = 'MODE';
+        icon.innerText = 'Light Mode';
     }
 }
 
 function openNotes(id, event) {
     if (event) event.stopPropagation();
     activeNoteId = id;
-    
     const dayMatch = id.match(/d(\d+)/);
     const weekMatch = id.match(/w(\d+)/);
     const week = weekMatch[1];
     const day = dayMatch[1];
     modalDayInfo.innerText = `Week ${week}, Day ${day} - ${workoutData[parseInt(day)-1].focus}`;
-    
     dayNotesTextarea.value = state.notes[id] || '';
     notesModal.style.display = 'block';
     dayNotesTextarea.focus();
@@ -491,7 +489,6 @@ function openNotes(id, event) {
 
 function exportToCSV() {
     let csv = 'Week,Day,Focus,Completed,Notes\n';
-    
     for (let w = 1; w <= 8; w++) {
         for (let d = 1; d <= 7; d++) {
             const id = `w${w}d${d}`;
@@ -501,12 +498,11 @@ function exportToCSV() {
             csv += `${w},${d},"${workout.focus}",${completed},"${notes}"\n`;
         }
     }
-    
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement("a");
     const url = URL.createObjectURL(blob);
     link.setAttribute("href", url);
-    link.setAttribute("download", "workout_progress_export.csv");
+    link.setAttribute("download", "genesis_workout_export.csv");
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();
