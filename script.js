@@ -158,11 +158,10 @@ function renderTracker() {
             const row = document.createElement('div');
             row.className = `day-row ${isCompleted ? 'completed' : ''}`;
             row.id = `row-${id}`;
-            row.onclick = () => showDetails(id);
             
             row.innerHTML = `
                 <div class="checkbox-custom" onclick="toggleDay('${id}', event)"></div>
-                <div class="day-content">
+                <div class="day-content" onclick="showDetails('${id}', event)">
                     <div class="day-header">
                         <span class="day-title">${workout.day} ${workout.icon}</span>
                         <div class="day-actions">
