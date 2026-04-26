@@ -443,10 +443,90 @@ h1 {
     border-radius: 4px;
 }
 
-/* Mobile */
+/* Mobile Navigation & Responsive */
 @media (max-width: 768px) {
-    .nav-content { padding: 0 16px; }
-    .navbar-nav { display: none; }
-    .top-header { flex-direction: column; align-items: flex-start; gap: 24px; }
-    .stats-grid { grid-template-columns: 1fr; }
+    .nav-content { 
+        padding: 0 20px; 
+    }
+    
+    /* Hide top nav items on mobile, we will move them to bottom */
+    .navbar-nav {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: var(--bg-secondary);
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 64px;
+        padding: 0;
+        gap: 0;
+        z-index: 1000;
+    }
+
+    .nav-item {
+        flex: 1;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        letter-spacing: 0.5px;
+    }
+
+    .nav-item.active {
+        background-color: var(--bg-tertiary);
+        border-bottom: 2px solid var(--text-primary);
+    }
+
+    .nav-actions-right {
+        gap: 12px;
+    }
+
+    .streak-badge {
+        font-size: 10px;
+        padding: 4px 10px;
+    }
+
+    /* Adjust main content for mobile */
+    .main-content {
+        padding: 32px 20px 100px 20px; /* Extra bottom padding for the nav bar */
+    }
+
+    .top-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+        margin-bottom: 40px;
+    }
+
+    .progress-stats {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .weeks-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 24px;
+        margin-top: 50px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .week-container {
+        padding: 16px;
+    }
 }
