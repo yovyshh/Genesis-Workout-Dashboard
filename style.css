@@ -77,12 +77,23 @@ body {
     display: inline-block;
 }
 
-.navbar-nav {
+/* Bottom Nav Bar (Mobile & Desktop) */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    height: 72px;
     display: flex;
-    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    gap: 80px;
 }
 
-.nav-item {
+.bottom-nav .nav-item {
     text-decoration: none;
     color: var(--text-secondary);
     font-size: 11px;
@@ -90,40 +101,27 @@ body {
     text-transform: uppercase;
     letter-spacing: 2px;
     transition: var(--transition);
+    padding: 12px 24px;
+    border-radius: 4px;
 }
 
-.nav-item:hover, .nav-item.active {
+.bottom-nav .nav-item:hover, .bottom-nav .nav-item.active {
     color: var(--text-primary);
+    background-color: var(--accent-dim);
 }
 
 .nav-actions-right {
     display: flex;
     align-items: center;
-    gap: 32px;
-}
-
-.streak-badge {
-    font-size: 11px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.streak-value {
-    color: var(--text-primary);
-    background-color: var(--bg-tertiary);
-    padding: 4px 10px;
-    border-radius: 20px;
-    margin-left: 8px;
 }
 
 .nav-settings-btn {
     background: none;
     border: 1px solid var(--border);
     color: var(--text-secondary);
-    padding: 8px 16px;
+    padding: 10px 20px;
     border-radius: 4px;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1.5px;
@@ -139,7 +137,7 @@ body {
 
 /* Main Content */
 .main-content {
-    padding: 80px 40px;
+    padding: 80px 40px 120px 40px; /* Added bottom padding for nav */
     max-width: 1200px;
     margin: 0 auto;
     width: 100%;

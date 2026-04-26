@@ -20,29 +20,23 @@
                     <span class="logo-text">GENESIS</span>
                 </div>
                 
-                <nav class="navbar-nav">
-                    <a href="#" class="nav-item active" data-view="dashboard">
-                        <span class="nav-label">Dashboard</span>
-                    </a>
-                    <a href="#" class="nav-item" data-view="stats">
-                        <span class="nav-label">Statistics</span>
-                    </a>
-                    <a href="#" class="nav-item" data-view="settings">
-                        <span class="nav-label">Settings</span>
-                    </a>
-                </nav>
-
                 <div class="nav-actions-right">
-                    <div class="streak-badge">
-                        <span class="streak-label">Streak:</span>
-                        <span class="streak-value" id="streak-count">0 Days</span>
-                    </div>
                     <button class="nav-item nav-settings-btn" data-view="settings" title="Settings">
                         Settings
                     </button>
                 </div>
             </div>
         </header>
+
+        <!-- Persistent Bottom Navigation for Mobile/Android -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active" data-view="dashboard">
+                <span class="nav-label">Dashboard</span>
+            </a>
+            <a href="#" class="nav-item" data-view="stats">
+                <span class="nav-label">Statistics</span>
+            </a>
+        </nav>
 
         <main class="main-content">
             <header class="top-header">
