@@ -65,14 +65,13 @@ let state = {
     bestStreak: 0
 };
 
-// Elements
+// Core Elements
 const trackerBody = document.getElementById('tracker-body');
 const totalCompletedEl = document.getElementById('total-completed');
 const progressPercentEl = document.getElementById('progress-percent');
 const progressCircle = document.getElementById('progress-circle');
 const streakCountEl = document.getElementById('streak-count');
 const currentDateEl = document.getElementById('current-date');
-const themeToggleBtn = document.getElementById('theme-toggle');
 const notesModal = document.getElementById('notes-modal');
 const detailsModal = document.getElementById('details-modal');
 const dayNotesTextarea = document.getElementById('day-notes');
@@ -80,24 +79,6 @@ const saveNotesBtn = document.getElementById('save-notes');
 const modalDayInfo = document.getElementById('modal-day-info');
 const detailsTitle = document.getElementById('details-title');
 const exerciseListContainer = document.getElementById('exercise-list-container');
-
-// View elements
-const navItems = document.querySelectorAll('.nav-item, .nav-settings-btn');
-const viewSections = document.querySelectorAll('.view-section');
-const dashboardTitle = document.querySelector('.header-left h1');
-
-// Stats elements
-const weeklyConsistencyChart = document.getElementById('weekly-consistency-chart');
-const focusDistribution = document.getElementById('focus-distribution');
-const statTotalWorkouts = document.getElementById('stat-total-workouts');
-const statCompletionRate = document.getElementById('stat-completion-rate');
-const statBestStreak = document.getElementById('stat-best-streak');
-
-// Settings elements
-const userNameInput = document.getElementById('user-name-input');
-const fitnessGoalSelect = document.getElementById('fitness-goal-select');
-const notifToggle = document.getElementById('notif-toggle');
-const saveSettingsBtn = document.getElementById('save-settings');
 
 let activeNoteId = null;
 
@@ -110,25 +91,17 @@ function init() {
     registerServiceWorker();
     
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    currentDateEl.innerText = new Date().toLocaleDateString(undefined, options);
+    if (currentDateEl) currentDateEl.innerText = new Date().toLocaleDateString(undefined, options);
 }
 
 function registerServiceWorker() {
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('service-worker.js')
-                .then(reg => console.log('Service Worker registered'))
-                .catch(err => console.log('Service Worker registration failed', err));
+                .then(reg => console.log('Genesis Service Worker registered'))
+                .catch(err => console.error('Registration failed', err));
         });
     }
-}
-
-async function requestNotificationPermission() {
-    if ('Notification' in window) {
-        const permission = await Notification.requestPermission();
-        return permission === 'granted';
-    }
-    return false;
 }
 
 function loadState() {
@@ -136,7 +109,14 @@ function loadState() {
     if (saved) {
         state = { ...state, ...JSON.parse(saved) };
     }
-    
+    applyTheme();
+}
+
+function saveState() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function applyTheme() {
     if (state.theme === 'light') {
         document.body.classList.remove('dark-theme');
         document.body.classList.add('light-theme');
@@ -147,30 +127,22 @@ function loadState() {
     updateThemeToggleUI();
 }
 
-function saveState() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-}
-
 function renderTracker() {
+    if (!trackerBody) return;
     trackerBody.innerHTML = '';
     
     for (let w = 1; w <= 8; w++) {
         const weekCard = document.createElement('div');
         weekCard.className = 'week-container';
-        
         const completedInWeek = Array.from({length: 7}, (_, i) => state.progress[`w${w}d${i+1}`]).filter(Boolean).length;
         
         weekCard.innerHTML = `
-            <h2>
-                <span>Week ${w}</span>
-                <span class="week-progress-mini">${completedInWeek}/7 Done</span>
-            </h2>
+            <h2><span>Week ${w}</span><span class="week-progress-mini">${completedInWeek}/7 Done</span></h2>
             <div class="day-list" id="week${w}-days"></div>
         `;
         trackerBody.appendChild(weekCard);
 
         const container = document.getElementById(`week${w}-days`);
-        
         workoutData.forEach((workout, index) => {
             const id = `w${w}d${index + 1}`;
             const isCompleted = state.progress[id] || false;
@@ -206,23 +178,23 @@ function showDetails(id, event) {
     const workout = workoutData[dayNum - 1];
     const exercises = exerciseData[workout.day];
     
-    detailsTitle.innerText = `Week ${weekNum}, ${workout.day} - ${workout.focus}`;
-    exerciseListContainer.innerHTML = '';
-    
-    exercises.forEach(ex => {
-        const exItem = document.createElement('div');
-        exItem.className = 'exercise-item';
-        exItem.innerHTML = `
-            <span class="exercise-name">${ex.name}</span>
-            <div class="exercise-details">
-                <span>${ex.details}</span>
-                ${ex.video ? `<a href="${ex.video}" target="_blank" class="exercise-video" onclick="event.stopPropagation();">Watch Video</a>` : ''}
-            </div>
-        `;
-        exerciseListContainer.appendChild(exItem);
-    });
-    
-    detailsModal.style.display = 'block';
+    if (detailsTitle) detailsTitle.innerText = `Week ${weekNum}, ${workout.day} - ${workout.focus}`;
+    if (exerciseListContainer) {
+        exerciseListContainer.innerHTML = '';
+        exercises.forEach(ex => {
+            const exItem = document.createElement('div');
+            exItem.className = 'exercise-item';
+            exItem.innerHTML = `
+                <span class="exercise-name">${ex.name}</span>
+                <div class="exercise-details">
+                    <span>${ex.details}</span>
+                    ${ex.video ? `<a href="${ex.video}" target="_blank" class="exercise-video" onclick="event.stopPropagation();">Watch Video</a>` : ''}
+                </div>
+            `;
+            exerciseListContainer.appendChild(exItem);
+        });
+    }
+    if (detailsModal) detailsModal.style.display = 'block';
 }
 
 function toggleDay(id, event) {
@@ -230,10 +202,9 @@ function toggleDay(id, event) {
     state.progress[id] = !state.progress[id];
     
     const row = document.getElementById(`row-${id}`);
-    if (state.progress[id]) {
-        row.classList.add('completed');
-    } else {
-        row.classList.remove('completed');
+    if (row) {
+        if (state.progress[id]) row.classList.add('completed');
+        else row.classList.remove('completed');
     }
     
     calculateStreak();
@@ -241,24 +212,19 @@ function toggleDay(id, event) {
     saveState();
     
     const weekNum = id.match(/w(\d+)/)[1];
-    const weekContainer = row.closest('.week-container');
-    const weekHeader = weekContainer.querySelector('.week-progress-mini');
+    const weekHeader = document.querySelector(`#row-${id}`).closest('.week-container').querySelector('.week-progress-mini');
     const completedInWeek = Array.from({length: 7}, (_, i) => state.progress[`w${weekNum}d${i+1}`]).filter(Boolean).length;
-    weekHeader.innerText = `${completedInWeek}/7 Done`;
+    if (weekHeader) weekHeader.innerText = `${completedInWeek}/7 Done`;
 }
 
 function calculateStreak() {
-    let currentStreak = 0;
-    let maxStreak = 0;
-    
+    let maxStreak = 0, currentStreak = 0;
     for (let w = 1; w <= 8; w++) {
         for (let d = 1; d <= 7; d++) {
             if (state.progress[`w${w}d${d}`]) {
                 currentStreak++;
                 if (currentStreak > maxStreak) maxStreak = currentStreak;
-            } else {
-                currentStreak = 0;
-            }
+            } else currentStreak = 0;
         }
     }
     state.bestStreak = maxStreak;
@@ -266,12 +232,8 @@ function calculateStreak() {
     let simpleStreak = 0;
     for (let w = 1; w <= 8; w++) {
         for (let d = 1; d <= 7; d++) {
-            if (state.progress[`w${w}d${d}`]) {
-                simpleStreak++;
-            } else {
-                state.streak = simpleStreak;
-                return;
-            }
+            if (state.progress[`w${w}d${d}`]) simpleStreak++;
+            else { state.streak = simpleStreak; return; }
         }
     }
     state.streak = simpleStreak;
@@ -282,175 +244,142 @@ function updateUI() {
     const completed = Object.values(state.progress).filter(Boolean).length;
     const percentage = Math.round((completed / total) * 100);
     
-    totalCompletedEl.innerText = `${completed}/${total}`;
-    progressPercentEl.innerText = `${percentage}%`;
+    if (totalCompletedEl) totalCompletedEl.innerText = `${completed}/${total}`;
+    if (progressPercentEl) progressPercentEl.innerText = `${percentage}%`;
     
-    const circumference = 163.36;
-    const offset = circumference - (percentage / 100) * circumference;
-    progressCircle.style.strokeDashoffset = offset;
+    if (progressCircle) {
+        const circumference = 163.36;
+        progressCircle.style.strokeDashoffset = circumference - (percentage / 100) * circumference;
+    }
     
     calculateStreak();
-    streakCountEl.innerText = `${state.streak} Day${state.streak === 1 ? '' : 's'}`;
+    if (streakCountEl) streakCountEl.innerText = `${state.streak} Day${state.streak === 1 ? '' : 's'}`;
     
-    if (state.settings.userName) {
-        dashboardTitle.innerText = `${state.settings.userName}'s Genesis`;
-    } else {
-        dashboardTitle.innerText = `Genesis Dashboard`;
+    const dashTitle = document.querySelector('.header-left h1');
+    if (dashTitle) {
+        dashTitle.innerText = state.settings.userName ? `${state.settings.userName}'s Genesis` : `Genesis Dashboard`;
     }
 }
 
 function switchView(viewName) {
-    viewSections.forEach(section => {
-        section.style.display = 'none';
-    });
-    
+    document.querySelectorAll('.view-section').forEach(section => section.style.display = 'none');
     const targetSection = document.getElementById(`${viewName}-view`);
-    if (targetSection) {
-        targetSection.style.display = 'block';
-    }
+    if (targetSection) targetSection.style.display = 'block';
     
-    navItems.forEach(item => {
+    document.querySelectorAll('.nav-item, .nav-settings-btn').forEach(item => {
         item.classList.remove('active');
-        if (item.getAttribute('data-view') === viewName) {
-            item.classList.add('active');
-        }
+        if (item.getAttribute('data-view') === viewName) item.classList.add('active');
     });
 
-    if (viewName === 'stats') {
-        renderStats();
-    }
+    if (viewName === 'stats') renderStats();
 }
 
 function renderStats() {
-    const total = 56;
-    const completed = Object.values(state.progress).filter(Boolean).length;
-    statTotalWorkouts.innerText = completed;
-    statCompletionRate.innerText = `${Math.round((completed / total) * 100)}%`;
-    statBestStreak.innerText = `${state.bestStreak} Days`;
-
-    weeklyConsistencyChart.innerHTML = '';
-    for (let w = 1; w <= 8; w++) {
-        const completedInWeek = Array.from({length: 7}, (_, i) => state.progress[`w${w}d${i+1}`]).filter(Boolean).length;
-        const heightPercentage = (completedInWeek / 7) * 100;
-        
-        const barContainer = document.createElement('div');
-        barContainer.className = 'chart-bar-container';
-        barContainer.innerHTML = `
-            <div class="chart-bar ${completedInWeek > 0 ? 'active' : ''}" style="height: ${heightPercentage}%"></div>
-            <span class="chart-label">W${w}</span>
-        `;
-        weeklyConsistencyChart.appendChild(barContainer);
-    }
-
-    const focusCounts = {};
-    let totalCompleted = 0;
-
-    for (let w = 1; w <= 8; w++) {
-        workoutData.forEach((workout, index) => {
-            const id = `w${w}d${index + 1}`;
-            if (state.progress[id]) {
-                const focus = workout.focus.split('(')[0].trim();
-                focusCounts[focus] = (focusCounts[focus] || 0) + 1;
-                totalCompleted++;
-            }
-        });
-    }
-
-    focusDistribution.innerHTML = '';
-    Object.entries(focusCounts).forEach(([focus, count]) => {
-        const percentage = totalCompleted > 0 ? Math.round((count / totalCompleted) * 100) : 0;
-        const focusItem = document.createElement('div');
-        focusItem.className = 'focus-item';
-        focusItem.innerHTML = `
-            <div class="focus-info">
-                <span>${focus}</span>
-                <span>${count} workouts (${percentage}%)</span>
-            </div>
-            <div class="focus-bar-bg">
-                <div class="focus-bar-fill" style="width: ${percentage}%"></div>
-            </div>
-        `;
-        focusDistribution.appendChild(focusItem);
-    });
+    const total = 56, completed = Object.values(state.progress).filter(Boolean).length;
+    const statTotal = document.getElementById('stat-total-workouts');
+    const statRate = document.getElementById('stat-completion-rate');
+    const statBest = document.getElementById('stat-best-streak');
     
-    if (totalCompleted === 0) {
-        focusDistribution.innerHTML = '<p style="color: var(--text-secondary); font-size: 14px;">No data yet. Complete some workouts!</p>';
+    if (statTotal) statTotal.innerText = completed;
+    if (statRate) statRate.innerText = `${Math.round((completed / total) * 100)}%`;
+    if (statBest) statBest.innerText = `${state.bestStreak} Days`;
+
+    const chart = document.getElementById('weekly-consistency-chart');
+    if (chart) {
+        chart.innerHTML = '';
+        for (let w = 1; w <= 8; w++) {
+            const done = Array.from({length: 7}, (_, i) => state.progress[`w${w}d${i+1}`]).filter(Boolean).length;
+            const bar = document.createElement('div');
+            bar.className = 'chart-bar-container';
+            bar.innerHTML = `<div class="chart-bar ${done > 0 ? 'active' : ''}" style="height: ${(done / 7) * 100}%"></div><span class="chart-label">W${w}</span>`;
+            chart.appendChild(bar);
+        }
     }
 }
 
 function updateSettingsUI() {
-    userNameInput.value = state.settings.userName || '';
-    fitnessGoalSelect.value = state.settings.goal || 'strength';
-    notifToggle.checked = state.settings.notifications;
+    const nameInp = document.getElementById('user-name-input');
+    const goalSel = document.getElementById('fitness-goal-select');
+    const notifTog = document.getElementById('notif-toggle');
+    if (nameInp) nameInp.value = state.settings.userName || '';
+    if (goalSel) goalSel.value = state.settings.goal || 'strength';
+    if (notifTog) notifTog.checked = state.settings.notifications;
 }
 
 function setupEventListeners() {
-    // Select all nav items including the top-right settings button
-    const navigationLinks = document.querySelectorAll('.nav-item, .nav-settings-btn, .bottom-nav .nav-item');
-    
-    navigationLinks.forEach(item => {
-        item.addEventListener('click', (e) => {
+    // Robust event delegation for all navigation
+    document.addEventListener('click', (e) => {
+        const navTarget = e.target.closest('[data-view]');
+        if (navTarget && (navTarget.classList.contains('nav-item') || navTarget.classList.contains('nav-settings-btn'))) {
             e.preventDefault();
-            const view = item.getAttribute('data-view');
-            if (view) switchView(view);
-        });
+            switchView(navTarget.getAttribute('data-view'));
+        }
     });
 
-    themeToggleBtn.addEventListener('click', () => {
-        document.body.classList.toggle('dark-theme');
-        document.body.classList.toggle('light-theme');
-        state.theme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
-        updateThemeToggleUI();
-        saveState();
-    });
+    const themeBtn = document.getElementById('theme-toggle');
+    if (themeBtn) {
+        themeBtn.addEventListener('click', () => {
+            state.theme = state.theme === 'dark' ? 'light' : 'dark';
+            applyTheme();
+            saveState();
+        });
+    }
 
     document.querySelectorAll('.close-modal').forEach(btn => {
         btn.addEventListener('click', () => {
-            notesModal.style.display = 'none';
-            detailsModal.style.display = 'none';
+            if (notesModal) notesModal.style.display = 'none';
+            if (detailsModal) detailsModal.style.display = 'none';
         });
     });
 
-    saveNotesBtn.addEventListener('click', () => {
-        if (activeNoteId) {
-            state.notes[activeNoteId] = dayNotesTextarea.value;
-            saveState();
-            notesModal.style.display = 'none';
-            renderTracker(); 
-        }
-    });
+    const saveNotes = document.getElementById('save-notes');
+    if (saveNotes) {
+        saveNotes.addEventListener('click', () => {
+            if (activeNoteId && dayNotesTextarea) {
+                state.notes[activeNoteId] = dayNotesTextarea.value;
+                saveState();
+                if (notesModal) notesModal.style.display = 'none';
+                renderTracker(); 
+            }
+        });
+    }
 
-    document.getElementById('reset-all').addEventListener('click', () => {
-        if (confirm("Reset all progress and notes? This cannot be undone.")) {
-            state.progress = {};
-            state.notes = {};
-            state.streak = 0;
-            state.bestStreak = 0;
-            saveState();
-            location.reload();
-        }
-    });
+    const resetBtn = document.getElementById('reset-all');
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            if (confirm("Reset everything?")) {
+                state.progress = {}; state.notes = {}; state.streak = 0; state.bestStreak = 0;
+                saveState(); location.reload();
+            }
+        });
+    }
 
-    document.getElementById('export-csv').addEventListener('click', exportToCSV);
+    const exportBtn = document.getElementById('export-csv');
+    if (exportBtn) exportBtn.addEventListener('click', exportToCSV);
 
-    document.getElementById('test-notif').addEventListener('click', () => {
-        sendNotification("Genesis Fitness", "This is a test notification! It works.");
-    });
+    const testNotif = document.getElementById('test-notif');
+    if (testNotif) {
+        testNotif.addEventListener('click', () => {
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.ready.then(reg => {
+                    reg.showNotification("Genesis Fitness", { body: "Test successful.", vibrate: [200, 100, 200] });
+                });
+            }
+        });
+    }
 
-    saveSettingsBtn.addEventListener('click', async () => {
-        state.settings.userName = userNameInput.value;
-        state.settings.goal = fitnessGoalSelect.value;
-        
-        if (notifToggle.checked && !state.settings.notifications) {
-            const granted = await requestNotificationPermission();
-            if (!granted) notifToggle.checked = false;
-        }
-        
-        state.settings.notifications = notifToggle.checked;
-        saveState();
-        updateUI();
-        alert('Settings saved!');
-    });
+    const saveSet = document.getElementById('save-settings');
+    if (saveSet) {
+        saveSet.addEventListener('click', () => {
+            const nameInp = document.getElementById('user-name-input');
+            const goalSel = document.getElementById('fitness-goal-select');
+            const notifTog = document.getElementById('notif-toggle');
+            state.settings.userName = nameInp ? nameInp.value : '';
+            state.settings.goal = goalSel ? goalSel.value : 'strength';
+            state.settings.notifications = notifTog ? notifTog.checked : true;
+            saveState(); updateUI(); alert('Settings saved!');
+        });
+    }
 
     window.onclick = (event) => {
         if (event.target == notesModal) notesModal.style.display = 'none';
@@ -458,37 +387,22 @@ function setupEventListeners() {
     };
 }
 
-function sendNotification(title, body) {
-    if (state.settings.notifications && 'serviceWorker' in navigator) {
-        navigator.serviceWorker.ready.then(registration => {
-            registration.showNotification(title, {
-                body: body,
-                vibrate: [200, 100, 200]
-            });
-        });
-    }
-}
-
 function updateThemeToggleUI() {
-    const icon = themeToggleBtn.querySelector('.toggle-icon');
-    if (state.theme === 'dark') {
-        icon.innerText = 'Dark Mode';
-    } else {
-        icon.innerText = 'Light Mode';
-    }
+    const icon = document.querySelector('#theme-toggle .toggle-icon');
+    if (icon) icon.innerText = state.theme === 'dark' ? 'Dark Mode' : 'Light Mode';
 }
 
 function openNotes(id, event) {
     if (event) event.stopPropagation();
     activeNoteId = id;
-    const dayMatch = id.match(/d(\d+)/);
-    const weekMatch = id.match(/w(\d+)/);
-    const week = weekMatch[1];
-    const day = dayMatch[1];
-    modalDayInfo.innerText = `Week ${week}, Day ${day} - ${workoutData[parseInt(day)-1].focus}`;
-    dayNotesTextarea.value = state.notes[id] || '';
-    notesModal.style.display = 'block';
-    dayNotesTextarea.focus();
+    const day = id.match(/d(\d+)/)[1];
+    const week = id.match(/w(\d+)/)[1];
+    if (modalDayInfo) modalDayInfo.innerText = `Week ${week}, Day ${day} - ${workoutData[parseInt(day)-1].focus}`;
+    if (dayNotesTextarea) {
+        dayNotesTextarea.value = state.notes[id] || '';
+        if (notesModal) notesModal.style.display = 'block';
+        dayNotesTextarea.focus();
+    }
 }
 
 function exportToCSV() {
@@ -497,20 +411,15 @@ function exportToCSV() {
         for (let d = 1; d <= 7; d++) {
             const id = `w${w}d${d}`;
             const workout = workoutData[d-1];
-            const completed = state.progress[id] ? 'Yes' : 'No';
-            const notes = (state.notes[id] || '').replace(/"/g, '""');
-            csv += `${w},${d},"${workout.focus}",${completed},"${notes}"\n`;
+            csv += `${w},${d},"${workout.focus}",${state.progress[id] ? 'Yes' : 'No'},"${(state.notes[id] || '').replace(/"/g, '""')}"\n`;
         }
     }
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement("a");
-    const url = URL.createObjectURL(blob);
-    link.setAttribute("href", url);
+    link.setAttribute("href", URL.createObjectURL(blob));
     link.setAttribute("download", "genesis_workout_export.csv");
     link.style.visibility = 'hidden';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    document.body.appendChild(link); link.click(); document.body.removeChild(link);
 }
 
 init();
