@@ -385,10 +385,14 @@ function updateSettingsUI() {
 }
 
 function setupEventListeners() {
-    navItems.forEach(item => {
+    // Select all nav items including the top-right settings button
+    const navigationLinks = document.querySelectorAll('.nav-item, .nav-settings-btn, .bottom-nav .nav-item');
+    
+    navigationLinks.forEach(item => {
         item.addEventListener('click', (e) => {
             e.preventDefault();
-            switchView(item.getAttribute('data-view'));
+            const view = item.getAttribute('data-view');
+            if (view) switchView(view);
         });
     });
 
