@@ -68,7 +68,7 @@
                 </div>
             </header>
 
-            <section class="dashboard-view">
+            <section class="dashboard-view view-section" id="dashboard-view">
                 <div class="view-header">
                     <h2>8-Week Transformation</h2>
                     <div class="view-actions">
@@ -83,6 +83,83 @@
 
                 <div class="weeks-grid" id="tracker-body">
                     <!-- JS will inject weeks here -->
+                </div>
+            </section>
+
+            <section class="stats-view view-section" id="stats-view" style="display: none;">
+                <div class="view-header">
+                    <h2>Performance Analytics</h2>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-card-header">Weekly Consistency</div>
+                        <div class="week-chart" id="weekly-consistency-chart">
+                            <!-- JS will inject bars -->
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-card-header">Focus Distribution</div>
+                        <div class="focus-list" id="focus-distribution">
+                            <!-- JS will inject distribution -->
+                        </div>
+                    </div>
+
+                    <div class="stat-card total-summary">
+                        <div class="summary-item">
+                            <span class="summary-label">Total Workouts</span>
+                            <span class="summary-value" id="stat-total-workouts">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Completion Rate</span>
+                            <span class="summary-value" id="stat-completion-rate">0%</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Best Streak</span>
+                            <span class="summary-value" id="stat-best-streak">0 Days</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="settings-view view-section" id="settings-view" style="display: none;">
+                <div class="view-header">
+                    <h2>User Settings</h2>
+                </div>
+
+                <div class="settings-container">
+                    <div class="settings-group">
+                        <h3>Profile</h3>
+                        <div class="setting-item">
+                            <label>User Name</label>
+                            <input type="text" id="user-name-input" placeholder="Enter your name">
+                        </div>
+                        <div class="setting-item">
+                            <label>Fitness Goal</label>
+                            <select id="fitness-goal-select">
+                                <option value="strength">Strength Building</option>
+                                <option value="weight-loss">Weight Loss</option>
+                                <option value="endurance">Endurance</option>
+                                <option value="maintenance">General Health</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="settings-group">
+                        <h3>Preferences</h3>
+                        <div class="setting-item">
+                            <span>Notifications</span>
+                            <label class="switch">
+                                <input type="checkbox" id="notif-toggle">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="settings-actions">
+                        <button class="btn btn-primary" id="save-settings">Save Changes</button>
+                    </div>
                 </div>
             </section>
         </main>

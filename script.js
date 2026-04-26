@@ -56,7 +56,13 @@ let state = {
     progress: {}, // { id: boolean }
     notes: {},    // { id: string }
     theme: 'dark',
-    streak: 0
+    streak: 0,
+    settings: {
+        userName: '',
+        goal: 'strength',
+        notifications: true
+    },
+    bestStreak: 0
 };
 
 // Elements
@@ -75,6 +81,24 @@ const modalDayInfo = document.getElementById('modal-day-info');
 const detailsTitle = document.getElementById('details-title');
 const exerciseListContainer = document.getElementById('exercise-list-container');
 
+// View elements
+const navItems = document.querySelectorAll('.nav-item');
+const viewSections = document.querySelectorAll('.view-section');
+const dashboardTitle = document.querySelector('.header-left h1');
+
+// Stats elements
+const weeklyConsistencyChart = document.getElementById('weekly-consistency-chart');
+const focusDistribution = document.getElementById('focus-distribution');
+const statTotalWorkouts = document.getElementById('stat-total-workouts');
+const statCompletionRate = document.getElementById('stat-completion-rate');
+const statBestStreak = document.getElementById('stat-best-streak');
+
+// Settings elements
+const userNameInput = document.getElementById('user-name-input');
+const fitnessGoalSelect = document.getElementById('fitness-goal-select');
+const notifToggle = document.getElementById('notif-toggle');
+const saveSettingsBtn = document.getElementById('save-settings');
+
 let activeNoteId = null;
 
 function init() {
@@ -82,6 +106,7 @@ function init() {
     renderTracker();
     updateUI();
     setupEventListeners();
+    updateSettingsUI();
     
     // Set date
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -202,18 +227,35 @@ function toggleDay(id, event) {
 }
 
 function calculateStreak() {
-    let streak = 0;
+    let currentStreak = 0;
+    let maxStreak = 0;
+    
+    // Calculate best streak across all time
     for (let w = 1; w <= 8; w++) {
         for (let d = 1; d <= 7; d++) {
             if (state.progress[`w${w}d${d}`]) {
-                streak++;
+                currentStreak++;
+                if (currentStreak > maxStreak) maxStreak = currentStreak;
             } else {
-                state.streak = streak;
+                currentStreak = 0;
+            }
+        }
+    }
+    state.bestStreak = maxStreak;
+    
+    // Calculate current consecutive streak from Day 1
+    let simpleStreak = 0;
+    for (let w = 1; w <= 8; w++) {
+        for (let d = 1; d <= 7; d++) {
+            if (state.progress[`w${w}d${d}`]) {
+                simpleStreak++;
+            } else {
+                state.streak = simpleStreak;
                 return;
             }
         }
     }
-    state.streak = streak;
+    state.streak = simpleStreak;
 }
 
 function updateUI() {
@@ -230,9 +272,107 @@ function updateUI() {
     
     calculateStreak();
     streakCountEl.innerText = `${state.streak} Day${state.streak === 1 ? '' : 's'}`;
+    
+    if (state.settings.userName) {
+        dashboardTitle.innerText = `${state.settings.userName}'s Dashboard`;
+    } else {
+        dashboardTitle.innerText = `Workout Dashboard`;
+    }
+}
+
+function switchView(viewName) {
+    viewSections.forEach(section => {
+        section.style.display = 'none';
+    });
+    
+    const targetSection = document.getElementById(`${viewName}-view`);
+    if (targetSection) {
+        targetSection.style.display = 'block';
+    }
+    
+    navItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.getAttribute('data-view') === viewName) {
+            item.classList.add('active');
+        }
+    });
+
+    if (viewName === 'stats') {
+        renderStats();
+    }
+}
+
+function renderStats() {
+    const total = 56;
+    const completed = Object.values(state.progress).filter(Boolean).length;
+    statTotalWorkouts.innerText = completed;
+    statCompletionRate.innerText = `${Math.round((completed / total) * 100)}%`;
+    statBestStreak.innerText = `${state.bestStreak} Days`;
+
+    weeklyConsistencyChart.innerHTML = '';
+    for (let w = 1; w <= 8; w++) {
+        const completedInWeek = Array.from({length: 7}, (_, i) => state.progress[`w${w}d${i+1}`]).filter(Boolean).length;
+        const heightPercentage = (completedInWeek / 7) * 100;
+        
+        const barContainer = document.createElement('div');
+        barContainer.className = 'chart-bar-container';
+        barContainer.innerHTML = `
+            <div class="chart-bar ${completedInWeek > 0 ? 'active' : ''}" style="height: ${heightPercentage}%"></div>
+            <span class="chart-label">W${w}</span>
+        `;
+        weeklyConsistencyChart.appendChild(barContainer);
+    }
+
+    const focusCounts = {};
+    let totalCompleted = 0;
+
+    for (let w = 1; w <= 8; w++) {
+        workoutData.forEach((workout, index) => {
+            const id = `w${w}d${index + 1}`;
+            if (state.progress[id]) {
+                const focus = workout.focus.split('(')[0].trim();
+                focusCounts[focus] = (focusCounts[focus] || 0) + 1;
+                totalCompleted++;
+            }
+        });
+    }
+
+    focusDistribution.innerHTML = '';
+    Object.entries(focusCounts).forEach(([focus, count]) => {
+        const percentage = Math.round((count / totalCompleted) * 100);
+        const focusItem = document.createElement('div');
+        focusItem.className = 'focus-item';
+        focusItem.innerHTML = `
+            <div class="focus-info">
+                <span>${focus}</span>
+                <span>${count} workouts (${percentage}%)</span>
+            </div>
+            <div class="focus-bar-bg">
+                <div class="focus-bar-fill" style="width: ${percentage}%"></div>
+            </div>
+        `;
+        focusDistribution.appendChild(focusItem);
+    });
+    
+    if (totalCompleted === 0) {
+        focusDistribution.innerHTML = '<p style="color: var(--text-secondary); font-size: 14px;">No data yet. Complete some workouts!</p>';
+    }
+}
+
+function updateSettingsUI() {
+    userNameInput.value = state.settings.userName || '';
+    fitnessGoalSelect.value = state.settings.goal || 'strength';
+    notifToggle.checked = state.settings.notifications;
 }
 
 function setupEventListeners() {
+    navItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchView(item.getAttribute('data-view'));
+        });
+    });
+
     themeToggleBtn.addEventListener('click', () => {
         document.body.classList.toggle('dark-theme');
         document.body.classList.toggle('light-theme');
@@ -262,12 +402,22 @@ function setupEventListeners() {
             state.progress = {};
             state.notes = {};
             state.streak = 0;
+            state.bestStreak = 0;
             saveState();
             location.reload();
         }
     });
 
     document.getElementById('export-csv').addEventListener('click', exportToCSV);
+
+    saveSettingsBtn.addEventListener('click', () => {
+        state.settings.userName = userNameInput.value;
+        state.settings.goal = fitnessGoalSelect.value;
+        state.settings.notifications = notifToggle.checked;
+        saveState();
+        updateUI();
+        alert('Settings saved!');
+    });
 
     window.onclick = (event) => {
         if (event.target == notesModal) notesModal.style.display = 'none';
