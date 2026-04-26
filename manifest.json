@@ -1,14 +1,14 @@
 {
-  "name": "Elite Workout Tracker",
-  "short_name": "Elite",
-  "description": "Minimalist 8-Week Workout Tracker",
+  "name": "Genesis",
+  "short_name": "Genesis",
+  "description": "Genesis Workout Dashboard",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#0a0a0a",
-  "theme_color": "#0a0a0a",
+  "background_color": "#050505",
+  "theme_color": "#050505",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/2964/2964514.png",
+      "src": "https://cdn-icons-png.flaticon.com/512/32/32339.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
