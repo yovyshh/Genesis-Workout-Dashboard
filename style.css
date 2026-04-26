@@ -65,9 +65,16 @@ body {
 
 .logo {
     font-weight: 900;
-    letter-spacing: 5px;
-    font-size: 20px;
+    letter-spacing: 8px;
+    font-size: 24px;
     color: var(--text-primary);
+    text-transform: uppercase;
+}
+
+.logo-text {
+    border: 2px solid var(--text-primary);
+    padding: 4px 12px;
+    display: inline-block;
 }
 
 .navbar-nav {
