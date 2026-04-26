@@ -453,13 +453,15 @@ h2 {
 .modal-content {
     position: relative;
     background-color: var(--bg-secondary);
-    margin: 10% auto;
+    margin: 5% auto;
     padding: 32px;
     border-radius: var(--radius-lg);
     width: 90%;
     max-width: 500px;
     box-shadow: var(--shadow);
     border: 1px solid var(--border);
+    max-height: 85vh;
+    overflow-y: auto;
 }
 
 .modal-header {
@@ -467,6 +469,11 @@ h2 {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
+    position: sticky;
+    top: -32px;
+    background-color: var(--bg-secondary);
+    padding: 10px 0;
+    z-index: 10;
 }
 
 .close-modal {
@@ -495,6 +502,55 @@ h2 {
     justify-content: flex-end;
     gap: 12px;
     margin-top: 24px;
+}
+
+/* Exercise List in Modal */
+.exercise-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.exercise-item {
+    background-color: var(--bg-tertiary);
+    padding: 14px 18px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
+}
+
+.exercise-item:hover {
+    border-color: var(--accent-primary);
+    background-color: rgba(59, 130, 246, 0.05);
+}
+
+.exercise-name {
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: 15px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.exercise-details {
+    font-size: 13px;
+    color: var(--text-secondary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.exercise-video {
+    color: var(--accent-primary);
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.exercise-video:hover {
+    text-decoration: underline;
 }
 
 /* Mobile Responsive */
