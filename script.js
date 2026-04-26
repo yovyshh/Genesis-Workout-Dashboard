@@ -431,19 +431,38 @@ function setupEventListeners() {
 
     document.getElementById('export-csv').addEventListener('click', exportToCSV);
 
-    saveSettingsBtn.addEventListener('click', () => {
+    document.getElementById('test-notif').addEventListener('click', () => {
+        sendNotification("Elite Workout Tracker", "This is a test notification! It works.");
+    });
+
+    saveSettingsBtn.addEventListener('click', async () => {
         state.settings.userName = userNameInput.value;
         state.settings.goal = fitnessGoalSelect.value;
+        
+        if (notifToggle.checked && !state.settings.notifications) {
+            const granted = await requestNotificationPermission();
+            if (!granted) notifToggle.checked = false;
+        }
+        
         state.settings.notifications = notifToggle.checked;
         saveState();
         updateUI();
         alert('Settings saved!');
     });
+}
 
-    window.onclick = (event) => {
-        if (event.target == notesModal) notesModal.style.display = 'none';
-        if (event.target == detailsModal) detailsModal.style.display = 'none';
-    };
+function sendNotification(title, body) {
+    if (state.settings.notifications && 'serviceWorker' in navigator) {
+        navigator.serviceWorker.ready.then(registration => {
+            registration.showNotification(title, {
+                body: body,
+                icon: 'https://cdn-icons-png.flaticon.com/512/2964/2964514.png',
+                vibrate: [200, 100, 200]
+            });
+        });
+    } else if (state.settings.notifications && 'Notification' in window) {
+        new Notification(title, { body });
+    }
 }
 
 function updateThemeToggleUI() {
