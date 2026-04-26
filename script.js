@@ -65,7 +65,7 @@ let state = {
     bestStreak: 0
 };
 
-// Core Elements
+// Elements
 const trackerBody = document.getElementById('tracker-body');
 const totalCompletedEl = document.getElementById('total-completed');
 const progressPercentEl = document.getElementById('progress-percent');
@@ -79,8 +79,6 @@ const saveNotesBtn = document.getElementById('save-notes');
 const modalDayInfo = document.getElementById('modal-day-info');
 const detailsTitle = document.getElementById('details-title');
 const exerciseListContainer = document.getElementById('exercise-list-container');
-
-let activeNoteId = null;
 
 function init() {
     loadState();
@@ -102,6 +100,14 @@ function registerServiceWorker() {
                 .catch(err => console.error('Registration failed', err));
         });
     }
+}
+
+async function requestNotificationPermission() {
+    if ('Notification' in window) {
+        const permission = await Notification.requestPermission();
+        return permission === 'granted';
+    }
+    return false;
 }
 
 function loadState() {
@@ -159,8 +165,8 @@ function renderTracker() {
                     <div class="day-header">
                         <span class="day-title">${workout.day}</span>
                         <div class="day-actions">
-                            ${workout.link ? `<button class="action-btn" title="Tutorial" onclick="window.open('${workout.link}', '_blank'); event.stopPropagation();">Video</button>` : ''}
-                            <button class="action-btn ${hasNotes ? 'has-notes' : ''}" title="Notes" onclick="openNotes('${id}', event)">Note</button>
+                            ${workout.link ? `<button class="action-btn" onclick="window.open('${workout.link}', '_blank'); event.stopPropagation();">Video</button>` : ''}
+                            <button class="action-btn ${hasNotes ? 'has-notes' : ''}" onclick="openNotes('${id}', event)">Note</button>
                         </div>
                     </div>
                     <div class="day-focus">${workout.focus}</div>
@@ -261,7 +267,7 @@ function updateUI() {
     }
 }
 
-function switchView(viewName) {
+window.switchView = function(viewName) {
     document.querySelectorAll('.view-section').forEach(section => section.style.display = 'none');
     const targetSection = document.getElementById(`${viewName}-view`);
     if (targetSection) targetSection.style.display = 'block';
@@ -272,7 +278,7 @@ function switchView(viewName) {
     });
 
     if (viewName === 'stats') renderStats();
-}
+};
 
 function renderStats() {
     const total = 56, completed = Object.values(state.progress).filter(Boolean).length;
@@ -307,12 +313,11 @@ function updateSettingsUI() {
 }
 
 function setupEventListeners() {
-    // Robust event delegation for all navigation
     document.addEventListener('click', (e) => {
         const navTarget = e.target.closest('[data-view]');
         if (navTarget && (navTarget.classList.contains('nav-item') || navTarget.classList.contains('nav-settings-btn'))) {
             e.preventDefault();
-            switchView(navTarget.getAttribute('data-view'));
+            window.switchView(navTarget.getAttribute('data-view'));
         }
     });
 
