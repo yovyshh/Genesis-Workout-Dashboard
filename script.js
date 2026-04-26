@@ -108,7 +108,7 @@ function saveState() {
 function renderTracker() {
     trackerBody.innerHTML = '';
     
-    for (let w = 1; w <= 4; w++) {
+    for (let w = 1; w <= 8; w++) {
         const weekCard = document.createElement('div');
         weekCard.className = 'week-container';
         
@@ -154,8 +154,8 @@ function renderTracker() {
 }
 
 function showDetails(id) {
-    const weekNum = id.charAt(1);
-    const dayNum = parseInt(id.substring(3));
+    const weekNum = id.match(/w(\d+)/)[1];
+    const dayNum = parseInt(id.match(/d(\d+)/)[1]);
     const workout = workoutData[dayNum - 1];
     const exercises = exerciseData[workout.day];
     
@@ -194,7 +194,7 @@ function toggleDay(id, event) {
     saveState();
     
     // Update week mini progress
-    const weekNum = id.charAt(1);
+    const weekNum = id.match(/w(\d+)/)[1];
     const weekContainer = row.closest('.week-container');
     const weekHeader = weekContainer.querySelector('.week-progress-mini');
     const completedInWeek = Array.from({length: 7}, (_, i) => state.progress[`w${weekNum}d${i+1}`]).filter(Boolean).length;
@@ -203,9 +203,7 @@ function toggleDay(id, event) {
 
 function calculateStreak() {
     let streak = 0;
-    // We'll count backwards from the most recent day that should have been completed
-    // For simplicity in this demo, we'll just count total consecutive from Day 1
-    for (let w = 1; w <= 4; w++) {
+    for (let w = 1; w <= 8; w++) {
         for (let d = 1; d <= 7; d++) {
             if (state.progress[`w${w}d${d}`]) {
                 streak++;
@@ -219,7 +217,7 @@ function calculateStreak() {
 }
 
 function updateUI() {
-    const total = 28;
+    const total = 56; // 8 weeks * 7 days
     const completed = Object.values(state.progress).filter(Boolean).length;
     const percentage = Math.round((completed / total) * 100);
     
@@ -293,8 +291,10 @@ function openNotes(id, event) {
     if (event) event.stopPropagation();
     activeNoteId = id;
     
-    const week = id.charAt(1);
-    const day = id.substring(3);
+    const weekMatch = id.match(/w(\d+)/);
+    const dayMatch = id.match(/d(\d+)/);
+    const week = weekMatch[1];
+    const day = dayMatch[1];
     modalDayInfo.innerText = `Week ${week}, Day ${day} - ${workoutData[parseInt(day)-1].focus}`;
     
     dayNotesTextarea.value = state.notes[id] || '';
@@ -305,7 +305,7 @@ function openNotes(id, event) {
 function exportToCSV() {
     let csv = 'Week,Day,Focus,Completed,Notes\n';
     
-    for (let w = 1; w <= 4; w++) {
+    for (let w = 1; w <= 8; w++) {
         for (let d = 1; d <= 7; d++) {
             const id = `w${w}d${d}`;
             const workout = workoutData[d-1];
