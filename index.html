@@ -33,8 +33,11 @@
             <a href="#" class="nav-item active" data-view="dashboard">
                 <span class="nav-label">Dashboard</span>
             </a>
+            <a href="#" class="nav-item" data-view="plan">
+                <span class="nav-label">Plan</span>
+            </a>
             <a href="#" class="nav-item" data-view="stats">
-                <span class="nav-label">Statistics</span>
+                <span class="nav-label">Stats</span>
             </a>
         </nav>
 
@@ -76,6 +79,74 @@
 
                 <div class="weeks-grid" id="tracker-body">
                     <!-- JS will inject weeks here -->
+                </div>
+            </section>
+
+            <section class="plan-view view-section" id="plan-view" style="display: none;">
+                <div class="view-header">
+                    <h2>Weekly Training Plan</h2>
+                </div>
+
+                <div class="plan-grid">
+                    <div class="plan-card">
+                        <div class="plan-card-header">Priority: Master These First</div>
+                        <ul class="priority-list">
+                            <li>Deadlift</li>
+                            <li>Squat</li>
+                            <li>Bench Press</li>
+                            <li>Overhead Press</li>
+                            <li>Bent-over Row</li>
+                            <li>Face Pull (shoulder saver)</li>
+                        </ul>
+                    </div>
+
+                    <div class="plan-card">
+                        <div class="plan-card-header">Critique & Optimization</div>
+                        <div class="critique-content">
+                            <p><strong>• Deadlift 3x8:</strong> Can be fatiguing; consider 3x5 for strength focus.</p>
+                            <p><strong>• Back Width:</strong> Add pull-ups/assisted pull-ups eventually.</p>
+                            <p><strong>• Shoulders:</strong> Face pulls help balance the three heavy pressing days.</p>
+                            <p><strong>• Progression:</strong> Aim for +2.5–5kg on compounds weekly; deload on Week 4.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weekly-schedule-grid">
+                    <div class="schedule-day">
+                        <div class="day-name">Monday</div>
+                        <div class="day-focus-tag">Workout A (Full Body / Deadlift)</div>
+                        <div class="day-exercises">Deadlift, OHP, Bench, Curls, Triceps, Calf, Sit-Ups</div>
+                    </div>
+                    <div class="schedule-day">
+                        <div class="day-name">Tuesday</div>
+                        <div class="day-focus-tag cardio">Cardio + Core</div>
+                        <div class="day-exercises">30m Walk/Jog, Plank, Leg Raises, Mountain Climbers</div>
+                    </div>
+                    <div class="schedule-day">
+                        <div class="day-name">Wednesday</div>
+                        <div class="day-focus-tag">Workout B (Squat Focus)</div>
+                        <div class="day-exercises">Squat, Row, Incline Press, EZ Curl, Lateral Raise, Pushdown, Obliques</div>
+                    </div>
+                    <div class="schedule-day">
+                        <div class="day-name">Thursday</div>
+                        <div class="day-focus-tag recovery">Active Recovery</div>
+                        <div class="day-exercises">20-30m Walk/Yoga/Swim, Hip/Chest/Thoracic Mobility</div>
+                    </div>
+                    <div class="schedule-day">
+                        <div class="day-name">Friday</div>
+                        <div class="day-focus-tag">Workout C (Compound Focus)</div>
+                        <div class="day-exercises">Split Squat, Close-Grip, DB Press, Incline Curl, Lat Pulldown, Face Pull, Leg Raise</div>
+                    </div>
+                    <div class="schedule-day">
+                        <div class="day-name">Saturday</div>
+                        <div class="day-focus-tag cardio">Cardio Day</div>
+                        <div class="day-exercises">30-40m Jog/Cycle, Jump Rope, Intervals</div>
+                    </div>
+                    <div class="schedule-day">
+                        <div class="day-name">Sunday</div>
+                        <div class="day-focus-tag rest">Full Rest</div>
+                        <div class="day-exercises">Sleep, Recover, High Protein Intake</div>
+                    </div>
                 </div>
             </section>
 
