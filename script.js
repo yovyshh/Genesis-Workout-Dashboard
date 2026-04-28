@@ -1,9 +1,9 @@
 const workoutData = [
-    { day: "Monday", focus: "Workout A (Full Body / Deadlift)", link: "https://www.youtube.com/watch?v=hCDzSR6bW10" },
+    { day: "Monday", focus: "Workout A (Full Body / Deadlift Focus)", link: "https://www.youtube.com/watch?v=hCDzSR6bW10" },
     { day: "Tuesday", focus: "Cardio + Core", link: "https://www.youtube.com/watch?v=pSHjTRCQxIw" },
     { day: "Wednesday", focus: "Workout B (Squat Focus)", link: "https://www.youtube.com/watch?v=ultWZbUMPL8" },
     { day: "Thursday", focus: "Active Recovery & Mobility", link: "https://www.youtube.com/watch?v=7bRaX6M2nr8" },
-    { day: "Friday", focus: "Workout C (Split Squat / Close Grip)", link: "https://www.youtube.com/watch?v=2C-uNgKwPLE" },
+    { day: "Friday", focus: "Workout C (Compound Focus)", link: "https://www.youtube.com/watch?v=2C-uNgKwPLE" },
     { day: "Saturday", focus: "Cardio Day (Intervals)", link: "https://www.youtube.com/watch?v=1BZM6jcr7M4" },
     { day: "Sunday", focus: "Full Rest & Recovery", link: null }
 ];
