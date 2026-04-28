@@ -1,54 +1,63 @@
 const workoutData = [
-    { day: "Day 1", focus: "Upper Body (Push/Pull)", link: "https://www.youtube.com/watch?v=eGo4IYlbE5g" },
-    { day: "Day 2", focus: "Lower Body & Core", link: "https://www.youtube.com/watch?v=MeIiIdhvXT4" },
-    { day: "Day 3", focus: "Active Rest", link: null },
-    { day: "Day 4", focus: "Upper Body (Strength)", link: "https://www.youtube.com/watch?v=iW9u_yVbaS0" },
-    { day: "Day 5", focus: "Full Body & Mobility", link: "https://www.youtube.com/watch?v=vjKW_Z_vX_M" },
-    { day: "Day 6", focus: "Rest & Recovery", link: null },
-    { day: "Day 7", focus: "Rest & Recovery", link: null }
+    { day: "Monday", focus: "Workout A (Full Body / Deadlift)", link: "https://www.youtube.com/watch?v=hCDzSR6bW10" },
+    { day: "Tuesday", focus: "Cardio + Core", link: "https://www.youtube.com/watch?v=pSHjTRCQxIw" },
+    { day: "Wednesday", focus: "Workout B (Squat Focus)", link: "https://www.youtube.com/watch?v=ultWZbUMPL8" },
+    { day: "Thursday", focus: "Active Recovery & Mobility", link: "https://www.youtube.com/watch?v=7bRaX6M2nr8" },
+    { day: "Friday", focus: "Workout C (Split Squat / Close Grip)", link: "https://www.youtube.com/watch?v=2C-uNgKwPLE" },
+    { day: "Saturday", focus: "Cardio Day (Intervals)", link: "https://www.youtube.com/watch?v=1BZM6jcr7M4" },
+    { day: "Sunday", focus: "Full Rest & Recovery", link: null }
 ];
 
 const exerciseData = {
-    "Day 1": [
-        { name: "Pull-ups/Negatives", details: "3 x Max/5-8", video: "https://www.youtube.com/watch?v=eGo4IYlbE5g" },
-        { name: "Standard Push-ups", details: "3 x 8-15", video: "https://www.youtube.com/watch?v=v9LABVJzv8Y" },
-        { name: "DB Bent-Over Rows", details: "3 x 10-12", video: "https://www.youtube.com/watch?v=6KAGCdrAzX0" },
-        { name: "Pike Push-ups", details: "3 x 6-10", video: "https://www.youtube.com/watch?v=sposDXWEB0A" },
-        { name: "DB Bicep Curls", details: "3 x 10-15", video: "https://www.youtube.com/watch?v=i1YgFZB6alI" }
+    "Monday": [
+        { name: "Deadlift", details: "3 x 8", video: "https://www.youtube.com/watch?v=hCDzSR6bW10" },
+        { name: "Overhead Press", details: "3 x 8", video: "https://www.youtube.com/watch?v=2yjwXTZQDDI" },
+        { name: "Bench Press", details: "3 x 8", video: "https://www.youtube.com/watch?v=rT7DgCr-3pg" },
+        { name: "Bicep Curl", details: "3 x 10", video: "https://www.youtube.com/watch?v=ykJmrZ5v0Oo" },
+        { name: "Overhead Triceps Extension", details: "3 x 10", video: "https://www.youtube.com/watch?v=_gsUck-7M74" },
+        { name: "Calf Raises", details: "3 x 20", video: "https://www.youtube.com/watch?v=-M4-G8p8fmc" },
+        { name: "Sit-Ups", details: "3 x 20", video: "https://www.youtube.com/watch?v=jDwoBqPH0jk" }
     ],
-    "Day 2": [
-        { name: "DB Goblet Squats", details: "4 x 10-15", video: "https://www.youtube.com/watch?v=MeIiIdhvXT4" },
-        { name: "DB Walking Lunges", details: "3 x 10/leg", video: "https://www.youtube.com/watch?v=COkF9X76vqo" },
-        { name: "Glute Bridges", details: "3 x 15-20", video: "https://www.youtube.com/watch?v=A8nFGuY77CE" },
-        { name: "Lying Leg Raises", details: "3 x 12-15", video: "https://www.youtube.com/watch?v=v9LABVJzv8Y" },
-        { name: "Forearm Plank", details: "3 x 30-60 sec", video: "https://www.youtube.com/watch?v=TvxNkmjdhMM" }
+    "Tuesday": [
+        { name: "Brisk walk / jog / cycle", details: "30 min", video: null },
+        { name: "Plank", details: "3 x 30–45 sec", video: "https://www.youtube.com/watch?v=pSHjTRCQxIw" },
+        { name: "Leg Raises", details: "3 x 15", video: "https://www.youtube.com/watch?v=JB2oyawG9KI" },
+        { name: "Mountain Climbers", details: "3 x 20", video: "https://www.youtube.com/watch?v=nmwgirgXLYM" }
     ],
-    "Day 3": [
-        { name: "Light Stretching", details: "15-20 mins", video: null },
-        { name: "Yoga or Mobility Flow", details: "Optional", video: null },
-        { name: "Walking", details: "30 mins", video: null }
+    "Wednesday": [
+        { name: "Back Squat", details: "3 x 8", video: "https://www.youtube.com/watch?v=ultWZbUMPL8" },
+        { name: "Bent-Over Row", details: "3 x 8", video: "https://www.youtube.com/watch?v=vT2GjY_Umpw" },
+        { name: "Incline Press", details: "3 x 8", video: "https://www.youtube.com/watch?v=SrqOu55lrYU" },
+        { name: "EZ Bar Curl", details: "3 x 10", video: "https://www.youtube.com/watch?v=kwG2ipFRgfo" },
+        { name: "Lateral Raise", details: "3 x 10", video: "https://www.youtube.com/watch?v=3VcKaXpzqRo" },
+        { name: "Tricep Pushdown", details: "3 x 10", video: "https://www.youtube.com/watch?v=2-LAMcpzODU" },
+        { name: "Oblique Cable Twist", details: "3 x 20", video: "https://www.youtube.com/watch?v=9ZmbiA0P3Ac" }
     ],
-    "Day 4": [
-        { name: "Chin-ups/Negatives", details: "3 x Max/5-8", video: "https://www.youtube.com/watch?v=i1YgFZB6alI" },
-        { name: "Decline Push-ups", details: "3 x 8-12", video: "https://www.youtube.com/watch?v=v9LABVJzv8Y" },
-        { name: "Chair/Bench Dips", details: "3 x 10-15", video: "https://www.youtube.com/watch?v=2z8JmcrW-As" },
-        { name: "DB Lateral Raises", details: "3 x 12-15", video: "https://www.youtube.com/watch?v=v9LABVJzv8Y" },
-        { name: "Hanging Knee Raises", details: "3 x 8-12", video: "https://www.youtube.com/watch?v=hdnHCAR66iE" }
+    "Thursday": [
+        { name: "Easy walk / Yoga / Swim", details: "20–30 min", video: null },
+        { name: "Hip Flexor Stretch", details: "Mobility", video: "https://www.youtube.com/watch?v=7bRaX6M2nr8" },
+        { name: "Chest Opener Stretch", details: "Mobility", video: "https://www.youtube.com/watch?v=SXhfEU00M5w" },
+        { name: "Thoracic Rotation", details: "Mobility", video: "https://www.youtube.com/watch?v=ltUY0Bv6M6g" }
     ],
-    "Day 5": [
-        { name: "DB Thrusters", details: "3 x 10-12", video: "https://www.youtube.com/watch?v=v9LABVJzv8Y" },
-        { name: "Diamond Push-ups", details: "3 x 8-12", video: "https://www.youtube.com/watch?v=J0DnG1_S92I" },
-        { name: "DB Romanian Deadlifts", details: "3 x 10-15", video: "https://www.youtube.com/watch?v=jEy_czb3zKA" },
-        { name: "Russian Twists w/ DB", details: "3 x 20", video: "https://www.youtube.com/watch?v=v9LABVJzv8Y" },
-        { name: "Hollow Body Hold", details: "3 x 30-45 sec", video: "https://www.youtube.com/watch?v=v9LABVJzv8Y" }
+    "Friday": [
+        { name: "Split Squat", details: "3 x 8", video: "https://www.youtube.com/watch?v=2C-uNgKwPLE" },
+        { name: "Close-Grip Bench", details: "3 x 8", video: "https://www.youtube.com/watch?v=nEF0bv2FW94" },
+        { name: "Flat Dumbbell Press", details: "3 x 8", video: "https://www.youtube.com/watch?v=VmB1G1K7v94" },
+        { name: "Incline Dumbbell Curl", details: "3 x 10", video: "https://www.youtube.com/watch?v=soxrZlIl35U" },
+        { name: "Lat Pulldown", details: "3 x 10", video: "https://www.youtube.com/watch?v=CAwf7n6Luuc" },
+        { name: "Face Pull", details: "3 x 10", video: "https://www.youtube.com/watch?v=rep-qVOkqgk" },
+        { name: "Hanging Leg Raise", details: "3 x 20", video: "https://www.youtube.com/watch?v=Pr1ieGZ5atk" }
     ],
-    "Day 6": [
-        { name: "Full Rest", details: "Focus on recovery", video: null },
-        { name: "Foam Rolling", details: "Optional", video: null }
+    "Saturday": [
+        { name: "Jog / Cycle / Elliptical", details: "30–40 min", video: "https://www.youtube.com/watch?v=1BZM6jcr7M4" },
+        { name: "Jump Rope", details: "3 x 2 min", video: "https://www.youtube.com/watch?v=1BZM6jcr7M4" },
+        { name: "Intervals", details: "1 min fast / 2 min easy x 8-10", video: null }
     ],
-    "Day 7": [
-        { name: "Full Rest", details: "Prepare for next week", video: null }
+    "Sunday": [
+        { name: "Sleep & Recover", details: "Full Rest", video: null },
+        { name: "Protein Intake", details: "Eat enough protein", video: null }
     ]
+};
 };
 
 const STORAGE_KEY = 'genesisFitness_v1';
