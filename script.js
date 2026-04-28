@@ -58,7 +58,6 @@ const exerciseData = {
         { name: "Protein Intake", details: "Eat enough protein", video: null }
     ]
 };
-};
 
 const STORAGE_KEY = 'genesisFitness_v1';
 let state = {
