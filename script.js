@@ -1,63 +1,152 @@
-const workoutData = [
-    { day: "Monday", focus: "Workout A (Full Body / Deadlift Focus)", link: "https://www.youtube.com/watch?v=hCDzSR6bW10" },
-    { day: "Tuesday", focus: "Cardio + Core", link: "https://www.youtube.com/watch?v=pSHjTRCQxIw" },
-    { day: "Wednesday", focus: "Workout B (Squat Focus)", link: "https://www.youtube.com/watch?v=ultWZbUMPL8" },
-    { day: "Thursday", focus: "Active Recovery & Mobility", link: "https://www.youtube.com/watch?v=7bRaX6M2nr8" },
-    { day: "Friday", focus: "Workout C (Compound Focus)", link: "https://www.youtube.com/watch?v=2C-uNgKwPLE" },
-    { day: "Saturday", focus: "Cardio Day (Intervals)", link: "https://www.youtube.com/watch?v=1BZM6jcr7M4" },
-    { day: "Sunday", focus: "Full Rest & Recovery", link: null }
-];
-
-const exerciseData = {
-    "Monday": [
-        { name: "Deadlift", details: "3 x 8", video: "https://www.youtube.com/watch?v=hCDzSR6bW10" },
-        { name: "Overhead Press", details: "3 x 8", video: "https://www.youtube.com/watch?v=2yjwXTZQDDI" },
-        { name: "Bench Press", details: "3 x 8", video: "https://www.youtube.com/watch?v=rT7DgCr-3pg" },
-        { name: "Bicep Curl", details: "3 x 10", video: "https://www.youtube.com/watch?v=ykJmrZ5v0Oo" },
-        { name: "Overhead Triceps Extension", details: "3 x 10", video: "https://www.youtube.com/watch?v=_gsUck-7M74" },
-        { name: "Calf Raises", details: "3 x 20", video: "https://www.youtube.com/watch?v=-M4-G8p8fmc" },
-        { name: "Sit-Ups", details: "3 x 20", video: "https://www.youtube.com/watch?v=jDwoBqPH0jk" }
-    ],
-    "Tuesday": [
-        { name: "Brisk walk / jog / cycle", details: "30 min", video: null },
-        { name: "Plank", details: "3 x 30–45 sec", video: "https://www.youtube.com/watch?v=pSHjTRCQxIw" },
-        { name: "Leg Raises", details: "3 x 15", video: "https://www.youtube.com/watch?v=JB2oyawG9KI" },
-        { name: "Mountain Climbers", details: "3 x 20", video: "https://www.youtube.com/watch?v=nmwgirgXLYM" }
-    ],
-    "Wednesday": [
-        { name: "Back Squat", details: "3 x 8", video: "https://www.youtube.com/watch?v=ultWZbUMPL8" },
-        { name: "Bent-Over Row", details: "3 x 8", video: "https://www.youtube.com/watch?v=vT2GjY_Umpw" },
-        { name: "Incline Press", details: "3 x 8", video: "https://www.youtube.com/watch?v=SrqOu55lrYU" },
-        { name: "EZ Bar Curl", details: "3 x 10", video: "https://www.youtube.com/watch?v=kwG2ipFRgfo" },
-        { name: "Lateral Raise", details: "3 x 10", video: "https://www.youtube.com/watch?v=3VcKaXpzqRo" },
-        { name: "Tricep Pushdown", details: "3 x 10", video: "https://www.youtube.com/watch?v=2-LAMcpzODU" },
-        { name: "Oblique Cable Twist", details: "3 x 20", video: "https://www.youtube.com/watch?v=9ZmbiA0P3Ac" }
-    ],
-    "Thursday": [
-        { name: "Easy walk / Yoga / Swim", details: "20–30 min", video: null },
-        { name: "Hip Flexor Stretch", details: "Mobility", video: "https://www.youtube.com/watch?v=7bRaX6M2nr8" },
-        { name: "Chest Opener Stretch", details: "Mobility", video: "https://www.youtube.com/watch?v=SXhfEU00M5w" },
-        { name: "Thoracic Rotation", details: "Mobility", video: "https://www.youtube.com/watch?v=ltUY0Bv6M6g" }
-    ],
-    "Friday": [
-        { name: "Split Squat", details: "3 x 8", video: "https://www.youtube.com/watch?v=2C-uNgKwPLE" },
-        { name: "Close-Grip Bench", details: "3 x 8", video: "https://www.youtube.com/watch?v=nEF0bv2FW94" },
-        { name: "Flat Dumbbell Press", details: "3 x 8", video: "https://www.youtube.com/watch?v=VmB1G1K7v94" },
-        { name: "Incline Dumbbell Curl", details: "3 x 10", video: "https://www.youtube.com/watch?v=soxrZlIl35U" },
-        { name: "Lat Pulldown", details: "3 x 10", video: "https://www.youtube.com/watch?v=CAwf7n6Luuc" },
-        { name: "Face Pull", details: "3 x 10", video: "https://www.youtube.com/watch?v=rep-qVOkqgk" },
-        { name: "Hanging Leg Raise", details: "3 x 20", video: "https://www.youtube.com/watch?v=Pr1ieGZ5atk" }
-    ],
-    "Saturday": [
-        { name: "Jog / Cycle / Elliptical", details: "30–40 min", video: "https://www.youtube.com/watch?v=1BZM6jcr7M4" },
-        { name: "Jump Rope", details: "3 x 2 min", video: "https://www.youtube.com/watch?v=1BZM6jcr7M4" },
-        { name: "Intervals", details: "1 min fast / 2 min easy x 8-10", video: null }
-    ],
-    "Sunday": [
-        { name: "Sleep & Recover", details: "Full Rest", video: null },
-        { name: "Protein Intake", details: "Eat enough protein", video: null }
+const days = [
+  {
+    label: "Mon", name: "Push strength", badge: "Strength", bc: "b-strength",
+    sub: "Chest · Shoulders · Triceps · Abs",
+    gear: ["Barbell", "Dumbbells", "Bodyweight"],
+    tip: "Floor press with barbell: load 5kg each side (10kg total) to start. Lower slowly for 3 seconds — that tension builds chest even without a bench. Add weight only when you can do all reps with clean form.",
+    sections: [
+      { name: "Warm-up (5 min)", ex: [
+        { name: "Arm circles + shoulder rolls", detail: "2 min", video: "https://www.youtube.com/watch?v=140RTXN4K0o" },
+        { name: "Push-up (slow)", detail: "2 × 8", video: "https://www.youtube.com/watch?v=mWyY0_S_m7E" },
+      ]},
+      { name: "Main workout", ex: [
+        { name: "Barbell floor press", note: "replaces bench press · 10kg to start", detail: "4 × 8 · Rest 2 min", video: "https://www.youtube.com/watch?v=Xef_H9ZLkdY" },
+        { name: "Pike push-up", note: "targets shoulders · elevate feet to progress", detail: "3 × 10 · Rest 90 sec", video: "https://www.youtube.com/watch?v=sposDXWEB0A" },
+        { name: "Diamond push-up", note: "tricep focus", detail: "3 × 10 · Rest 1 min", video: "https://www.youtube.com/watch?v=6dALZ87SlhY" },
+        { name: "Dumbbell lateral raise", note: "use 2kg or 3kg", detail: "3 × 12 · Rest 1 min", video: "https://www.youtube.com/watch?v=3VcKaXpzqRo" },
+        { name: "Dumbbell overhead press", note: "seated or standing", detail: "3 × 10 · Rest 90 sec", video: "https://www.youtube.com/watch?v=2yjwXTZQDDI" },
+      ]},
+      { name: "Abs circuit (no rest between exercises)", ex: [
+        { name: "Sit-up", detail: "3 × 20", video: "https://www.youtube.com/watch?v=jDwoBqPH0jk" },
+        { name: "Leg raise", detail: "3 × 15", video: "https://www.youtube.com/watch?v=JB2oyawG9KI" },
+        { name: "Plank hold", detail: "3 × 40 sec", video: "https://www.youtube.com/watch?v=pSHjTRCQxIw" },
+      ]},
     ]
-};
+  },
+  {
+    label: "Tue", name: "Pull + cardio", badge: "Strength + Burn", bc: "b-cardio",
+    sub: "Back · Biceps · Cardio · Fat loss",
+    gear: ["Pull-up bar", "Barbell", "Dumbbells"],
+    tip: "Pull-ups are the single best back exercise you can do at home. If you can only do 3–4, that's fine — do all your reps then switch to negative pull-ups (jump up, lower yourself in 5 seconds). You'll build fast.",
+    sections: [
+      { name: "Warm-up (5 min)", ex: [
+        { name: "Dead hang on pull-up bar", detail: "2 × 20 sec", video: "https://www.youtube.com/watch?v=R96S97m_Y_g" },
+        { name: "Bodyweight squat", detail: "2 × 10", video: "https://www.youtube.com/watch?v=MVMNk0HiTMg" },
+      ]},
+      { name: "Main workout", ex: [
+        { name: "Pull-up", note: "max reps per set · negative reps if needed", detail: "4 sets · Rest 2 min", video: "https://www.youtube.com/watch?v=eGo4IYlbE5g" },
+        { name: "Chin-up", note: "underhand grip · hits biceps harder", detail: "3 sets · Rest 90 sec", video: "https://www.youtube.com/watch?v=i8_M6v_xhyE" },
+        { name: "Barbell bent-over row", note: "10kg to start · hinge at hips", detail: "4 × 8 · Rest 2 min", video: "https://www.youtube.com/watch?v=vT2GjY_Umpw" },
+        { name: "Dumbbell bicep curl", note: "use 3kg or 5kg", detail: "3 × 12 · Rest 1 min", video: "https://www.youtube.com/watch?v=ykJmrZ5v0Oo" },
+        { name: "Dumbbell hammer curl", detail: "3 × 10 · Rest 1 min", video: "https://www.youtube.com/watch?v=zC3nLlEvin4" },
+      ]},
+      { name: "Cardio finisher (fat burn)", ex: [
+        { name: "Brisk walk or jog outdoors", detail: "20 min", video: null },
+        { name: "OR jump rope", detail: "10 min", video: "https://www.youtube.com/watch?v=1BZM6jcr7M4" },
+      ]},
+    ]
+  },
+  {
+    label: "Wed", name: "Legs + core", badge: "Strength", bc: "b-strength",
+    sub: "Quads · Hamstrings · Glutes · Abs",
+    gear: ["Barbell", "Dumbbells", "Bodyweight"],
+    tip: "Barbell squats with 10kg total are perfectly fine for now. Focus on going below parallel — thighs past horizontal. That depth is what activates glutes and builds real leg muscle. Squat shallow and you are wasting the set.",
+    sections: [
+      { name: "Warm-up (5 min)", ex: [
+        { name: "Hip circle", detail: "10 each side", video: "https://www.youtube.com/watch?v=H7m_YqfQvY4" },
+        { name: "Bodyweight squat", detail: "2 × 12", video: "https://www.youtube.com/watch?v=MVMNk0HiTMg" },
+        { name: "Hip flexor stretch", detail: "30 sec each side", video: "https://www.youtube.com/watch?v=7bRaX6M2nr8" },
+      ]},
+      { name: "Main workout", ex: [
+        { name: "Barbell back squat", note: "10kg to start · go deep", detail: "4 × 8 · Rest 2–3 min", video: "https://www.youtube.com/watch?v=ultWZbUMPL8" },
+        { name: "Barbell Romanian deadlift", note: "feel the hamstring stretch", detail: "3 × 10 · Rest 2 min", video: "https://www.youtube.com/watch?v=hCDzSR6bW10" },
+        { name: "Bulgarian split squat", note: "bodyweight or hold dumbbells", detail: "3 × 8 each leg · Rest 90 sec", video: "https://www.youtube.com/watch?v=2C-uNgKwPLE" },
+        { name: "Dumbbell goblet squat", note: "use 5kg dumbbell", detail: "3 × 12 · Rest 1 min", video: "https://www.youtube.com/watch?v=MeIiGibT6Xo" },
+        { name: "Calf raise", note: "use barbell on back or hold dumbbells", detail: "4 × 20 · Rest 1 min", video: "https://www.youtube.com/watch?v=-M4-G8p8fmc" },
+      ]},
+      { name: "Abs circuit", ex: [
+        { name: "Hanging knee raise (pull-up bar)", detail: "3 × 15", video: "https://www.youtube.com/watch?v=RD_A-Z15Er4" },
+        { name: "Bicycle crunch", detail: "3 × 20", video: "https://www.youtube.com/watch?v=Iwyvozckjak" },
+        { name: "Side plank", detail: "2 × 30 sec each side", video: "https://www.youtube.com/watch?v=K3fT699-vFw" },
+      ]},
+    ]
+  },
+  {
+    label: "Thu", name: "HIIT + active recovery", badge: "Fat Burn", bc: "b-hiit",
+    sub: "Cardio · Fat loss · Light mobility",
+    gear: ["Bodyweight"],
+    tip: "HIIT is your most powerful fat-loss tool. 20 minutes burns more fat than 40 minutes of slow jogging because your metabolism stays elevated for hours after. Push hard during the work intervals — that is the whole point.",
+    sections: [
+      { name: "HIIT circuit (4 rounds, 40 sec on / 20 sec rest)", ex: [
+        { name: "Burpee", detail: "40 sec on · 20 sec rest", video: "https://www.youtube.com/watch?v=dZfeHe69mK8" },
+        { name: "Jump squat", detail: "40 sec on · 20 sec rest", video: "https://www.youtube.com/watch?v=CVaE6m-vCis" },
+        { name: "Mountain climber", detail: "40 sec on · 20 sec rest", video: "https://www.youtube.com/watch?v=nmwgirgXLYM" },
+        { name: "High knees", detail: "40 sec on · 20 sec rest", video: "https://www.youtube.com/watch?v=ZZpZatn8HmA" },
+        { name: "Rest between rounds", detail: "90 sec", video: null },
+      ]},
+      { name: "Active recovery (after HIIT)", ex: [
+        { name: "Slow walk outdoors", detail: "10–15 min", video: null },
+        { name: "Full body stretch", detail: "10 min", video: "https://www.youtube.com/watch?v=7bRaX6M2nr8" },
+      ]},
+    ]
+  },
+  {
+    label: "Fri", name: "Push + pull superset", badge: "Strength", bc: "b-strength",
+    sub: "Full upper body · Muscle definition",
+    gear: ["Pull-up bar", "Barbell", "Dumbbells"],
+    tip: "Supersets mean doing two exercises back to back with no rest in between, then resting after both. For example: push-up → immediately pull-up → rest 90 sec. This saves time, keeps your heart rate up (burns fat), and builds muscle at the same time.",
+    sections: [
+      { name: "Warm-up", ex: [
+        { name: "Arm swing + rotation", detail: "2 min", video: "https://www.youtube.com/watch?v=140RTXN4K0o" },
+        { name: "Band or bodyweight pull-apart", detail: "2 × 15", video: "https://www.youtube.com/watch?v=wi9v_YnoI3k" },
+      ]},
+      { name: "Superset A (push + pull · 4 rounds)", ex: [
+        { name: "Push-up", note: "A1", detail: "12 reps", video: "https://www.youtube.com/watch?v=mWyY0_S_m7E" },
+        { name: "Pull-up or chin-up", note: "A2 · max reps", detail: "then rest 90 sec", video: "https://www.youtube.com/watch?v=eGo4IYlbE5g" },
+      ]},
+      { name: "Superset B (barbell · 3 rounds)", ex: [
+        { name: "Barbell floor press", note: "B1", detail: "8 reps", video: "https://www.youtube.com/watch?v=Xef_H9ZLkdY" },
+        { name: "Barbell bent-over row", note: "B2", detail: "8 reps · rest 2 min", video: "https://www.youtube.com/watch?v=vT2GjY_Umpw" },
+      ]},
+      { name: "Superset C (dumbbells · 3 rounds)", ex: [
+        { name: "Dumbbell shoulder press", note: "C1", detail: "10 reps", video: "https://www.youtube.com/watch?v=2yjwXTZQDDI" },
+        { name: "Dumbbell rear delt fly", note: "C2 · replaces face pull", detail: "10 reps · rest 90 sec", video: "https://www.youtube.com/watch?v=rep-qVOkqgk" },
+      ]},
+      { name: "Abs", ex: [
+        { name: "Hanging leg raise (pull-up bar)", detail: "3 × 12", video: "https://www.youtube.com/watch?v=Pr1ieGZ5atk" },
+        { name: "Russian twist (hold dumbbell)", detail: "3 × 20", video: "https://www.youtube.com/watch?v=3zIu9fP8RkU" },
+      ]},
+    ]
+  },
+  {
+    label: "Sat", name: "Cardio + full abs", badge: "Fat Burn", bc: "b-cardio",
+    sub: "Fat loss · Ab definition · Active day",
+    gear: ["Bodyweight", "Pull-up bar"],
+    tip: "This is your highest fat-burn day. Steady cardio first to deplete glycogen, then hit abs. You will feel the abs working more intensely when you train them after cardio. This is also the day that most directly targets visible ab definition.",
+    sections: [
+      { name: "Cardio (choose one)", ex: [
+        { name: "Jog outdoors", detail: "30–35 min", video: null },
+        { name: "Jump rope intervals", detail: "20 min", video: "https://www.youtube.com/watch?v=1BZM6jcr7M4" },
+        { name: "Cycling or brisk walk", detail: "40 min", video: null },
+      ]},
+      { name: "Full abs circuit (after cardio · 3 rounds)", ex: [
+        { name: "Crunch", detail: "20 reps", video: "https://www.youtube.com/watch?v=Xyd_fa5zoRK" },
+        { name: "Leg raise", detail: "15 reps", video: "https://www.youtube.com/watch?v=JB2oyawG9KI" },
+        { name: "Bicycle crunch", detail: "20 reps", video: "https://www.youtube.com/watch?v=Iwyvozckjak" },
+        { name: "Hanging knee raise", detail: "12 reps", video: "https://www.youtube.com/watch?v=RD_A-Z15Er4" },
+        { name: "Plank hold", detail: "45 sec", video: "https://www.youtube.com/watch?v=pSHjTRCQxIw" },
+        { name: "Rest between rounds", detail: "60 sec", video: null },
+      ]},
+    ]
+  },
+  {
+    label: "Sun", name: "Full rest", badge: "Rest", bc: "b-rest",
+    sub: "Sleep · Eat · Recover",
+    gear: [],
+    rest: true,
+    tip: "Muscle grows during rest, not during training. Skipping this day feels productive but it slows your results. Sleep 7–9 hours, eat your protein, and let your body do the work."
+  },
+];
 
 const STORAGE_KEY = 'genesisFitness_v1';
 let state = {
@@ -110,14 +199,6 @@ function registerServiceWorker() {
     }
 }
 
-async function requestNotificationPermission() {
-    if ('Notification' in window) {
-        const permission = await Notification.requestPermission();
-        return permission === 'granted';
-    }
-    return false;
-}
-
 function loadState() {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
@@ -157,7 +238,7 @@ function renderTracker() {
         trackerBody.appendChild(weekCard);
 
         const container = document.getElementById(`week${w}-days`);
-        workoutData.forEach((workout, index) => {
+        days.forEach((workout, index) => {
             const id = `w${w}d${index + 1}`;
             const isCompleted = state.progress[id] || false;
             const hasNotes = state.notes[id] && state.notes[id].trim().length > 0;
@@ -171,13 +252,12 @@ function renderTracker() {
                 <div class="checkbox-custom" onclick="toggleDay('${id}', event)"></div>
                 <div class="day-content">
                     <div class="day-header">
-                        <span class="day-title">${workout.day}</span>
+                        <span class="day-title">${workout.name}</span>
                         <div class="day-actions">
-                            ${workout.link ? `<button class="action-btn" onclick="window.open('${workout.link}', '_blank'); event.stopPropagation();">Video</button>` : ''}
                             <button class="action-btn ${hasNotes ? 'has-notes' : ''}" onclick="openNotes('${id}', event)">Note</button>
                         </div>
                     </div>
-                    <div class="day-focus">${workout.focus}</div>
+                    <div class="day-focus">${workout.sub}</div>
                 </div>
             `;
             container.appendChild(row);
@@ -189,24 +269,55 @@ function showDetails(id, event) {
     if (event) event.stopPropagation();
     const dayNum = parseInt(id.match(/d(\d+)/)[1]);
     const weekNum = id.match(/w(\d+)/)[1];
-    const workout = workoutData[dayNum - 1];
-    const exercises = exerciseData[workout.day];
+    const workout = days[dayNum - 1];
     
-    if (detailsTitle) detailsTitle.innerText = `Week ${weekNum}, ${workout.day} - ${workout.focus}`;
+    if (detailsTitle) detailsTitle.innerText = `Week ${weekNum}, ${workout.label} - ${workout.name}`;
     if (exerciseListContainer) {
         exerciseListContainer.innerHTML = '';
-        exercises.forEach(ex => {
-            const exItem = document.createElement('div');
-            exItem.className = 'exercise-item';
-            exItem.innerHTML = `
-                <span class="exercise-name">${ex.name}</span>
-                <div class="exercise-details">
-                    <span>${ex.details}</span>
-                    ${ex.video ? `<a href="${ex.video}" target="_blank" class="exercise-video" onclick="event.stopPropagation();">Watch Video</a>` : ''}
+        
+        if (workout.rest) {
+            exerciseListContainer.innerHTML = `
+                <div class="rest-block">
+                    <div style="font-size:48px;margin-bottom:20px;">&#128564;</div>
+                    <div style="font-size:18px;font-weight:700;">Complete Rest Day</div>
+                    <div style="color:var(--text-secondary);margin-top:10px;">Muscle grows during rest, not during training. Sleep 7–9 hours, eat your protein, and let your body recover.</div>
                 </div>
             `;
-            exerciseListContainer.appendChild(exItem);
-        });
+        } else {
+            if (workout.gear && workout.gear.length) {
+                const gearDiv = document.createElement('div');
+                gearDiv.className = 'gear-row-modal';
+                gearDiv.innerHTML = `<span class="section-label">Equipment:</span> ` + 
+                    workout.gear.map(g => `<span class="gear-tag">${g}</span>`).join(' ');
+                exerciseListContainer.appendChild(gearDiv);
+            }
+
+            workout.sections.forEach(s => {
+                const sectionHeader = document.createElement('div');
+                sectionHeader.className = 'section-label-modal';
+                sectionHeader.innerText = s.name;
+                exerciseListContainer.appendChild(sectionHeader);
+
+                s.ex.forEach(e => {
+                    const exItem = document.createElement('div');
+                    exItem.className = 'exercise-item-new';
+                    exItem.innerHTML = `
+                        <div class="ex-main-info">
+                            <span class="ex-name">${e.name}</span>
+                            <span class="ex-detail">${e.detail}</span>
+                        </div>
+                        ${e.note ? `<div class="ex-note">${e.note}</div>` : ''}
+                        ${e.video ? `<a href="${e.video}" target="_blank" class="ex-video-link" onclick="event.stopPropagation();">Watch Tutorial</a>` : ''}
+                    `;
+                    exerciseListContainer.appendChild(exItem);
+                });
+            });
+        }
+
+        const tipBox = document.createElement('div');
+        tipBox.className = 'tip-box-modal';
+        tipBox.innerHTML = `<strong>💡 Tip of the Day:</strong><br>${workout.tip}`;
+        exerciseListContainer.appendChild(tipBox);
     }
     if (detailsModal) detailsModal.style.display = 'block';
 }
@@ -405,12 +516,13 @@ function updateThemeToggleUI() {
     if (icon) icon.innerText = state.theme === 'dark' ? 'Dark Mode' : 'Light Mode';
 }
 
+let activeNoteId = null;
 function openNotes(id, event) {
     if (event) event.stopPropagation();
     activeNoteId = id;
-    const day = id.match(/d(\d+)/)[1];
+    const day = parseInt(id.match(/d(\d+)/)[1]);
     const week = id.match(/w(\d+)/)[1];
-    if (modalDayInfo) modalDayInfo.innerText = `Week ${week}, Day ${day} - ${workoutData[parseInt(day)-1].focus}`;
+    if (modalDayInfo) modalDayInfo.innerText = `Week ${week}, Day ${day} - ${days[day-1].name}`;
     if (dayNotesTextarea) {
         dayNotesTextarea.value = state.notes[id] || '';
         if (notesModal) notesModal.style.display = 'block';
@@ -423,8 +535,8 @@ function exportToCSV() {
     for (let w = 1; w <= 8; w++) {
         for (let d = 1; d <= 7; d++) {
             const id = `w${w}d${d}`;
-            const workout = workoutData[d-1];
-            csv += `${w},${d},"${workout.focus}",${state.progress[id] ? 'Yes' : 'No'},"${(state.notes[id] || '').replace(/"/g, '""')}"\n`;
+            const workout = days[d-1];
+            csv += `${w},${d},"${workout.name}",${state.progress[id] ? 'Yes' : 'No'},"${(state.notes[id] || '').replace(/"/g, '""')}"\n`;
         }
     }
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });

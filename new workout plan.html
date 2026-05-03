@@ -1,0 +1,245 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.wrap { padding: 1rem 0; font-family: var(--font-sans); }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.tab { padding: 6px 14px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); font-size: 13px; cursor: pointer; background: transparent; color: var(--color-text-secondary); transition: all 0.15s; }
+.tab.active { background: var(--color-background-secondary); color: var(--color-text-primary); font-weight: 500; border-color: var(--color-border-primary); }
+.tab:hover:not(.active) { background: var(--color-background-secondary); }
+.day-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; }
+.header-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-wrap: wrap; }
+.day-title { font-size: 15px; font-weight: 500; color: var(--color-text-primary); }
+.badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; }
+.b-strength { background: #EEEDFE; color: #3C3489; }
+.b-cardio { background: #E1F5EE; color: #085041; }
+.b-rest { background: #F1EFE8; color: #5F5E5A; }
+.b-active { background: #E6F1FB; color: #0C447C; }
+.b-hiit { background: #FAEEDA; color: #633806; }
+.day-sub { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 0.9rem; }
+.gear-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 0.9rem; }
+.gear-tag { font-size: 11px; padding: 2px 8px; border-radius: 20px; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-secondary); color: var(--color-text-secondary); }
+.section-label { font-size: 11px; font-weight: 500; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin: 0.85rem 0 0.4rem; }
+.ex-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 8px 0; border-bottom: 0.5px solid var(--color-border-tertiary); gap: 10px; }
+.ex-row:last-child { border-bottom: none; }
+.ex-name { font-size: 14px; color: var(--color-text-primary); }
+.ex-note { font-size: 11px; color: var(--color-text-tertiary); margin-top: 2px; }
+.ex-detail { font-size: 12px; color: var(--color-text-secondary); text-align: right; white-space: nowrap; flex-shrink: 0; }
+.tip-box { background: var(--color-background-secondary); border-left: 2px solid #534AB7; border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; padding: 0.75rem 1rem; margin-top: 1rem; font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; }
+.rest-block { text-align: center; padding: 2.5rem 1rem; color: var(--color-text-secondary); font-size: 14px; line-height: 1.8; }
+.progress-note { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem 1rem; margin-top: 1rem; font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; }
+@media (prefers-color-scheme: dark) {
+  .b-strength { background: #3C3489; color: #CECBF6; }
+  .b-cardio { background: #085041; color: #9FE1CB; }
+  .b-rest { background: #444441; color: #D3D1C7; }
+  .b-active { background: #0C447C; color: #B5D4F4; }
+  .b-hiit { background: #633806; color: #FAC775; }
+}
+</style>
+
+<h2 class="sr-only">Full week home calisthenics and barbell workout plan for muscle gain, fat loss, and abs using pull-up bar, dumbbells, and barbell</h2>
+
+<div class="wrap">
+<div class="tabs" id="tabs"></div>
+<div id="content"></div>
+</div>
+
+<script>
+const days = [
+  {
+    label: "Mon", name: "Push strength", badge: "Strength", bc: "b-strength",
+    sub: "Chest · Shoulders · Triceps · Abs",
+    gear: ["Barbell", "Dumbbells", "Bodyweight"],
+    tip: "Floor press with barbell: load 5kg each side (10kg total) to start. Lower slowly for 3 seconds — that tension builds chest even without a bench. Add weight only when you can do all reps with clean form.",
+    sections: [
+      { name: "Warm-up (5 min)", ex: [
+        { name: "Arm circles + shoulder rolls", detail: "2 min" },
+        { name: "Push-up (slow)", detail: "2 × 8" },
+      ]},
+      { name: "Main workout", ex: [
+        { name: "Barbell floor press", note: "replaces bench press · 10kg to start", detail: "4 × 8 · Rest 2 min" },
+        { name: "Pike push-up", note: "targets shoulders · elevate feet to progress", detail: "3 × 10 · Rest 90 sec" },
+        { name: "Diamond push-up", note: "tricep focus", detail: "3 × 10 · Rest 1 min" },
+        { name: "Dumbbell lateral raise", note: "use 2kg or 3kg", detail: "3 × 12 · Rest 1 min" },
+        { name: "Dumbbell overhead press", note: "seated or standing", detail: "3 × 10 · Rest 90 sec" },
+      ]},
+      { name: "Abs circuit (no rest between exercises)", ex: [
+        { name: "Sit-up", detail: "3 × 20" },
+        { name: "Leg raise", detail: "3 × 15" },
+        { name: "Plank hold", detail: "3 × 40 sec" },
+      ]},
+    ]
+  },
+  {
+    label: "Tue", name: "Pull + cardio", badge: "Strength + Burn", bc: "b-cardio",
+    sub: "Back · Biceps · Cardio · Fat loss",
+    gear: ["Pull-up bar", "Barbell", "Dumbbells"],
+    tip: "Pull-ups are the single best back exercise you can do at home. If you can only do 3–4, that's fine — do all your reps then switch to negative pull-ups (jump up, lower yourself in 5 seconds). You'll build fast.",
+    sections: [
+      { name: "Warm-up (5 min)", ex: [
+        { name: "Dead hang on pull-up bar", detail: "2 × 20 sec" },
+        { name: "Bodyweight squat", detail: "2 × 10" },
+      ]},
+      { name: "Main workout", ex: [
+        { name: "Pull-up", note: "max reps per set · negative reps if needed", detail: "4 sets · Rest 2 min" },
+        { name: "Chin-up", note: "underhand grip · hits biceps harder", detail: "3 sets · Rest 90 sec" },
+        { name: "Barbell bent-over row", note: "10kg to start · hinge at hips", detail: "4 × 8 · Rest 2 min" },
+        { name: "Dumbbell bicep curl", note: "use 3kg or 5kg", detail: "3 × 12 · Rest 1 min" },
+        { name: "Dumbbell hammer curl", detail: "3 × 10 · Rest 1 min" },
+      ]},
+      { name: "Cardio finisher (fat burn)", ex: [
+        { name: "Brisk walk or jog outdoors", detail: "20 min" },
+        { name: "OR jump rope", detail: "10 min" },
+      ]},
+    ]
+  },
+  {
+    label: "Wed", name: "Legs + core", badge: "Strength", bc: "b-strength",
+    sub: "Quads · Hamstrings · Glutes · Abs",
+    gear: ["Barbell", "Dumbbells", "Bodyweight"],
+    tip: "Barbell squats with 10kg total are perfectly fine for now. Focus on going below parallel — thighs past horizontal. That depth is what activates glutes and builds real leg muscle. Squat shallow and you are wasting the set.",
+    sections: [
+      { name: "Warm-up (5 min)", ex: [
+        { name: "Hip circle", detail: "10 each side" },
+        { name: "Bodyweight squat", detail: "2 × 12" },
+        { name: "Hip flexor stretch", detail: "30 sec each side" },
+      ]},
+      { name: "Main workout", ex: [
+        { name: "Barbell back squat", note: "10kg to start · go deep", detail: "4 × 8 · Rest 2–3 min" },
+        { name: "Barbell Romanian deadlift", note: "feel the hamstring stretch", detail: "3 × 10 · Rest 2 min" },
+        { name: "Bulgarian split squat", note: "bodyweight or hold dumbbells", detail: "3 × 8 each leg · Rest 90 sec" },
+        { name: "Dumbbell goblet squat", note: "use 5kg dumbbell", detail: "3 × 12 · Rest 1 min" },
+        { name: "Calf raise", note: "use barbell on back or hold dumbbells", detail: "4 × 20 · Rest 1 min" },
+      ]},
+      { name: "Abs circuit", ex: [
+        { name: "Hanging knee raise (pull-up bar)", detail: "3 × 15" },
+        { name: "Bicycle crunch", detail: "3 × 20" },
+        { name: "Side plank", detail: "2 × 30 sec each side" },
+      ]},
+    ]
+  },
+  {
+    label: "Thu", name: "HIIT + active recovery", badge: "Fat Burn", bc: "b-hiit",
+    sub: "Cardio · Fat loss · Light mobility",
+    gear: ["Bodyweight"],
+    tip: "HIIT is your most powerful fat-loss tool. 20 minutes burns more fat than 40 minutes of slow jogging because your metabolism stays elevated for hours after. Push hard during the work intervals — that is the whole point.",
+    sections: [
+      { name: "HIIT circuit (4 rounds, 40 sec on / 20 sec rest)", ex: [
+        { name: "Burpee", detail: "40 sec on · 20 sec rest" },
+        { name: "Jump squat", detail: "40 sec on · 20 sec rest" },
+        { name: "Mountain climber", detail: "40 sec on · 20 sec rest" },
+        { name: "High knees", detail: "40 sec on · 20 sec rest" },
+        { name: "Rest between rounds", detail: "90 sec" },
+      ]},
+      { name: "Active recovery (after HIIT)", ex: [
+        { name: "Slow walk outdoors", detail: "10–15 min" },
+        { name: "Full body stretch", detail: "10 min" },
+      ]},
+    ]
+  },
+  {
+    label: "Fri", name: "Push + pull superset", badge: "Strength", bc: "b-strength",
+    sub: "Full upper body · Muscle definition",
+    gear: ["Pull-up bar", "Barbell", "Dumbbells"],
+    tip: "Supersets mean doing two exercises back to back with no rest in between, then resting after both. For example: push-up → immediately pull-up → rest 90 sec. This saves time, keeps your heart rate up (burns fat), and builds muscle at the same time.",
+    sections: [
+      { name: "Warm-up", ex: [
+        { name: "Arm swing + rotation", detail: "2 min" },
+        { name: "Band or bodyweight pull-apart", detail: "2 × 15" },
+      ]},
+      { name: "Superset A (push + pull · 4 rounds)", ex: [
+        { name: "Push-up", note: "A1", detail: "12 reps" },
+        { name: "Pull-up or chin-up", note: "A2 · max reps", detail: "then rest 90 sec" },
+      ]},
+      { name: "Superset B (barbell · 3 rounds)", ex: [
+        { name: "Barbell floor press", note: "B1", detail: "8 reps" },
+        { name: "Barbell bent-over row", note: "B2", detail: "8 reps · rest 2 min" },
+      ]},
+      { name: "Superset C (dumbbells · 3 rounds)", ex: [
+        { name: "Dumbbell shoulder press", note: "C1", detail: "10 reps" },
+        { name: "Dumbbell rear delt fly", note: "C2 · replaces face pull", detail: "10 reps · rest 90 sec" },
+      ]},
+      { name: "Abs", ex: [
+        { name: "Hanging leg raise (pull-up bar)", detail: "3 × 12" },
+        { name: "Russian twist (hold dumbbell)", detail: "3 × 20" },
+      ]},
+    ]
+  },
+  {
+    label: "Sat", name: "Cardio + full abs", badge: "Fat Burn", bc: "b-cardio",
+    sub: "Fat loss · Ab definition · Active day",
+    gear: ["Bodyweight", "Pull-up bar"],
+    tip: "This is your highest fat-burn day. Steady cardio first to deplete glycogen, then hit abs. You will feel the abs working more intensely when you train them after cardio. This is also the day that most directly targets visible ab definition.",
+    sections: [
+      { name: "Cardio (choose one)", ex: [
+        { name: "Jog outdoors", detail: "30–35 min" },
+        { name: "Jump rope intervals", detail: "20 min" },
+        { name: "Cycling or brisk walk", detail: "40 min" },
+      ]},
+      { name: "Full abs circuit (after cardio · 3 rounds)", ex: [
+        { name: "Crunch", detail: "20 reps" },
+        { name: "Leg raise", detail: "15 reps" },
+        { name: "Bicycle crunch", detail: "20 reps" },
+        { name: "Hanging knee raise", detail: "12 reps" },
+        { name: "Plank hold", detail: "45 sec" },
+        { name: "Rest between rounds", detail: "60 sec" },
+      ]},
+    ]
+  },
+  {
+    label: "Sun", name: "Full rest", badge: "Rest", bc: "b-rest",
+    sub: "Sleep · Eat · Recover",
+    gear: [],
+    rest: true,
+    tip: "Muscle grows during rest, not during training. Skipping this day feels productive but it slows your results. Sleep 7–9 hours, eat your protein, and let your body do the work."
+  },
+];
+
+let active = 0;
+const tabsEl = document.getElementById('tabs');
+const contentEl = document.getElementById('content');
+
+function render() {
+  tabsEl.innerHTML = days.map((d, i) =>
+    `<button class="tab ${i === active ? 'active' : ''}" onclick="go(${i})">${d.label}</button>`
+  ).join('');
+
+  const d = days[active];
+  let html = `<div class="day-card">
+    <div class="header-row">
+      <span class="day-title">${d.name}</span>
+      <span class="badge ${d.bc}">${d.badge}</span>
+    </div>
+    <div class="day-sub">${d.sub}</div>`;
+
+  if (d.gear && d.gear.length) {
+    html += `<div class="gear-row">${d.gear.map(g => `<span class="gear-tag">${g}</span>`).join('')}</div>`;
+  }
+
+  if (d.rest) {
+    html += `<div class="rest-block">
+      <div style="font-size:28px;margin-bottom:10px;">&#128564;</div>
+      <div>Complete rest. No training today.</div>
+      <div style="font-size:13px;margin-top:6px;">Eat your protein. Hydrate. Sleep well.</div>
+    </div>`;
+  } else {
+    d.sections.forEach(s => {
+      html += `<div class="section-label">${s.name}</div>`;
+      s.ex.forEach(e => {
+        html += `<div class="ex-row">
+          <div>
+            <div class="ex-name">${e.name}</div>
+            ${e.note ? `<div class="ex-note">${e.note}</div>` : ''}
+          </div>
+          <div class="ex-detail">${e.detail}</div>
+        </div>`;
+      });
+    });
+  }
+
+  html += `<div class="tip-box">&#128161; ${d.tip}</div></div>`;
+  contentEl.innerHTML = html;
+}
+
+function go(i) { active = i; render(); }
+render();
+</script>
