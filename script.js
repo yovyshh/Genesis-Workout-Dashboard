@@ -1,213 +1,287 @@
 const workoutPhases = {
-  phase1: [ // Weeks 1-4: Foundation + DB (3 days/week)
+  phase1: [ // Weeks 1-4: Foundation (3 days/week)
     {
-      label: "Mon", name: "Full Body Foundation", badge: "Phase 1", bc: "b-strength",
+      label: "Mon", name: "Full Body Workout", badge: "Month 1", bc: "b-strength",
       sub: "Push · Pull · Legs · Core",
-      gear: ["Dumbbells", "Bodyweight", "Pull-up bar"],
-      tip: "Focus on form first. In Phase 1, we are building the neural pathways. Add dumbbells to traditional calisthenics to spark extra muscle growth early.",
+      gear: ["Pull-up bar", "Dumbbells", "Bodyweight"],
+      tip: "Your barbell weights go up to 16kg total. For Month 1 dumbbells, use 2kg–3kg for isolation moves (curls, raises) and 5kg for compound moves (rows, press). Focus on form — this month builds the base for everything that follows.",
       sections: [
-        { name: "Warm-up (5 min)", ex: [
-          { name: "Arm circles + shoulder rolls", detail: "2 min", video: "https://www.youtube.com/watch?v=140RTXN4K0o" },
-          { name: "Push-up (slow)", detail: "2 × 8", video: "https://www.youtube.com/watch?v=mWyY0_S_m7E" },
-        ]},
         { name: "The Workout", ex: [
-          { name: "Push-ups", note: "Standard form", detail: "3 × 8-12", video: "https://www.youtube.com/watch?v=mWyY0_S_m7E" },
-          { name: "DB Floor Press", note: "Add chest volume", detail: "3 × 10 · Rest 90s", video: "https://www.youtube.com/watch?v=Xef_H9ZLkdY" },
-          { name: "Pull-ups or Inverted Rows", note: "Back foundation", detail: "3 × 5-8", video: "https://www.youtube.com/watch?v=eGo4IYlbE5g" },
-          { name: "DB One-Arm Row", note: "Back thickness", detail: "3 × 10 per side", video: "https://www.youtube.com/watch?v=ykJmrZ5v0Oo" },
-          { name: "Dips", note: "Triceps/Chest", detail: "3 × 8-12", video: "https://www.youtube.com/watch?v=2z8JmcrW-As" },
-          { name: "DB Overhead Press", note: "Shoulder mass", detail: "3 × 10", video: "https://www.youtube.com/watch?v=2yjwXTZQDDI" },
-          { name: "Bodyweight Squats", note: "Leg foundation", detail: "3 × 15-20", video: "https://www.youtube.com/watch?v=ultWZbUMPL8" },
-          { name: "DB Goblet Squat", note: "Quads/Glutes focus", detail: "3 × 12", video: "https://www.youtube.com/watch?v=MeIiGibT6Xo" },
-          { name: "Plank", note: "Core stability", detail: "3 × 45 sec", video: "https://www.youtube.com/watch?v=pSHjTRCQxIw" },
+          { name: "Warm-up", detail: "5–10 min", note: "Jumping jacks, high knees, arm circles", src: "calisthenics" },
+          { name: "Push-ups", detail: "3 × 8–12", note: "Keep body straight, core tight", src: "calisthenics", video: "https://www.youtube.com/watch?v=IODxDxX7oi4" },
+          { name: "Dumbbell Floor Press", detail: "3 × 10 reps", note: "5kg each hand · 3 sec lowering · replaces bench", src: "dumbbell", video: "https://www.youtube.com/watch?v=uUGDRwge4F8" },
+          { name: "Pull-ups", detail: "3 × 5–8", note: "Use band if needed", src: "calisthenics", video: "https://www.youtube.com/watch?v=Y3ntNsIS2Q8" },
+          { name: "Inverted Rows", detail: "3 × 5–8", note: "Alternative to pull-ups", src: "calisthenics", video: "https://www.youtube.com/watch?v=GdyhjXlxE-U" },
+          { name: "Dumbbell Bent-Over Row", detail: "3 × 10 reps", note: "5kg · hinge at hips · elbows back", src: "dumbbell", video: "https://www.youtube.com/watch?v=6TSP1TRMUzs" },
+          { name: "Squats", detail: "3 × 15–20", note: "Knees track over toes", src: "calisthenics", video: "https://www.youtube.com/watch?v=xqvCmoLULNY" },
+          { name: "Dumbbell Goblet Squat", detail: "3 × 12 reps", note: "5kg · adds load to squat pattern", src: "dumbbell", video: "https://www.youtube.com/watch?v=MxEiRCDbMaA" },
+          { name: "Lunges", detail: "3 × 10–15 per leg", note: "Torso upright", src: "calisthenics", video: "https://www.youtube.com/watch?v=wrwwXE_x-pQ" },
+          { name: "Dumbbell Lateral Raise", detail: "3 × 12 reps", note: "2kg · slow and controlled", src: "dumbbell", video: "https://www.youtube.com/watch?v=3VcKaXpzqRo" },
+          { name: "Plank", detail: "3 × 30–60 sec", note: "Full core engagement", src: "calisthenics", video: "https://www.youtube.com/watch?v=ASdvN_XEl_c" },
+          { name: "Dumbbell Bicep Curl", detail: "3 × 12 reps", note: "3kg · slow squeeze at top", src: "dumbbell", video: "https://www.youtube.com/watch?v=ykJmrZ5v0Oo" },
+          { name: "Cool down", detail: "5–10 min", note: "Stretch all worked muscles", src: "calisthenics" },
         ]}
       ]
     },
-    { label: "Tue", name: "Active Recovery", badge: "Recovery", bc: "b-rest", sub: "Mobility · Light Walk", rest: true, tip: "Recovery is when muscle is built. Keep it light today." },
+    { label: "Tue", name: "Rest Day", badge: "Rest", bc: "b-rest", rest: true, tip: "Recovery is when muscle is built. Stay hydrated." },
     {
-      label: "Wed", name: "Full Body Foundation", badge: "Phase 1", bc: "b-strength",
+      label: "Wed", name: "Full Body Workout", badge: "Month 1", bc: "b-strength",
       sub: "Push · Pull · Legs · Core",
-      gear: ["Dumbbells", "Bodyweight", "Pull-up bar"],
-      tip: "Consistency is key. If pull-ups are too hard, use negatives or rows, but keep the intensity high with your dumbbells.",
+      gear: ["Pull-up bar", "Dumbbells", "Bodyweight"],
+      tip: "Consistency is key. Focus on perfecting the movements from Monday.",
       sections: [
         { name: "The Workout", ex: [
-          { name: "Push-ups", detail: "3 × 8-12" },
-          { name: "DB Floor Press", detail: "3 × 10" },
-          { name: "Inverted Rows", detail: "3 × 8-10" },
-          { name: "DB Hammer Curls", note: "Bicep/Forearm mass", detail: "3 × 12", video: "https://www.youtube.com/watch?v=zC3nLlEvin4" },
-          { name: "Lunges", note: "Leg balance", detail: "3 × 10 per leg" },
-          { name: "DB Walking Lunges", note: "Glute focus", detail: "3 × 10 per leg", video: "https://www.youtube.com/watch?v=D7KaRcUTQeE" },
-          { name: "Plank", detail: "3 × 45 sec" },
+          { name: "Warm-up", detail: "5–10 min", note: "Jumping jacks, high knees, arm circles", src: "calisthenics" },
+          { name: "Push-ups", detail: "3 × 8–12", note: "Keep body straight, core tight", src: "calisthenics", video: "https://www.youtube.com/watch?v=IODxDxX7oi4" },
+          { name: "Dumbbell Floor Press", detail: "3 × 10 reps", note: "5kg each hand · 3 sec lowering · replaces bench", src: "dumbbell", video: "https://www.youtube.com/watch?v=uUGDRwge4F8" },
+          { name: "Pull-ups", detail: "3 × 5–8", note: "Use band if needed", src: "calisthenics", video: "https://www.youtube.com/watch?v=Y3ntNsIS2Q8" },
+          { name: "Inverted Rows", detail: "3 × 5–8", note: "Alternative to pull-ups", src: "calisthenics", video: "https://www.youtube.com/watch?v=GdyhjXlxE-U" },
+          { name: "Dumbbell Bent-Over Row", detail: "3 × 10 reps", note: "5kg · hinge at hips · elbows back", src: "dumbbell", video: "https://www.youtube.com/watch?v=6TSP1TRMUzs" },
+          { name: "Squats", detail: "3 × 15–20", note: "Knees track over toes", src: "calisthenics", video: "https://www.youtube.com/watch?v=xqvCmoLULNY" },
+          { name: "Dumbbell Goblet Squat", detail: "3 × 12 reps", note: "5kg · adds load to squat pattern", src: "dumbbell", video: "https://www.youtube.com/watch?v=MxEiRCDbMaA" },
+          { name: "Lunges", detail: "3 × 10–15 per leg", note: "Torso upright", src: "calisthenics", video: "https://www.youtube.com/watch?v=wrwwXE_x-pQ" },
+          { name: "Dumbbell Lateral Raise", detail: "3 × 12 reps", note: "2kg · slow and controlled", src: "dumbbell", video: "https://www.youtube.com/watch?v=3VcKaXpzqRo" },
+          { name: "Plank", detail: "3 × 30–60 sec", note: "Full core engagement", src: "calisthenics", video: "https://www.youtube.com/watch?v=ASdvN_XEl_c" },
+          { name: "Dumbbell Bicep Curl", detail: "3 × 12 reps", note: "3kg · slow squeeze at top", src: "dumbbell", video: "https://www.youtube.com/watch?v=ykJmrZ5v0Oo" },
+          { name: "Cool down", detail: "5–10 min", note: "Stretch all worked muscles", src: "calisthenics" },
         ]}
       ]
     },
-    { label: "Thu", name: "Active Recovery", badge: "Recovery", bc: "b-rest", sub: "Mobility · Light Walk", rest: true, tip: "Hydrate and eat your protein today." },
+    { label: "Thu", name: "Rest Day", badge: "Rest", bc: "b-rest", rest: true, tip: "Rest is essential. Focus on mobility if you feel stiff." },
     {
-      label: "Fri", name: "Full Body Foundation", badge: "Phase 1", bc: "b-strength",
+      label: "Fri", name: "Full Body Workout", badge: "Month 1", bc: "b-strength",
       sub: "Push · Pull · Legs · Core",
-      gear: ["Dumbbells", "Bodyweight", "Pull-up bar"],
-      tip: "End the week strong. Push yourself to add an extra 1-2 reps or a bit more weight on your dumbbells.",
+      gear: ["Pull-up bar", "Dumbbells", "Bodyweight"],
+      tip: "End the week strong. Try to add 1-2 extra reps to each set today.",
       sections: [
         { name: "The Workout", ex: [
-          { name: "Push-ups (Diamond focus)", detail: "3 × 8-12" },
-          { name: "DB Lateral Raise", note: "Width for shoulders", detail: "3 × 12", video: "https://www.youtube.com/watch?v=3VcKaXpzqRo" },
-          { name: "Pull-ups", detail: "3 × max reps" },
-          { name: "DB One-Arm Row", detail: "3 × 10 per side" },
-          { name: "DB Goblet Squat", detail: "3 × 15" },
-          { name: "Calf Raises (DB)", detail: "3 × 20", video: "https://www.youtube.com/watch?v=-M4-G8p8fmc" },
-          { name: "Plank", detail: "3 × 60 sec" },
+          { name: "Warm-up", detail: "5–10 min", note: "Jumping jacks, high knees, arm circles", src: "calisthenics" },
+          { name: "Push-ups", detail: "3 × 8–12", note: "Keep body straight, core tight", src: "calisthenics", video: "https://www.youtube.com/watch?v=IODxDxX7oi4" },
+          { name: "Dumbbell Floor Press", detail: "3 × 10 reps", note: "5kg each hand · 3 sec lowering · replaces bench", src: "dumbbell", video: "https://www.youtube.com/watch?v=uUGDRwge4F8" },
+          { name: "Pull-ups", detail: "3 × 5–8", note: "Use band if needed", src: "calisthenics", video: "https://www.youtube.com/watch?v=Y3ntNsIS2Q8" },
+          { name: "Inverted Rows", detail: "3 × 5–8", note: "Alternative to pull-ups", src: "calisthenics", video: "https://www.youtube.com/watch?v=GdyhjXlxE-U" },
+          { name: "Dumbbell Bent-Over Row", detail: "3 × 10 reps", note: "5kg · hinge at hips · elbows back", src: "dumbbell", video: "https://www.youtube.com/watch?v=6TSP1TRMUzs" },
+          { name: "Squats", detail: "3 × 15–20", note: "Knees track over toes", src: "calisthenics", video: "https://www.youtube.com/watch?v=xqvCmoLULNY" },
+          { name: "Dumbbell Goblet Squat", detail: "3 × 12 reps", note: "5kg · adds load to squat pattern", src: "dumbbell", video: "https://www.youtube.com/watch?v=MxEiRCDbMaA" },
+          { name: "Lunges", detail: "3 × 10–15 per leg", note: "Torso upright", src: "calisthenics", video: "https://www.youtube.com/watch?v=wrwwXE_x-pQ" },
+          { name: "Dumbbell Lateral Raise", detail: "3 × 12 reps", note: "2kg · slow and controlled", src: "dumbbell", video: "https://www.youtube.com/watch?v=3VcKaXpzqRo" },
+          { name: "Plank", detail: "3 × 30–60 sec", note: "Full core engagement", src: "calisthenics", video: "https://www.youtube.com/watch?v=ASdvN_XEl_c" },
+          { name: "Dumbbell Bicep Curl", detail: "3 × 12 reps", note: "3kg · slow squeeze at top", src: "dumbbell", video: "https://www.youtube.com/watch?v=ykJmrZ5v0Oo" },
+          { name: "Cool down", detail: "5–10 min", note: "Stretch all worked muscles", src: "calisthenics" },
         ]}
       ]
     },
-    { label: "Sat", name: "Cardio / Skill", badge: "Active", bc: "b-cardio", sub: "Light Jog · Stretching", rest: true, tip: "A 20-min walk today will help clear lactic acid." },
-    { label: "Sun", name: "Full Rest", badge: "Rest", bc: "b-rest", sub: "Recovery", rest: true, tip: "Get 8 hours of sleep tonight." },
+    { label: "Sat", name: "Active Recovery", badge: "Recovery", bc: "b-rest", rest: true, tip: "A light walk or yoga session today will help recovery." },
+    { label: "Sun", name: "Full Rest", badge: "Rest", bc: "b-rest", rest: true, tip: "Prepare for Week 2. Get plenty of sleep." },
   ],
-  phase2: [ // Weeks 5-8: Split + DB Intensity
+  phase2: [ // Weeks 5-8: Split Routine (4 days/week)
     {
-      label: "Mon", name: "Upper Body Intensity", badge: "Phase 2", bc: "b-strength",
-      sub: "Chest · Back · Shoulders",
-      gear: ["Dumbbells", "Bodyweight", "Pull-up bar"],
-      tip: "Phases 2 introduces higher volume. Use dumbbells to push past your calisthenics plateaus.",
+      label: "Mon", name: "Upper Body", badge: "Month 2", bc: "b-strength",
+      sub: "Day 1 & 4 · Chest · Back · Shoulders · Arms",
+      gear: ["Pull-up bar", "Dumbbells", "Bodyweight"],
+      tip: "Increase dumbbell weight slightly this month — move to 5kg for isolation moves and use both 5kg dumbbells (10kg total) for rows and presses. Add 1 rep per set each week on every exercise.",
       sections: [
         { name: "Main Workout", ex: [
-          { name: "Push-ups", detail: "4 × 10-15" },
-          { name: "DB Bench/Floor Press", detail: "4 × 10" },
-          { name: "Pull-ups", detail: "4 × 6-10" },
-          { name: "DB One-Arm Row", detail: "4 × 10" },
-          { name: "Dips", detail: "4 × 10-15" },
-          { name: "Pike Push-ups", note: "Shoulder focus", detail: "3 × 8-12" },
-          { name: "DB Lateral Raise", detail: "3 × 12" },
+          { name: "Warm-up", detail: "5–10 min", note: "Jogging, arm swings, dynamic stretches", src: "calisthenics" },
+          { name: "Push-ups", detail: "4 × 10–15", note: "Elbows tucked slightly", src: "calisthenics", video: "https://www.youtube.com/watch?v=IODxDxX7oi4" },
+          { name: "Dumbbell Floor Press", detail: "4 × 10 reps", note: "5kg · slow eccentric", src: "dumbbell", video: "https://www.youtube.com/watch?v=uUGDRwge4F8" },
+          { name: "Pull-ups", detail: "4 × 6–10", note: "Band assist if needed", src: "calisthenics", video: "https://www.youtube.com/watch?v=Y3ntNsIS2Q8" },
+          { name: "Dumbbell Bent-Over Row", detail: "4 × 10 reps", note: "5kg each hand", src: "dumbbell", video: "https://www.youtube.com/watch?v=6TSP1TRMUzs" },
+          { name: "Pike Push-ups", detail: "3 × 8–12", note: "Elevate hips for shoulders", src: "calisthenics", video: "https://www.youtube.com/watch?v=x7_I5SUAd00" },
+          { name: "Dumbbell Shoulder Press", detail: "3 × 10 reps", note: "3kg or 5kg · seated or standing", src: "dumbbell", video: "https://www.youtube.com/watch?v=qEwKCR5JCog" },
+          { name: "Dips", detail: "4 × 10–15", note: "Parallel bars or bench", src: "calisthenics", video: "https://www.youtube.com/watch?v=l41SoWZiowI" },
+          { name: "Dumbbell Overhead Tricep Extension", detail: "3 × 12 reps", note: "3kg · elbows close to head", src: "dumbbell", video: "https://www.youtube.com/watch?v=-Vyt2QdsR7I" },
+          { name: "Plank to Push-up", detail: "3 × 10–15", note: "Core tight", src: "calisthenics", video: "https://www.youtube.com/watch?v=56vUOad6Irs" },
+          { name: "Dumbbell Lateral Raise", detail: "3 × 12 reps", note: "3kg · shoulder width", src: "dumbbell", video: "https://www.youtube.com/watch?v=3VcKaXpzqRo" },
+          { name: "Cool down", detail: "5–10 min", note: "Arms, shoulders, chest stretch", src: "calisthenics" },
         ]}
       ]
     },
     {
-      label: "Tue", name: "Lower Body & Core", badge: "Phase 2", bc: "b-strength",
-      sub: "Quads · Hams · Glutes · Abs",
+      label: "Tue", name: "Lower Body & Core", badge: "Month 2", bc: "b-strength",
+      sub: "Day 2 & 3 · Quads · Hamstrings · Glutes · Abs",
       gear: ["Dumbbells", "Bodyweight"],
-      tip: "Legs respond well to higher reps and weighted loads. Hold those dumbbells tight.",
+      tip: "Focus on mind-muscle connection. Squeeze the glutes and core.",
       sections: [
         { name: "Main Workout", ex: [
-          { name: "Squats", detail: "4 × 20-25" },
-          { name: "DB Goblet Squats", detail: "4 × 12" },
-          { name: "Lunges", detail: "4 × 15 per leg" },
-          { name: "DB Romanian Deadlift", note: "Hamstrings focus", detail: "3 × 12", video: "https://www.youtube.com/watch?v=hCDzSR6bW10" },
-          { name: "Hanging Leg Raises", detail: "3 × 8-12" },
-          { name: "Russian Twists (DB)", detail: "3 × 20 per side" },
-        ]}
-      ]
-    },
-    { label: "Wed", name: "Active Recovery", badge: "Recovery", bc: "b-rest", rest: true, tip: "Yoga or light stretching today." },
-    {
-      label: "Thu", name: "Upper Body Intensity", badge: "Phase 2", bc: "b-strength",
-      sub: "Chest · Back · Shoulders",
-      gear: ["Dumbbells", "Bodyweight", "Pull-up bar"],
-      tip: "Focus on the mind-muscle connection, especially with dumbbell rows and presses.",
-      sections: [
-        { name: "Main Workout", ex: [
-          { name: "Push-ups", detail: "4 × 10-15" },
-          { name: "DB Overhead Press", detail: "4 × 10" },
-          { name: "Chin-ups", detail: "4 × 6-10" },
-          { name: "DB Hammer Curls", detail: "3 × 12" },
-          { name: "Dips", detail: "4 × 10-15" },
-          { name: "Plank to Push-up", detail: "3 × 10-15" },
+          { name: "Warm-up", detail: "5–10 min", note: "Leg swings, hip circles, light jog", src: "calisthenics" },
+          { name: "Squats", detail: "4 × 20–25", note: "Knees over toes", src: "calisthenics", video: "https://www.youtube.com/watch?v=xqvCmoLULNY" },
+          { name: "Dumbbell Goblet Squat", detail: "4 × 12 reps", note: "5kg · deeper than bodyweight", src: "dumbbell", video: "https://www.youtube.com/watch?v=MxEiRCDbMaA" },
+          { name: "Lunges", detail: "4 × 15–20 per leg", note: "Upright torso", src: "calisthenics", video: "https://www.youtube.com/watch?v=wrwwXE_x-pQ" },
+          { name: "Dumbbell Romanian Deadlift", detail: "3 × 10 reps", note: "5kg · feel hamstring stretch", src: "dumbbell", video: "https://www.youtube.com/watch?v=JCXUYuzwNrM" },
+          { name: "Glute Bridges", detail: "3 × 20–25", note: "Squeeze at top", src: "calisthenics", video: "https://www.youtube.com/watch?v=wPM8icPu6H8" },
+          { name: "Calf Raises", detail: "3 × 20–25", note: "Hold dumbbells for load · 5kg each", src: "dumbbell", video: "https://www.youtube.com/watch?v=gwLzBJYoWlI" },
+          { name: "Hanging Leg Raises", detail: "3 × 8–12", note: "Pull-up bar · legs straight", src: "calisthenics", video: "https://www.youtube.com/watch?v=Pr1ieGZ5atk" },
+          { name: "Russian Twists", detail: "3 × 20 per side", note: "Hold dumbbell 2kg for extra load", src: "dumbbell", video: "https://www.youtube.com/watch?v=JyUqwkVpsi8" },
+          { name: "Cool down", detail: "5–10 min", note: "Hamstrings, glutes, quads", src: "calisthenics" },
         ]}
       ]
     },
     {
-      label: "Fri", name: "Lower Body & Core", badge: "Phase 2", bc: "b-strength",
-      sub: "Quads · Hams · Glutes · Abs",
-      gear: ["Dumbbells", "Bodyweight"],
-      tip: "Last leg day of the week. Make it count with deep squats.",
+      label: "Wed", name: "Skill Training", badge: "Skill", bc: "b-hiit",
+      sub: "2–3×/week · Handstand · L-Sit",
+      gear: ["Pull-up bar", "Dumbbells", "Bodyweight"],
+      tip: "Skills require patience. Be consistent with your practice.",
       sections: [
-        { name: "Main Workout", ex: [
-          { name: "Bulgarian Split Squats", detail: "3 × 10 per leg" },
-          { name: "DB Goblet Squats", detail: "4 × 12" },
-          { name: "Glute Bridges", detail: "3 × 20-25" },
-          { name: "Calf Raises (DB)", detail: "3 × 20-25" },
-          { name: "Hanging Leg Raises", detail: "3 × 8-12" },
-          { name: "Russian Twists", detail: "3 × 20" },
+        { name: "Skill Focus", ex: [
+          { name: "Handstand Practice", detail: "3 × 20–30 sec", note: "Wall-assisted", src: "calisthenics", video: "https://www.youtube.com/watch?v=eFmjckKXEoA" },
+          { name: "L-Sit Progressions", detail: "3 × 10–15 sec", note: "Floor or parallettes", src: "calisthenics", video: "https://www.youtube.com/watch?v=HxDP7SqggpI" },
+          { name: "Dumbbell Wrist Curl", detail: "2 × 15 reps", note: "2kg · builds grip for L-sit and pull-ups", src: "dumbbell", video: "https://www.youtube.com/watch?v=_MaXaFr6sHo" },
         ]}
       ]
     },
-    { label: "Sat", name: "Cardio", badge: "Burn", bc: "b-cardio", rest: true, tip: "30-min steady state cardio." },
-    { label: "Sun", name: "Full Rest", badge: "Rest", bc: "b-rest", rest: true, tip: "Prepare your meals for next week." },
+    {
+      label: "Thu", name: "Upper Body", badge: "Month 2", bc: "b-strength",
+      sub: "Day 1 & 4 · Chest · Back · Shoulders · Arms",
+      sections: [
+        { name: "Main Workout", ex: [
+          { name: "Warm-up", detail: "5–10 min", note: "Jogging, arm swings, dynamic stretches", src: "calisthenics" },
+          { name: "Push-ups", detail: "4 × 10–15", note: "Elbows tucked slightly", src: "calisthenics", video: "https://www.youtube.com/watch?v=IODxDxX7oi4" },
+          { name: "Dumbbell Floor Press", detail: "4 × 10 reps", note: "5kg · slow eccentric", src: "dumbbell", video: "https://www.youtube.com/watch?v=uUGDRwge4F8" },
+          { name: "Pull-ups", detail: "4 × 6–10", note: "Band assist if needed", src: "calisthenics", video: "https://www.youtube.com/watch?v=Y3ntNsIS2Q8" },
+          { name: "Dumbbell Bent-Over Row", detail: "4 × 10 reps", note: "5kg each hand", src: "dumbbell", video: "https://www.youtube.com/watch?v=6TSP1TRMUzs" },
+          { name: "Pike Push-ups", detail: "3 × 8–12", note: "Elevate hips for shoulders", src: "calisthenics", video: "https://www.youtube.com/watch?v=x7_I5SUAd00" },
+          { name: "Dumbbell Shoulder Press", detail: "3 × 10 reps", note: "3kg or 5kg · seated or standing", src: "dumbbell", video: "https://www.youtube.com/watch?v=qEwKCR5JCog" },
+          { name: "Dips", detail: "4 × 10–15", note: "Parallel bars or bench", src: "calisthenics", video: "https://www.youtube.com/watch?v=l41SoWZiowI" },
+          { name: "Dumbbell Overhead Tricep Extension", detail: "3 × 12 reps", note: "3kg · elbows close to head", src: "dumbbell", video: "https://www.youtube.com/watch?v=-Vyt2QdsR7I" },
+          { name: "Plank to Push-up", detail: "3 × 10–15", note: "Core tight", src: "calisthenics", video: "https://www.youtube.com/watch?v=56vUOad6Irs" },
+          { name: "Dumbbell Lateral Raise", detail: "3 × 12 reps", note: "3kg · shoulder width", src: "dumbbell", video: "https://www.youtube.com/watch?v=3VcKaXpzqRo" },
+          { name: "Cool down", detail: "5–10 min", note: "Arms, shoulders, chest stretch", src: "calisthenics" },
+        ]}
+      ]
+    },
+    {
+      label: "Fri", name: "Lower Body & Core", badge: "Month 2", bc: "b-strength",
+      sub: "Day 2 & 3 · Quads · Hams · Glutes · Abs",
+      sections: [
+        { name: "Main Workout", ex: [
+          { name: "Warm-up", detail: "5–10 min", note: "Leg swings, hip circles, light jog", src: "calisthenics" },
+          { name: "Squats", detail: "4 × 20–25", note: "Knees over toes", src: "calisthenics", video: "https://www.youtube.com/watch?v=xqvCmoLULNY" },
+          { name: "Dumbbell Goblet Squat", detail: "4 × 12 reps", note: "5kg · deeper than bodyweight", src: "dumbbell", video: "https://www.youtube.com/watch?v=MxEiRCDbMaA" },
+          { name: "Lunges", detail: "4 × 15–20 per leg", note: "Upright torso", src: "calisthenics", video: "https://www.youtube.com/watch?v=wrwwXE_x-pQ" },
+          { name: "Dumbbell Romanian Deadlift", detail: "3 × 10 reps", note: "5kg · feel hamstring stretch", src: "dumbbell", video: "https://www.youtube.com/watch?v=JCXUYuzwNrM" },
+          { name: "Glute Bridges", detail: "3 × 20–25", note: "Squeeze at top", src: "calisthenics", video: "https://www.youtube.com/watch?v=wPM8icPu6H8" },
+          { name: "Calf Raises", detail: "3 × 20–25", note: "Hold dumbbells for load · 5kg each", src: "dumbbell", video: "https://www.youtube.com/watch?v=gwLzBJYoWlI" },
+          { name: "Hanging Leg Raises", detail: "3 × 8–12", note: "Pull-up bar · legs straight", src: "calisthenics", video: "https://www.youtube.com/watch?v=Pr1ieGZ5atk" },
+          { name: "Russian Twists", detail: "3 × 20 per side", note: "Hold dumbbell 2kg for extra load", src: "dumbbell", video: "https://www.youtube.com/watch?v=JyUqwkVpsi8" },
+          { name: "Cool down", detail: "5–10 min", note: "Hamstrings, glutes, quads", src: "calisthenics" },
+        ]}
+      ]
+    },
+    {
+      label: "Sat", name: "Skill Training", badge: "Skill", bc: "b-hiit",
+      sub: "2–3×/week · Handstand · L-Sit",
+      sections: [
+        { name: "Skill Focus", ex: [
+          { name: "Handstand Practice", detail: "3 × 20–30 sec", note: "Wall-assisted", src: "calisthenics", video: "https://www.youtube.com/watch?v=eFmjckKXEoA" },
+          { name: "L-Sit Progressions", detail: "3 × 10–15 sec", note: "Floor or parallettes", src: "calisthenics", video: "https://www.youtube.com/watch?v=HxDP7SqggpI" },
+          { name: "Dumbbell Wrist Curl", detail: "2 × 15 reps", note: "2kg · builds grip for L-sit and pull-ups", src: "dumbbell", video: "https://www.youtube.com/watch?v=_MaXaFr6sHo" },
+        ]}
+      ]
+    },
+    { label: "Sun", name: "Full Rest", badge: "Rest", bc: "b-rest", rest: true },
   ],
-  phase3: [ // Weeks 9-12: Advanced Skill + DB Build
+  phase3: [ // Weeks 9-12: Advanced (4-5 days/week)
     {
-      label: "Mon", name: "Advanced Upper", badge: "Phase 3", bc: "b-strength",
-      sub: "Chest · Back · Strength",
-      gear: ["Dumbbells", "Bodyweight", "Pull-up bar"],
-      tip: "Phase 3 is where we refine skills and add serious mass. Decline push-ups hit the upper chest hard.",
+      label: "Mon", name: "Advanced Upper", badge: "Month 3", bc: "b-strength",
+      sub: "Day 1 & 4 · Advanced push & pull",
+      gear: ["Pull-up bar", "Dumbbells", "Bodyweight"],
+      tip: "By now you should be comfortable with 5kg dumbbells on all exercises. Try moving to 5kg + 3kg (8kg) on rows and RDLs. The advanced calisthenics moves (archer push-up, pistol squat, windshield wiper) are hard — use the tutorials and be patient.",
       sections: [
         { name: "Main Workout", ex: [
-          { name: "Decline Push-ups", detail: "4 × 10-15" },
-          { name: "DB Bench/Floor Press (Heavy)", detail: "4 × 8" },
-          { name: "Pull-ups (Weighted if possible)", detail: "4 × 8-12" },
-          { name: "DB One-Arm Row (Heavy)", detail: "4 × 8" },
-          { name: "Archer Push-ups", detail: "3 × 6-10 per side" },
-          { name: "Dips", detail: "4 × 10-15" },
+          { name: "Warm-up", detail: "5–10 min", note: "Jump rope, dynamic stretches", src: "calisthenics" },
+          { name: "Decline Push-ups", detail: "4 × 10–15", note: "Feet elevated on chair or box", src: "calisthenics", video: "https://www.youtube.com/watch?v=SKPab2YC8BE" },
+          { name: "Dumbbell Incline Floor Press", detail: "4 × 10 reps", note: "5kg · prop torso on bag/pillow at angle", src: "dumbbell", video: "https://www.youtube.com/watch?v=uUGDRwge4F8" },
+          { name: "Pull-ups", detail: "4 × 8–12", note: "Full range of motion", src: "calisthenics", video: "https://www.youtube.com/watch?v=Y3ntNsIS2Q8" },
+          { name: "Dumbbell Hammer Curl", detail: "3 × 12 reps", note: "3kg or 5kg · builds arm thickness", src: "dumbbell", video: "https://www.youtube.com/watch?v=zC3nLlEvin4" },
+          { name: "Archer Push-ups", detail: "3 × 6–10 per side", note: "Full control · one arm takes most load", src: "calisthenics", video: "https://www.youtube.com/watch?v=MxVbNel13Ek" },
+          { name: "Dips", detail: "4 × 10–15", note: "Parallel bars or bench", src: "calisthenics", video: "https://www.youtube.com/watch?v=l41SoWZiowI" },
+          { name: "Dumbbell Rear Delt Fly", detail: "3 × 12 reps", note: "2kg · bent forward · replaces face pull", src: "dumbbell", video: "https://www.youtube.com/watch?v=EA7u4Q_8HQ0" },
+          { name: "Plank to Push-up", detail: "3 × 15–20", note: "Core tight throughout", src: "calisthenics", video: "https://www.youtube.com/watch?v=56vUOad6Irs" },
+          { name: "Dumbbell Lateral Raise", detail: "3 × 12 reps", note: "3kg or 5kg", src: "dumbbell", video: "https://www.youtube.com/watch?v=3VcKaXpzqRo" },
+          { name: "Cool down", detail: "5–10 min", note: "Upper body stretches", src: "calisthenics" },
         ]}
       ]
     },
     {
-      label: "Tue", name: "Advanced Lower", badge: "Phase 3", bc: "b-strength",
-      sub: "Leg Mastery",
-      gear: ["Dumbbells", "Bodyweight"],
+      label: "Tue", name: "Advanced Lower", badge: "Month 3", bc: "b-strength",
+      sub: "Day 2 & 3 · Advanced legs and abs",
       tip: "Pistol squats build elite balance and single-leg strength.",
       sections: [
         { name: "Main Workout", ex: [
-          { name: "Pistol Squats (Assisted if needed)", detail: "4 × 6-10 per leg" },
-          { name: "Bulgarian Split Squats (DB)", detail: "4 × 10-15 per leg" },
-          { name: "DB Romanian Deadlift", detail: "4 × 10" },
-          { name: "Single-Leg Glute Bridges", detail: "3 × 15-20 per leg" },
-          { name: "Hanging Leg Raises", detail: "3 × 10-15" },
-          { name: "Windshield Wipers", detail: "3 × 10-15 per side" },
+          { name: "Warm-up", detail: "5–10 min", note: "Leg swings, hip circles", src: "calisthenics" },
+          { name: "Pistol Squats (Assisted)", detail: "4 × 6–10 per leg", note: "Hold door frame for balance", src: "calisthenics", video: "https://www.youtube.com/watch?v=tiA23NSUm7A" },
+          { name: "Dumbbell Bulgarian Split Squat", detail: "4 × 10–15 per leg", note: "Hold 5kg each · rear foot elevated", src: "dumbbell", video: "https://www.youtube.com/shorts/9p5e2BSvoLs" },
+          { name: "Dumbbell Romanian Deadlift", detail: "4 × 10 reps", note: "5kg each · slow and deep", src: "dumbbell", video: "https://www.youtube.com/watch?v=JCXUYuzwNrM" },
+          { name: "Single-Leg Glute Bridge", detail: "3 × 15–20 per leg", note: "Squeeze glutes hard at top", src: "calisthenics", video: "https://www.youtube.com/watch?v=3NXv0Nany-Q" },
+          { name: "Calf Raises", detail: "3 × 25–30", note: "Hold 5kg dumbbells", src: "dumbbell", video: "https://www.youtube.com/watch?v=c5Kv6-fnTj8" },
+          { name: "Hanging Leg Raises", detail: "3 × 10–15", note: "Straight legs · pull-up bar", src: "calisthenics", video: "https://www.youtube.com/watch?v=EYe6dc_i4L0" },
+          { name: "Windshield Wipers", detail: "3 × 10–15 per side", note: "Advanced · shoulders pinned down", src: "calisthenics", video: "https://www.youtube.com/watch?v=ygwS-vtkhew" },
+          { name: "Russian Twists with Dumbbell", detail: "3 × 20 per side", note: "3kg or 5kg · controlled rotation", src: "dumbbell", video: "https://www.youtube.com/watch?v=JyUqwkVpsi8" },
+          { name: "Cool down", detail: "5–10 min", note: "Quads, hamstrings, hip flexors", src: "calisthenics" },
         ]}
       ]
     },
     {
-      label: "Wed", name: "Skill & Hypertrophy", badge: "Skill", bc: "b-hiit",
-      sub: "Arms · Shoulders · Skills",
-      gear: ["Dumbbells", "Bodyweight"],
-      tip: "Skills like handstands build incredible shoulder stability.",
+      label: "Wed", name: "Skill Mastery", badge: "Skill", bc: "b-hiit",
+      sub: "3–4×/week · Handstand · Muscle-Up Progressions",
       sections: [
-        { name: "The Workout", ex: [
-          { name: "Handstand Practice", detail: "3 × 30 sec" },
-          { name: "L-Sit Hold", detail: "3 × 15 sec" },
-          { name: "DB Overhead Press", detail: "3 × 10" },
-          { name: "DB Hammer Curls", detail: "4 × 10" },
-          { name: "DB Skull Crushers", detail: "4 × 10" },
-          { name: "DB Lateral Raise", detail: "3 × 15" },
+        { name: "Skill Focus", ex: [
+          { name: "Handstand Practice", detail: "3 × 20–30 sec", note: "Wall to freestanding", src: "calisthenics", video: "https://www.youtube.com/watch?v=X9fRDlIeGTU" },
+          { name: "L-Sit Hold", detail: "3 × 10–20 sec", note: "Parallettes or floor", src: "calisthenics", video: "https://www.youtube.com/watch?v=eywCpp0p7lg" },
+          { name: "Muscle-Up Progressions", detail: "3 × 3–5 reps", note: "Band-assisted or jumping", src: "calisthenics", video: "https://www.youtube.com/watch?v=6v6IsZcvqCA" },
+          { name: "Dumbbell Wrist Curl", detail: "2 × 15 reps", note: "2kg · grip strength for muscle-up", src: "dumbbell", video: "https://www.youtube.com/watch?v=_MaXaFr6sHo" },
         ]}
       ]
     },
     {
-      label: "Thu", name: "Advanced Upper", badge: "Phase 3", bc: "b-strength",
-      sections: [
-        { name: "Main Workout", ex: [
-          { name: "Decline Push-ups", detail: "4 × 10-15" },
-          { name: "DB Floor Press", detail: "4 × 10" },
-          { name: "Pull-ups", detail: "4 × 8-12" },
-          { name: "DB Row", detail: "4 × 10" },
-          { name: "Plank to Push-up", detail: "3 × 15-20" },
-          { name: "Muscle-Up Progressions", detail: "3 × 3-5" },
-        ]}
-      ]
-    },
-    {
-      label: "Fri", name: "Advanced Lower", badge: "Phase 3", bc: "b-strength",
+      label: "Thu", name: "Advanced Upper", badge: "Month 3", bc: "b-strength",
       sections: [
         { name: "Main Workout", ex: [
-          { name: "Pistol Squats", detail: "4 × 6-10 per leg" },
-          { name: "DB Bulgarian Split Squat", detail: "4 × 10 per leg" },
-          { name: "Calf Raises (DB)", detail: "3 × 25-30" },
-          { name: "Hanging Leg Raises", detail: "3 × 10-15" },
-          { name: "Russian Twists (Heavy DB)", detail: "3 × 20" },
+          { name: "Warm-up", detail: "5–10 min", note: "Jump rope, dynamic stretches", src: "calisthenics" },
+          { name: "Decline Push-ups", detail: "4 × 10–15", note: "Feet elevated on chair or box", src: "calisthenics", video: "https://www.youtube.com/watch?v=SKPab2YC8BE" },
+          { name: "Dumbbell Incline Floor Press", detail: "4 × 10 reps", note: "5kg · prop torso on bag/pillow at angle", src: "dumbbell", video: "https://www.youtube.com/watch?v=uUGDRwge4F8" },
+          { name: "Pull-ups", detail: "4 × 8–12", note: "Full range of motion", src: "calisthenics", video: "https://www.youtube.com/watch?v=Y3ntNsIS2Q8" },
+          { name: "Dumbbell Hammer Curl", detail: "3 × 12 reps", note: "3kg or 5kg · builds arm thickness", src: "dumbbell", video: "https://www.youtube.com/watch?v=zC3nLlEvin4" },
+          { name: "Archer Push-ups", detail: "3 × 6–10 per side", note: "Full control · one arm takes most load", src: "calisthenics", video: "https://www.youtube.com/watch?v=MxVbNel13Ek" },
+          { name: "Dips", detail: "4 × 10–15", note: "Parallel bars or bench", src: "calisthenics", video: "https://www.youtube.com/watch?v=l41SoWZiowI" },
+          { name: "Dumbbell Rear Delt Fly", detail: "3 × 12 reps", note: "2kg · bent forward · replaces face pull", src: "dumbbell", video: "https://www.youtube.com/watch?v=EA7u4Q_8HQ0" },
+          { name: "Plank to Push-up", detail: "3 × 15–20", note: "Core tight throughout", src: "calisthenics", video: "https://www.youtube.com/watch?v=56vUOad6Irs" },
+          { name: "Dumbbell Lateral Raise", detail: "3 × 12 reps", note: "3kg or 5kg", src: "dumbbell", video: "https://www.youtube.com/watch?v=3VcKaXpzqRo" },
+          { name: "Cool down", detail: "5–10 min", note: "Upper body stretches", src: "calisthenics" },
         ]}
       ]
     },
-    { label: "Sat", name: "Active Recovery", rest: true },
-    { label: "Sun", name: "Full Rest", rest: true },
+    {
+      label: "Fri", name: "Advanced Lower", badge: "Month 3", bc: "b-strength",
+      sections: [
+        { name: "Main Workout", ex: [
+          { name: "Warm-up", detail: "5–10 min", note: "Leg swings, hip circles", src: "calisthenics" },
+          { name: "Pistol Squats (Assisted)", detail: "4 × 6–10 per leg", note: "Hold door frame for balance", src: "calisthenics", video: "https://www.youtube.com/watch?v=tiA23NSUm7A" },
+          { name: "Dumbbell Bulgarian Split Squat", detail: "4 × 10–15 per leg", note: "Hold 5kg each · rear foot elevated", src: "dumbbell", video: "https://www.youtube.com/shorts/9p5e2BSvoLs" },
+          { name: "Dumbbell Romanian Deadlift", detail: "4 × 10 reps", note: "5kg each · slow and deep", src: "dumbbell", video: "https://www.youtube.com/watch?v=JCXUYuzwNrM" },
+          { name: "Single-Leg Glute Bridge", detail: "3 × 15–20 per leg", note: "Squeeze glutes hard at top", src: "calisthenics", video: "https://www.youtube.com/watch?v=3NXv0Nany-Q" },
+          { name: "Calf Raises", detail: "3 × 25–30", note: "Hold 5kg dumbbells", src: "dumbbell", video: "https://www.youtube.com/watch?v=c5Kv6-fnTj8" },
+          { name: "Hanging Leg Raises", detail: "3 × 10–15", note: "Straight legs · pull-up bar", src: "calisthenics", video: "https://www.youtube.com/watch?v=EYe6dc_i4L0" },
+          { name: "Windshield Wipers", detail: "3 × 10–15 per side", note: "Advanced · shoulders pinned down", src: "calisthenics", video: "https://www.youtube.com/watch?v=ygwS-vtkhew" },
+          { name: "Russian Twists with Dumbbell", detail: "3 × 20 per side", note: "3kg or 5kg · controlled rotation", src: "dumbbell", video: "https://www.youtube.com/watch?v=JyUqwkVpsi8" },
+          { name: "Cool down", detail: "5–10 min", note: "Quads, hamstrings, hip flexors", src: "calisthenics" },
+        ]}
+      ]
+    },
+    {
+      label: "Sat", name: "Skill Mastery", badge: "Skill", bc: "b-hiit",
+      sub: "3–4×/week · Handstand · Muscle-Up Progressions",
+      sections: [
+        { name: "Skill Focus", ex: [
+          { name: "Handstand Practice", detail: "3 × 20–30 sec", note: "Wall to freestanding", src: "calisthenics", video: "https://www.youtube.com/watch?v=X9fRDlIeGTU" },
+          { name: "L-Sit Hold", detail: "3 × 10–20 sec", note: "Parallettes or floor", src: "calisthenics", video: "https://www.youtube.com/watch?v=eywCpp0p7lg" },
+          { name: "Muscle-Up Progressions", detail: "3 × 3–5 reps", note: "Band-assisted or jumping", src: "calisthenics", video: "https://www.youtube.com/watch?v=6v6IsZcvqCA" },
+          { name: "Dumbbell Wrist Curl", detail: "2 × 15 reps", note: "2kg · grip strength for muscle-up", src: "dumbbell", video: "https://www.youtube.com/watch?v=_MaXaFr6sHo" },
+        ]}
+      ]
+    },
+    { label: "Sun", name: "Full Rest", badge: "Rest", bc: "b-rest", rest: true },
   ]
 };
 
@@ -230,6 +304,8 @@ let state = {
     },
     bestStreak: 0
 };
+
+let activeDashboardMonth = 1;
 
 // Elements
 const trackerBody = document.getElementById('tracker-body');
@@ -295,12 +371,11 @@ function renderTracker() {
     if (!trackerBody) return;
     trackerBody.innerHTML = '';
     
-    const startWeek = (activeDashboardMonth - 1) * 4 + 1;
-    const endWeek = startWeek + 3;
-    
-    for (let w = startWeek; w <= endWeek; w++) {
+    // Render all 12 weeks
+    for (let w = 1; w <= 12; w++) {
         const weekCard = document.createElement('div');
         weekCard.className = 'week-container';
+        weekCard.id = `week-card-${w}`;
         const completedInWeek = Array.from({length: 7}, (_, i) => state.progress[`w${w}d${i+1}`]).filter(Boolean).length;
         
         weekCard.innerHTML = `
@@ -374,9 +449,14 @@ function showDetails(id, event) {
                 s.ex.forEach(e => {
                     const exItem = document.createElement('div');
                     exItem.className = 'exercise-item-new';
+                    
+                    const sourceBadge = e.src === 'dumbbell' 
+                        ? `<span style="font-size: 10px; background: #0C447C; color: #B5D4F4; padding: 1px 6px; border-radius: 20px; margin-left: 8px; text-transform: uppercase;">dumbbell</span>`
+                        : `<span style="font-size: 10px; background: #085041; color: #9FE1CB; padding: 1px 6px; border-radius: 20px; margin-left: 8px; text-transform: uppercase;">calisthenics</span>`;
+
                     exItem.innerHTML = `
                         <div class="ex-main-info">
-                            <span class="ex-name">${e.name}</span>
+                            <span class="ex-name">${e.name} ${sourceBadge}</span>
                             <span class="ex-detail">${e.detail}</span>
                         </div>
                         ${e.note ? `<div class="ex-note">${e.note}</div>` : ''}
@@ -504,12 +584,35 @@ function updateSettingsUI() {
     if (notifTog) notifTog.checked = state.settings.notifications;
 }
 
+function scrollToMonth(month) {
+    activeDashboardMonth = month;
+    const startWeek = (month - 1) * 4 + 1;
+    const element = document.getElementById(`week-card-${startWeek}`);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    
+    // Update active tab UI
+    document.querySelectorAll('.month-tab').forEach(tab => {
+        tab.classList.remove('active');
+        if (parseInt(tab.getAttribute('data-month')) === month) {
+            tab.classList.add('active');
+        }
+    });
+}
+
 function setupEventListeners() {
     document.addEventListener('click', (e) => {
         const navTarget = e.target.closest('[data-view]');
         if (navTarget && (navTarget.classList.contains('nav-item') || navTarget.classList.contains('nav-settings-btn'))) {
             e.preventDefault();
             window.switchView(navTarget.getAttribute('data-view'));
+        }
+
+        const monthTarget = e.target.closest('.month-tab');
+        if (monthTarget) {
+            const month = parseInt(monthTarget.getAttribute('data-month'));
+            scrollToMonth(month);
         }
     });
 
