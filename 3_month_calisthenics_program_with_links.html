@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans, system-ui, sans-serif); padding: 1rem 0; }
+h1 { font-size: 16px; font-weight: 600; color: var(--color-text-primary); margin-bottom: 4px; }
+.subtitle { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 1.25rem; }
+.month-tabs { display: flex; gap: 6px; margin-bottom: 1rem; flex-wrap: wrap; }
+.mtab { padding: 6px 16px; border-radius: var(--border-radius-md, 8px); border: 0.5px solid var(--color-border-secondary); font-size: 13px; cursor: pointer; background: transparent; color: var(--color-text-secondary); transition: all 0.15s; }
+.mtab.active { background: var(--color-background-secondary); color: var(--color-text-primary); font-weight: 500; border-color: var(--color-border-primary); }
+.day-tabs { display: flex; gap: 6px; margin-bottom: 1rem; flex-wrap: wrap; }
+.dtab { padding: 5px 12px; border-radius: var(--border-radius-md, 8px); border: 0.5px solid var(--color-border-secondary); font-size: 12px; cursor: pointer; background: transparent; color: var(--color-text-secondary); transition: all 0.15s; }
+.dtab.active { background: var(--color-background-secondary); color: var(--color-text-primary); font-weight: 500; }
+.card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg, 12px); padding: 1rem 1.25rem; margin-bottom: 1rem; }
+.card-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 2px; }
+.card-sub { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 0.85rem; }
+.section-label { font-size: 11px; font-weight: 500; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin: 0.85rem 0 0.4rem; }
+table { width: 100%; border-collapse: collapse; }
+th { font-size: 11px; color: var(--color-text-tertiary); text-align: left; padding: 6px 8px; border-bottom: 0.5px solid var(--color-border-secondary); font-weight: 500; }
+td { font-size: 13px; color: var(--color-text-primary); padding: 9px 8px; border-bottom: 0.5px solid var(--color-border-tertiary); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+.note { font-size: 11px; color: var(--color-text-tertiary); margin-top: 3px; }
+a.yt { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: #CC0000; text-decoration: none; background: #FCEBEB; padding: 2px 8px; border-radius: 20px; }
+a.yt:hover { background: #F7C1C1; }
+.badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 20px; margin-left: 6px; }
+.b1 { background: #E6F1FB; color: #0C447C; }
+.b2 { background: #EEEDFE; color: #3C3489; }
+.b3 { background: #E1F5EE; color: #085041; }
+.tip-box { background: var(--color-background-secondary); border-left: 2px solid #534AB7; border-radius: 0 8px 8px 0; padding: 0.75rem 1rem; font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; margin-top: 0.5rem; }
+.freq-row { display: flex; gap: 8px; align-items: center; margin-bottom: 0.85rem; flex-wrap: wrap; }
+.freq-tag { font-size: 12px; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-secondary); padding: 3px 10px; border-radius: 20px; color: var(--color-text-secondary); }
+@media (prefers-color-scheme: dark) {
+  a.yt { background: #501313; color: #F7C1C1; }
+  a.yt:hover { background: #6B1A1A; }
+  .b1 { background: #0C447C; color: #B5D4F4; }
+  .b2 { background: #3C3489; color: #CECBF6; }
+  .b3 { background: #085041; color: #9FE1CB; }
+}
+</style>
+</head>
+<body>
+
+<h1>3-Month Calisthenics Program</h1>
+<p class="subtitle">All YouTube tutorial links included · tap any video link to watch</p>
+
+<div class="month-tabs" id="mtabs"></div>
+<div id="mcontent"></div>
+
+<script>
+const data = {
+  months: [
+    {
+      label: "Month 1",
+      badge: "b1",
+      badgeText: "Foundation",
+      title: "Weeks 1–4: Full Body Workouts",
+      freq: ["3×/week", "Mon · Wed · Fri"],
+      tip: "Focus on form over reps. Every exercise should be slow and controlled. This month is about building the movement patterns that carry you through months 2 and 3.",
+      days: [
+        {
+          label: "Full Body",
+          title: "Full Body Workout",
+          sub: "All muscle groups · 3 times per week",
+          exercises: [
+            { name: "Warm-up", sets: "—", reps: "5–10 min", note: "Jumping jacks, light jogging, high knees", link: null },
+            { name: "Push-ups", sets: "3", reps: "8–12 reps", note: "Keep body straight, avoid sagging hips", link: "https://www.youtube.com/watch?v=IODxDxX7oi4", linkText: "Tutorial" },
+            { name: "Pull-ups or Inverted Rows", sets: "3", reps: "5–8 reps", note: "Use a resistance band if needed", link: "https://www.youtube.com/watch?v=Y3ntNsIS2Q8", link2: "https://www.youtube.com/watch?v=GdyhjXlxE-U", linkText: "Pull-ups", linkText2: "Inverted Rows" },
+            { name: "Dips", sets: "3", reps: "8–12 reps", note: "Use parallel bars or bench", link: "https://www.youtube.com/watch?v=l41SoWZiowI", linkText: "Tutorial" },
+            { name: "Squats", sets: "3", reps: "15–20 reps", note: "Keep knees tracking over toes", link: "https://www.youtube.com/watch?v=xqvCmoLULNY", linkText: "Tutorial" },
+            { name: "Lunges", sets: "3", reps: "10–15 per leg", note: "Keep torso upright", link: "https://www.youtube.com/watch?v=wrwwXE_x-pQ", linkText: "Tutorial" },
+            { name: "Plank", sets: "3", reps: "30–60 sec", note: "Engage core fully", link: "https://www.youtube.com/watch?v=ASdvN_XEl_c", linkText: "Tutorial" },
+            { name: "Cool down", sets: "—", reps: "5–10 min", note: "Stretch all worked muscles", link: null },
+          ]
+        }
+      ]
+    },
+    {
+      label: "Month 2",
+      badge: "b2",
+      badgeText: "Intensity",
+      title: "Weeks 5–8: Split Routine + Skill Training",
+      freq: ["4×/week", "Mon · Tue · Thu · Fri"],
+      tip: "You are now splitting upper and lower body. This lets each muscle group recover better while you train more frequently. Skill training starts here — be patient with handstands and L-sits.",
+      days: [
+        {
+          label: "Upper (Day 1 & 4)",
+          title: "Upper Body",
+          sub: "Day 1 & 4 · Chest · Back · Shoulders · Arms",
+          exercises: [
+            { name: "Warm-up", sets: "—", reps: "5–10 min", note: "Jogging, jumping jacks, dynamic stretches", link: null },
+            { name: "Push-ups", sets: "4", reps: "10–15 reps", note: "Keep elbows tucked slightly", link: "https://www.youtube.com/watch?v=IODxDxX7oi4", linkText: "The Perfect Push-Up" },
+            { name: "Pull-ups or Inverted Rows", sets: "4", reps: "6–10 reps", note: "Use band assistance if needed", link: "https://www.youtube.com/watch?v=Y3ntNsIS2Q8", link2: "https://www.youtube.com/watch?v=GdyhjXlxE-U", linkText: "Pull-ups", linkText2: "Inverted Rows" },
+            { name: "Dips", sets: "4", reps: "10–15 reps", note: "Focus on controlled movement", link: "https://www.youtube.com/watch?v=l41SoWZiowI", linkText: "Tutorial" },
+            { name: "Pike Push-ups", sets: "3", reps: "8–12 reps", note: "Elevate hips to target shoulders", link: "https://www.youtube.com/watch?v=x7_I5SUAd00", linkText: "Tutorial" },
+            { name: "Plank to Push-up", sets: "3", reps: "10–15 reps", note: "Core tight, avoid sagging", link: "https://www.youtube.com/watch?v=56vUOad6Irs", linkText: "Tutorial" },
+            { name: "Cool down", sets: "—", reps: "5–10 min", note: "Focus on arms, shoulders, chest", link: null },
+          ]
+        },
+        {
+          label: "Lower + Core (Day 2 & 3)",
+          title: "Lower Body & Core",
+          sub: "Day 2 & 3 · Quads · Hamstrings · Glutes · Abs",
+          exercises: [
+            { name: "Warm-up", sets: "—", reps: "5–10 min", note: "Dynamic leg swings, light jogging", link: null },
+            { name: "Squats", sets: "4", reps: "20–25 reps", note: "Keep knees tracking over toes", link: "https://www.youtube.com/watch?v=xqvCmoLULNY", linkText: "Tutorial" },
+            { name: "Lunges", sets: "4", reps: "15–20 per leg", note: "Keep torso upright", link: "https://www.youtube.com/watch?v=wrwwXE_x-pQ", linkText: "Tutorial" },
+            { name: "Glute Bridges", sets: "3", reps: "20–25 reps", note: "Squeeze glutes at the top", link: "https://www.youtube.com/watch?v=wPM8icPu6H8", linkText: "Tutorial" },
+            { name: "Calf Raises", sets: "3", reps: "20–25 reps", note: "Controlled movement, full range", link: "https://www.youtube.com/watch?v=gwLzBJYoWlI", linkText: "Tutorial" },
+            { name: "Hanging Leg Raises", sets: "3", reps: "8–12 reps", note: "Use bar, keep legs straight", link: "https://www.youtube.com/watch?v=Pr1ieGZ5atk", linkText: "Tutorial" },
+            { name: "Russian Twists", sets: "3", reps: "20 per side", note: "Keep torso upright, move with control", link: "https://www.youtube.com/watch?v=JyUqwkVpsi8", linkText: "Tutorial" },
+            { name: "Cool down", sets: "—", reps: "5–10 min", note: "Stretch hamstrings, glutes, quads", link: null },
+          ]
+        },
+        {
+          label: "Skill Training",
+          title: "Skill Training",
+          sub: "2–3 times per week · after main workout",
+          exercises: [
+            { name: "Handstand Practice", sets: "3", reps: "20–30 sec", note: "Wall-assisted, progress to freestanding", link: "https://www.youtube.com/watch?v=eFmjckKXEoA", linkText: "Tutorial" },
+            { name: "L-Sit Progressions", sets: "3", reps: "10–15 sec", note: "Use parallettes or floor", link: "https://www.youtube.com/watch?v=HxDP7SqggpI", linkText: "Tutorial" },
+          ]
+        }
+      ]
+    },
+    {
+      label: "Month 3",
+      badge: "b3",
+      badgeText: "Advanced",
+      title: "Weeks 9–12: Skill Focus + Advanced Workouts",
+      freq: ["4–5×/week"],
+      tip: "This is where things get serious. Archer push-ups, pistol squats, windshield wipers, and muscle-up progressions are advanced movements. Be patient — attempting them with poor form will cause injury. Use the tutorials.",
+      days: [
+        {
+          label: "Upper (Day 1 & 4)",
+          title: "Upper Body",
+          sub: "Day 1 & 4 · Advanced push & pull",
+          exercises: [
+            { name: "Warm-up", sets: "—", reps: "5–10 min", note: "Jump rope, jogging, dynamic stretches", link: null },
+            { name: "Decline Push-ups", sets: "4", reps: "10–15 reps", note: "Feet elevated on bench or box", link: "https://www.youtube.com/watch?v=SKPab2YC8BE", linkText: "Tutorial" },
+            { name: "Pull-ups", sets: "4", reps: "8–12 reps", note: "Use band assistance if needed", link: "https://www.youtube.com/watch?v=Y3ntNsIS2Q8", linkText: "Tutorial" },
+            { name: "Dips", sets: "4", reps: "10–15 reps", note: "Use parallel bars or bench", link: "https://www.youtube.com/watch?v=l41SoWZiowI", linkText: "Tutorial" },
+            { name: "Archer Push-ups", sets: "3", reps: "6–10 per side", note: "Focus on control · elevate hands for easier version", link: "https://www.youtube.com/watch?v=MxVbNel13Ek", linkText: "Tutorial" },
+            { name: "Plank to Push-up", sets: "3", reps: "15–20 reps", note: "Keep core tight", link: "https://www.youtube.com/watch?v=56vUOad6Irs", linkText: "Tutorial" },
+            { name: "Cool down", sets: "—", reps: "5–10 min", note: "Upper body stretches", link: null },
+          ]
+        },
+        {
+          label: "Lower + Core (Day 2 & 3)",
+          title: "Lower Body & Core",
+          sub: "Day 2 & 3 · Advanced leg & core work",
+          exercises: [
+            { name: "Warm-up", sets: "—", reps: "5–10 min", note: "Light jogging, dynamic leg swings", link: null },
+            { name: "Pistol Squats (Assisted)", sets: "4", reps: "6–10 per leg", note: "Use support for balance", link: "https://www.youtube.com/watch?v=tiA23NSUm7A", linkText: "Tutorial" },
+            { name: "Bulgarian Split Squats", sets: "4", reps: "10–15 per leg", note: "Rear foot elevated on bench", link: "https://www.youtube.com/shorts/9p5e2BSvoLs", linkText: "Tutorial" },
+            { name: "Single-Leg Glute Bridges", sets: "3", reps: "15–20 per leg", note: "Squeeze glutes at the top", link: "https://www.youtube.com/watch?v=3NXv0Nany-Q", linkText: "Tutorial" },
+            { name: "Calf Raises", sets: "3", reps: "25–30 reps", note: "Full range, slow controlled movement", link: "https://www.youtube.com/watch?v=c5Kv6-fnTj8", linkText: "Tutorial" },
+            { name: "Hanging Leg Raises", sets: "3", reps: "10–15 reps", note: "Use bar, keep legs straight", link: "https://www.youtube.com/watch?v=EYe6dc_i4L0", linkText: "Tutorial" },
+            { name: "Windshield Wipers", sets: "3", reps: "10–15 per side", note: "Keep shoulders down, controlled core", link: "https://www.youtube.com/watch?v=ygwS-vtkhew", linkText: "Tutorial" },
+            { name: "Cool down", sets: "—", reps: "5–10 min", note: "Lower body stretches, quads and hamstrings", link: null },
+          ]
+        },
+        {
+          label: "Skill Training",
+          title: "Skill Training",
+          sub: "3–4 times per week · after main workout",
+          exercises: [
+            { name: "Handstand Practice", sets: "3", reps: "20–30 sec", note: "Wall-assisted to freestanding progression", link: "https://www.youtube.com/watch?v=X9fRDlIeGTU", linkText: "Tutorial" },
+            { name: "L-Sit Hold", sets: "3", reps: "10–20 sec", note: "Use parallettes or floor", link: "https://www.youtube.com/watch?v=eywCpp0p7lg", linkText: "Tutorial" },
+            { name: "Muscle-Up Progressions", sets: "3", reps: "3–5 reps", note: "Band-assisted or jumping muscle-ups", link: "https://www.youtube.com/watch?v=6v6IsZcvqCA", linkText: "Tutorial" },
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+let activeMonth = 0;
+let activeDay = 0;
+
+function renderMonthTabs() {
+  document.getElementById('mtabs').innerHTML = data.months.map((m, i) =>
+    `<button class="mtab ${i === activeMonth ? 'active' : ''}" onclick="setMonth(${i})">${m.label}</button>`
+  ).join('');
+}
+
+function renderContent() {
+  const m = data.months[activeMonth];
+  let html = `
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+        <span style="font-size:15px;font-weight:500;color:var(--color-text-primary)">${m.title}</span>
+        <span class="badge ${m.badge}">${m.badgeText}</span>
+      </div>
+      <div class="freq-row">
+        ${m.freq.map(f => `<span class="freq-tag">${f}</span>`).join('')}
+      </div>
+      <div class="day-tabs" id="dtabs"></div>
+      <div id="dcontent"></div>
+      <div class="tip-box">💡 ${m.tip}</div>
+    </div>`;
+  document.getElementById('mcontent').innerHTML = html;
+
+  document.getElementById('dtabs').innerHTML = m.days.map((d, i) =>
+    `<button class="dtab ${i === activeDay ? 'active' : ''}" onclick="setDay(${i})">${d.label}</button>`
+  ).join('');
+
+  renderDay();
+}
+
+function renderDay() {
+  const m = data.months[activeMonth];
+  const d = m.days[activeDay];
+  let html = `<div style="margin-bottom:4px;font-size:14px;font-weight:500;color:var(--color-text-primary)">${d.title}</div>
+    <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:0.75rem">${d.sub}</div>
+    <table>
+      <thead><tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Video</th></tr></thead>
+      <tbody>`;
+
+  d.exercises.forEach(e => {
+    let videoCell = '—';
+    if (e.link && e.link2) {
+      videoCell = `<a class="yt" href="${e.link}" target="_blank">▶ ${e.linkText}</a><br><a class="yt" href="${e.link2}" target="_blank" style="margin-top:4px">▶ ${e.linkText2}</a>`;
+    } else if (e.link) {
+      videoCell = `<a class="yt" href="${e.link}" target="_blank">▶ ${e.linkText}</a>`;
+    }
+    html += `<tr>
+      <td><div>${e.name}</div><div class="note">${e.note}</div></td>
+      <td>${e.sets}</td>
+      <td>${e.reps}</td>
+      <td>${videoCell}</td>
+    </tr>`;
+  });
+
+  html += `</tbody></table>`;
+  document.getElementById('dcontent').innerHTML = html;
+}
+
+function setMonth(i) { activeMonth = i; activeDay = 0; renderMonthTabs(); renderContent(); }
+function setDay(i) {
+  activeDay = i;
+  document.querySelectorAll('.dtab').forEach((t, idx) => t.classList.toggle('active', idx === i));
+  renderDay();
+}
+
+renderMonthTabs();
+renderContent();
+</script>
+</body>
+</html>

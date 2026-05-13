@@ -720,22 +720,72 @@ input:checked + .slider:before { transform: translateX(18px); background-color: 
 }
 
 .ex-video-link {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-size: 10px;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--text-primary);
+    color: #CC0000;
     text-decoration: none;
-    border: 1px solid var(--text-secondary);
-    padding: 4px 10px;
-    border-radius: 2px;
+    background: #FCEBEB;
+    padding: 6px 12px;
+    border-radius: 20px;
     transition: var(--transition);
+    border: none;
+    margin-top: 8px;
+}
+
+.ex-video-link::before {
+    content: "▶";
+    font-size: 9px;
 }
 
 .ex-video-link:hover {
+    background: #F7C1C1;
+}
+
+.dark-theme .ex-video-link {
+    background: #3a0d0d;
+    color: #ff9999;
+}
+
+.dark-theme .ex-video-link:hover {
+    background: #5a1414;
+}
+
+/* Month Tabs */
+.month-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+
+.month-tab {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 10px 24px;
+    border-radius: 24px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.month-tab:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.month-tab.active {
+    background-color: var(--text-primary);
+    color: var(--bg-primary);
     border-color: var(--text-primary);
-    background-color: var(--accent-dim);
 }
 
 .gear-row-modal {
