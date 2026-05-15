@@ -42,7 +42,7 @@ A professional, feature-rich 12-week (3-month) workout transformation tracker fo
 2. Use the **Month Tabs** to navigate between phases.
 3. Click on a day card to see the workout details and tutorial links.
 4. Mark workouts as completed and save notes to track your strength gains.
-5. Export your data via **CSV** anytime for external logging.
+5. Reset your data anytime to start over.
 
 ---
 *Built for the dedicated. Stay consistent.*

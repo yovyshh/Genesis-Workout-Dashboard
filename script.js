@@ -707,22 +707,4 @@ function openNotes(id, event) {
     }
 }
 
-function exportToCSV() {
-    let csv = 'Week,Day,Focus,Completed,Notes\n';
-    for (let w = 1; w <= 12; w++) {
-        const weekDays = getWorkoutForWeek(w);
-        for (let d = 1; d <= 7; d++) {
-            const id = `w${w}d${d}`;
-            const workout = weekDays[d-1];
-            csv += `${w},${d},"${workout.name}",${state.progress[id] ? 'Yes' : 'No'},"${(state.notes[id] || '').replace(/"/g, '""')}"\n`;
-        }
-    }
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement("a");
-    link.setAttribute("href", URL.createObjectURL(blob));
-    link.setAttribute("download", "genesis_workout_export.csv");
-    link.style.visibility = 'hidden';
-    document.body.appendChild(link); link.click(); document.body.removeChild(link);
-}
-
 init();
