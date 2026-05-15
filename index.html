@@ -17,6 +17,7 @@
             --border: #222222;
             --cal-accent: #00ff88;
             --db-accent: #00a2ff;
+            --completed-accent: #00ff88;
             --glass: rgba(255, 255, 255, 0.03);
             --glass-border: rgba(255, 255, 255, 0.08);
         }
@@ -119,13 +120,24 @@
             transform: translateY(0);
         }
 
+        .week-section.completed {
+            opacity: 0.5;
+        }
+
         .week-header {
             display: flex;
-            align-items: baseline;
+            align-items: center;
+            justify-content: space-between;
             gap: 1rem;
             margin-bottom: 2rem;
             border-bottom: 1px solid var(--border);
             padding-bottom: 1rem;
+        }
+
+        .week-info {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
         }
 
         .week-number {
@@ -138,6 +150,56 @@
         .week-title {
             font-size: 1.5rem;
             font-weight: 700;
+        }
+
+        /* Completion Toggle */
+        .completion-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        .completion-toggle:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .completion-toggle.active {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: var(--completed-accent);
+            color: var(--completed-accent);
+        }
+
+        .checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--accent-muted);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .active .checkbox {
+            background: var(--completed-accent);
+            border-color: var(--completed-accent);
+        }
+
+        .checkbox::after {
+            content: '✓';
+            font-size: 12px;
+            color: var(--bg);
+            display: none;
+        }
+
+        .active .checkbox::after {
+            display: block;
         }
 
         /* Day Cards */
@@ -246,6 +308,8 @@
             .content-grid { padding: 0 1.5rem; }
             .day-grid { grid-template-columns: 1fr; }
             .day-card { padding: 1.5rem; }
+            .week-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .completion-toggle { width: 100%; justify-content: center; }
         }
     </style>
 </head>
@@ -271,6 +335,7 @@
 <script>
 const DB = "db";
 const CAL = "cal";
+const STORAGE_KEY = "genesis_progress_v2";
 
 const programData = [
     {
@@ -354,14 +419,34 @@ const programData = [
     }
 ];
 
+let progress = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+
+function saveProgress() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+}
+
+function toggleWeek(wkNum) {
+    progress[wkNum] = !progress[wkNum];
+    saveProgress();
+    
+    const section = document.querySelector(`[data-week="${wkNum}"]`);
+    const toggle = section.querySelector('.completion-toggle');
+    
+    section.classList.toggle('completed', progress[wkNum]);
+    toggle.classList.toggle('active', progress[wkNum]);
+    toggle.querySelector('span').innerText = progress[wkNum] ? 'Completed' : 'Mark as Done';
+}
+
 function renderMonth(monthIdx) {
     const main = document.getElementById('main-content');
     const data = programData[monthIdx];
     main.innerHTML = '';
 
     data.weeks.forEach(wkNum => {
+        const isCompleted = progress[wkNum] || false;
         const weekSection = document.createElement('section');
-        weekSection.className = 'week-section';
+        weekSection.className = `week-section ${isCompleted ? 'completed' : ''}`;
+        weekSection.setAttribute('data-week', wkNum);
         
         let dayHtml = '';
         data.days.forEach(day => {
@@ -390,8 +475,14 @@ function renderMonth(monthIdx) {
 
         weekSection.innerHTML = `
             <div class="week-header">
-                <span class="week-number">Phase ${monthIdx + 1}</span>
-                <h2 class="week-title">Week ${wkNum < 10 ? '0' + wkNum : wkNum}</h2>
+                <div class="week-info">
+                    <span class="week-number">Phase ${monthIdx + 1}</span>
+                    <h2 class="week-title">Week ${wkNum < 10 ? '0' + wkNum : wkNum}</h2>
+                </div>
+                <div class="completion-toggle ${isCompleted ? 'active' : ''}" onclick="toggleWeek(${wkNum})">
+                    <div class="checkbox"></div>
+                    <span>${isCompleted ? 'Completed' : 'Mark as Done'}</span>
+                </div>
             </div>
             <div class="day-grid">${dayHtml}</div>
         `;
