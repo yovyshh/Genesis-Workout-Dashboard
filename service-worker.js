@@ -1,8 +1,6 @@
-const CACHE_NAME = 'genesis-fitness-v3';
+const CACHE_NAME = 'genesis-fitness-v4';
 const ASSETS = [
   'index.html',
-  'style.css',
-  'script.js',
   'manifest.json'
 ];
 

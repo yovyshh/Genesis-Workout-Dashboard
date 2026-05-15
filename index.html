@@ -8,6 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#050505">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/32/32339.png">
     <style>
         :root {
             --bg: #050505;
@@ -541,6 +544,13 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.week-section').forEach(section => observer.observe(section));
 
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js')
+            .then(reg => console.log('Service Worker registered'))
+            .catch(err => console.error('Service Worker registration failed', err));
+    });
+}
 </script>
 </body>
 </html>
