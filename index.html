@@ -1,212 +1,403 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Genesis - 12-Week Transformation</title>
-    <!-- Version 1.1 - 12-Week Transformation Heartbeat -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#050505">
-    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/32/32339.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Genesis - 3-Month Calisthenics + Dumbbell Program</title>
+<style>
+:root {
+  --color-background-primary: #050505;
+  --color-background-secondary: #121212;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a0a0a0;
+  --color-text-tertiary: #666666;
+  --color-border-primary: #333333;
+  --color-border-secondary: #222222;
+  --color-border-tertiary: #1a1a1a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { 
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+  padding: 1.5rem; 
+  background-color: var(--color-background-primary);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+h1 { font-size: 20px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 4px; letter-spacing: -0.02em; }
+.subtitle { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 2rem; }
+
+.month-tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.mtab { 
+  padding: 8px 18px; 
+  border-radius: 10px; 
+  border: 1px solid var(--color-border-secondary); 
+  font-size: 14px; 
+  cursor: pointer; 
+  background: var(--color-background-secondary); 
+  color: var(--color-text-secondary); 
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+.mtab.active { 
+  background: var(--color-text-primary); 
+  color: var(--color-background-primary); 
+  font-weight: 600; 
+  border-color: var(--color-text-primary); 
+}
+
+.day-tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.dtab { 
+  padding: 6px 14px; 
+  border-radius: 8px; 
+  border: 1px solid var(--color-border-secondary); 
+  font-size: 13px; 
+  cursor: pointer; 
+  background: transparent; 
+  color: var(--color-text-secondary); 
+  transition: all 0.2s; 
+}
+.dtab.active { 
+  background: #333; 
+  color: var(--color-text-primary); 
+  font-weight: 600;
+  border-color: #444;
+}
+
+.card { 
+  background: var(--color-background-secondary); 
+  border: 1px solid var(--color-border-tertiary); 
+  border-radius: 16px; 
+  padding: 1.5rem; 
+  margin-bottom: 1.5rem; 
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+
+.freq-row { display: flex; gap: 8px; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.freq-tag { 
+  font-size: 12px; 
+  background: rgba(255,255,255,0.05); 
+  border: 1px solid var(--color-border-secondary); 
+  padding: 4px 12px; 
+  border-radius: 20px; 
+  color: var(--color-text-secondary); 
+  font-weight: 500;
+}
+
+.badge { 
+  display: inline-block; 
+  font-size: 11px; 
+  padding: 3px 10px; 
+  border-radius: 20px; 
+  margin-left: 8px; 
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.b1 { background: #0C447C; color: #B5D4F4; }
+.b2 { background: #3C3489; color: #CECBF6; }
+.b3 { background: #085041; color: #9FE1CB; }
+
+.table-container {
+  overflow-x: auto;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--color-border-tertiary);
+}
+
+table { width: 100%; border-collapse: collapse; min-width: 600px; }
+th { 
+  font-size: 11px; 
+  color: var(--color-text-tertiary); 
+  text-align: left; 
+  padding: 12px 16px; 
+  border-bottom: 1px solid var(--color-border-secondary); 
+  font-weight: 600; 
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: rgba(255,255,255,0.02);
+}
+td { 
+  font-size: 14px; 
+  color: var(--color-text-primary); 
+  padding: 16px; 
+  border-bottom: 1px solid var(--color-border-tertiary); 
+  vertical-align: top; 
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,255,255,0.01); }
+
+.ex-name-cell { display: flex; flex-direction: column; gap: 6px; }
+.ex-name { font-weight: 600; }
+.note { font-size: 12px; color: var(--color-text-secondary); line-height: 1.4; }
+
+.src-db { font-size: 10px; background: rgba(12, 68, 124, 0.3); color: #B5D4F4; padding: 2px 8px; border-radius: 20px; display: inline-block; font-weight: 600; }
+.src-cal { font-size: 10px; background: rgba(8, 80, 65, 0.3); color: #9FE1CB; padding: 2px 8px; border-radius: 20px; display: inline-block; font-weight: 600; }
+
+a.yt { 
+  display: inline-flex; 
+  align-items: center; 
+  gap: 6px; 
+  font-size: 12px; 
+  color: #ff4d4d; 
+  text-decoration: none; 
+  background: rgba(255, 77, 77, 0.1); 
+  padding: 5px 12px; 
+  border-radius: 8px; 
+  transition: all 0.2s;
+  font-weight: 500;
+}
+a.yt:hover { background: rgba(255, 77, 77, 0.2); transform: translateY(-1px); }
+
+.tip-box { 
+  background: rgba(83, 74, 183, 0.1); 
+  border-left: 3px solid #534AB7; 
+  border-radius: 4px 12px 12px 4px; 
+  padding: 1.25rem; 
+  font-size: 14px; 
+  color: var(--color-text-secondary); 
+  line-height: 1.6; 
+  margin-top: 1rem; 
+}
+.tip-box strong { color: var(--color-text-primary); }
+
+.legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 1.5rem; padding: 0.5rem 0; }
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--color-text-secondary); font-weight: 500; }
+.dot-db { width: 10px; height: 10px; border-radius: 50%; background: #0C447C; box-shadow: 0 0 10px rgba(12,68,124,0.5); }
+.dot-cal { width: 10px; height: 10px; border-radius: 50%; background: #085041; box-shadow: 0 0 10px rgba(8,80,65,0.5); }
+
+@media (max-width: 600px) {
+  body { padding: 1rem; }
+  .card { padding: 1.25rem; }
+  td, th { padding: 12px; }
+  .mtab { padding: 6px 14px; font-size: 13px; }
+}
+</style>
 </head>
-<body class="dark-theme">
-    <div class="app-container">
-        <header class="top-navbar">
-            <div class="nav-content">
-                <div class="logo">
-                    <span class="logo-text">GENESIS</span>
-                </div>
-                
-                <div class="nav-actions-right">
-                    <button class="nav-item nav-settings-btn" data-view="settings" onclick="if(window.switchView) window.switchView('settings')" title="Settings">
-                        Settings
-                    </button>
-                </div>
-            </div>
-        </header>
+<body>
 
-        <!-- Persistent Bottom Navigation for Mobile/Android -->
-        <nav class="bottom-nav">
-            <a href="#" class="nav-item active" data-view="dashboard">
-                <span class="nav-label">Dashboard</span>
-            </a>
-            <a href="#" class="nav-item" data-view="stats">
-                <span class="nav-label">Stats</span>
-            </a>
-        </nav>
+<header>
+  <h1>Genesis: 3-Month Plan</h1>
+  <p class="subtitle">Mixed Calisthenics + Dumbbell · Clinical Precision</p>
+</header>
 
-        <main class="main-content">
-            <header class="top-header">
-                <div class="header-left">
-                    <h1>Genesis Dashboard</h1>
-                    <p class="date-display" id="current-date"></p>
-                </div>
-                <div class="header-right">
-                    <div class="progress-stats">
-                        <div class="stat-group">
-                            <span class="stat-value" id="total-completed">0/84</span>
-                            <span class="stat-label">Completed</span>
-                        </div>
-                        <div class="progress-ring-container">
-                            <svg class="progress-ring" width="60" height="60">
-                                <circle class="progress-ring-bg" stroke="currentColor" stroke-width="4" fill="transparent" r="26" cx="30" cy="30"/>
-                                <circle class="progress-ring-fill" id="progress-circle" stroke="currentColor" stroke-width="4" fill="transparent" r="26" cx="30" cy="30" stroke-dasharray="163.36" stroke-dashoffset="163.36"/>
-                            </svg>
-                            <span class="progress-percentage" id="progress-percent">0%</span>
-                        </div>
-                    </div>
-                </div>
-            </header>
+<div class="legend">
+  <div class="legend-item"><div class="dot-cal"></div> Calisthenics Focus</div>
+  <div class="legend-item"><div class="dot-db"></div> Dumbbell Integrated</div>
+</div>
 
-            <section class="dashboard-view view-section" id="dashboard-view">
-                <div class="view-header">
-                    <h2>12-Week Transformation</h2>
-                    <div class="view-actions">
-                        <button class="btn btn-danger-outline" id="reset-all">
-                            Reset
-                        </button>
-                    </div>
-                </div>
+<nav class="month-tabs" id="mtabs"></nav>
+<div id="mcontent"></div>
 
-                <div class="month-tabs" id="dashboard-month-tabs">
-                    <button class="month-tab active" data-month="1">Month 1 (W1-4)</button>
-                    <button class="month-tab" data-month="2">Month 2 (W5-8)</button>
-                    <button class="month-tab" data-month="3">Month 3 (W9-12)</button>
-                </div>
+<script>
+const DB = "dumbbell";
+const CAL = "calisthenics";
 
-                <div class="weeks-grid" id="tracker-body">
-                    <!-- JS will inject weeks here -->
-                </div>
-            </section>
+const data = {
+  months: [
+    {
+      label: "Month 1", badge: "b1", badgeText: "Foundation",
+      title: "Weeks 1–4 · Full Body",
+      freq: ["3×/week", "Mon · Wed · Fri"],
+      tip: "<strong>Form First:</strong> Your barbell weights go up to 16kg total. For Month 1 dumbbells, use 2kg–3kg for isolation moves (curls, raises) and 5kg for compound moves (rows, press). Focus on form — this month builds the base for everything that follows.",
+      days: [
+        {
+          label: "Full Body",
+          title: "Full Body Workout", sub: "All muscle groups · Mon / Wed / Fri",
+          exercises: [
+            { name: "Warm-up", sets: "—", reps: "5–10 min", note: "Jumping jacks, high knees, arm circles", src: CAL, link: null },
+            { name: "Push-ups", sets: "3", reps: "8–12", note: "Keep body straight, core tight", src: CAL, link: "https://www.youtube.com/watch?v=IODxDxX7oi4", lt: "Tutorial" },
+            { name: "Dumbbell Floor Press", sets: "3", reps: "10", note: "5kg each hand · 3 sec lowering · replaces bench", src: DB, link: "https://www.youtube.com/watch?v=uUGDRwge4F8", lt: "Tutorial" },
+            { name: "Pull-ups / Rows", sets: "3", reps: "5–8", note: "Use band for pull-ups if needed", src: CAL, link: "https://www.youtube.com/watch?v=Y3ntNsIS2Q8", lt: "Pull-ups", link2: "https://www.youtube.com/watch?v=GdyhjXlxE-U", lt2: "Inverted Rows" },
+            { name: "DB Bent-Over Row", sets: "3", reps: "10", note: "5kg · hinge at hips · elbows back", src: DB, link: "https://www.youtube.com/watch?v=6TSP1TRMUzs", lt: "Tutorial" },
+            { name: "Squats", sets: "3", reps: "15–20", note: "Knees track over toes", src: CAL, link: "https://www.youtube.com/watch?v=xqvCmoLULNY", lt: "Tutorial" },
+            { name: "DB Goblet Squat", sets: "3", reps: "12", note: "5kg · adds load to squat pattern", src: DB, link: "https://www.youtube.com/watch?v=MxEiRCDbMaA", lt: "Tutorial" },
+            { name: "Lunges", sets: "3", reps: "10–15", note: "Torso upright", src: CAL, link: "https://www.youtube.com/watch?v=wrwwXE_x-pQ", lt: "Tutorial" },
+            { name: "DB Lateral Raise", sets: "3", reps: "12", note: "2kg · slow and controlled", src: DB, link: "https://www.youtube.com/watch?v=3VcKaXpzqRo", lt: "Tutorial" },
+            { name: "Plank", sets: "3", reps: "30–60s", note: "Full core engagement", src: CAL, link: "https://www.youtube.com/watch?v=ASdvN_XEl_c", lt: "Tutorial" },
+            { name: "DB Bicep Curl", sets: "3", reps: "12", note: "3kg · slow squeeze at top", src: DB, link: "https://www.youtube.com/watch?v=ykJmrZ5v0Oo", lt: "Tutorial" },
+            { name: "Cool down", sets: "—", reps: "5–10 min", note: "Stretch all worked muscles", src: CAL, link: null },
+          ]
+        }
+      ]
+    },
+    {
+      label: "Month 2", badge: "b2", badgeText: "Intensity",
+      title: "Weeks 5–8 · Split Routine",
+      freq: ["4×/week", "Mon · Tue · Thu · Fri"],
+      tip: "<strong>Progressive Overload:</strong> Increase dumbbell weight slightly this month — move to 5kg for isolation moves and use both 5kg dumbbells (10kg total) for rows and presses. Add 1 rep per set each week on every exercise.",
+      days: [
+        {
+          label: "Upper (Day 1 & 4)",
+          title: "Upper Body", sub: "Chest · Back · Shoulders · Arms",
+          exercises: [
+            { name: "Warm-up", sets: "—", reps: "5–10 min", note: "Jogging, arm swings, dynamic stretches", src: CAL, link: null },
+            { name: "Push-ups", sets: "4", reps: "10–15", note: "Elbows tucked slightly", src: CAL, link: "https://www.youtube.com/watch?v=IODxDxX7oi4", lt: "Tutorial" },
+            { name: "Dumbbell Floor Press", sets: "4", reps: "10", note: "5kg · slow eccentric", src: DB, link: "https://www.youtube.com/watch?v=uUGDRwge4F8", lt: "Tutorial" },
+            { name: "Pull-ups", sets: "4", reps: "6–10", note: "Band assist if needed", src: CAL, link: "https://www.youtube.com/watch?v=Y3ntNsIS2Q8", lt: "Tutorial" },
+            { name: "DB Bent-Over Row", sets: "4", reps: "10", note: "5kg each hand", src: DB, link: "https://www.youtube.com/watch?v=6TSP1TRMUzs", lt: "Tutorial" },
+            { name: "Pike Push-ups", sets: "3", reps: "8–12", note: "Elevate hips for shoulders", src: CAL, link: "https://www.youtube.com/watch?v=x7_I5SUAd00", lt: "Tutorial" },
+            { name: "DB Shoulder Press", sets: "3", reps: "10", note: "3kg or 5kg · seated or standing", src: DB, link: "https://www.youtube.com/watch?v=qEwKCR5JCog", lt: "Tutorial" },
+            { name: "Dips", sets: "4", reps: "10–15", note: "Parallel bars or bench", src: CAL, link: "https://www.youtube.com/watch?v=l41SoWZiowI", lt: "Tutorial" },
+            { name: "DB Tricep Ext.", sets: "3", reps: "12", note: "3kg · elbows close to head", src: DB, link: "https://www.youtube.com/watch?v=-Vyt2QdsR7I", lt: "Tutorial" },
+            { name: "Plank to Push-up", sets: "3", reps: "10–15", note: "Core tight", src: CAL, link: "https://www.youtube.com/watch?v=56vUOad6Irs", lt: "Tutorial" },
+            { name: "DB Lateral Raise", sets: "3", reps: "12", note: "3kg · shoulder width", src: DB, link: "https://www.youtube.com/watch?v=3VcKaXpzqRo", lt: "Tutorial" },
+            { name: "Cool down", sets: "—", reps: "5–10 min", note: "Arms, shoulders, chest stretch", src: CAL, link: null },
+          ]
+        },
+        {
+          label: "Lower + Core (Day 2 & 3)",
+          title: "Lower Body & Core", sub: "Quads · Hamstrings · Glutes · Abs",
+          exercises: [
+            { name: "Warm-up", sets: "—", reps: "5–10 min", note: "Leg swings, hip circles, light jog", src: CAL, link: null },
+            { name: "Squats", sets: "4", reps: "20–25", note: "Knees over toes", src: CAL, link: "https://www.youtube.com/watch?v=xqvCmoLULNY", lt: "Tutorial" },
+            { name: "DB Goblet Squat", sets: "4", reps: "12", note: "5kg · deeper than bodyweight", src: DB, link: "https://www.youtube.com/watch?v=MxEiRCDbMaA", lt: "Tutorial" },
+            { name: "Lunges", sets: "4", reps: "15–20", note: "Upright torso", src: CAL, link: "https://www.youtube.com/watch?v=wrwwXE_x-pQ", lt: "Tutorial" },
+            { name: "DB Romanian DL", sets: "3", reps: "10", note: "5kg · feel hamstring stretch", src: DB, link: "https://www.youtube.com/watch?v=JCXUYuzwNrM", lt: "Tutorial" },
+            { name: "Glute Bridges", sets: "3", reps: "20–25", note: "Squeeze at top", src: CAL, link: "https://www.youtube.com/watch?v=wPM8icPu6H8", lt: "Tutorial" },
+            { name: "Calf Raises", sets: "3", reps: "20–25", note: "Hold 5kg each for load", src: DB, link: "https://www.youtube.com/watch?v=gwLzBJYoWlI", lt: "Tutorial" },
+            { name: "Hanging Leg Raise", sets: "3", reps: "8–12", note: "Pull-up bar · legs straight", src: CAL, link: "https://www.youtube.com/watch?v=Pr1ieGZ5atk", lt: "Tutorial" },
+            { name: "Russian Twists", sets: "3", reps: "20/side", note: "Hold dumbbell 2kg for extra load", src: DB, link: "https://www.youtube.com/watch?v=JyUqwkVpsi8", lt: "Tutorial" },
+            { name: "Cool down", sets: "—", reps: "5–10 min", note: "Hamstrings, glutes, quads", src: CAL, link: null },
+          ]
+        },
+        {
+          label: "Skill Training",
+          title: "Skill Training", sub: "2–3×/week · After main session",
+          exercises: [
+            { name: "Handstand Prac.", sets: "3", reps: "20–30s", note: "Wall-assisted", src: CAL, link: "https://www.youtube.com/watch?v=eFmjckKXEoA", lt: "Tutorial" },
+            { name: "L-Sit Progress.", sets: "3", reps: "10–15s", note: "Floor or parallettes", src: CAL, link: "https://www.youtube.com/watch?v=HxDP7SqggpI", lt: "Tutorial" },
+            { name: "DB Wrist Curl", sets: "2", reps: "15", note: "2kg · builds grip for L-sit", src: DB, link: "https://www.youtube.com/watch?v=_MaXaFr6sHo", lt: "Tutorial" },
+          ]
+        }
+      ]
+    },
+    {
+      label: "Month 3", badge: "b3", badgeText: "Advanced",
+      title: "Weeks 9–12 · Advanced Mastery",
+      freq: ["4–5×/week"],
+      tip: "<strong>Elite Performance:</strong> By now you should be comfortable with 5kg dumbbells. Try moving to 5kg + 3kg (8kg) on rows and RDLs. The advanced calisthenics moves (archer push-up, pistol squat) require extreme focus.",
+      days: [
+        {
+          label: "Upper (Day 1 & 4)",
+          title: "Upper Body", sub: "Advanced push & pull",
+          exercises: [
+            { name: "Warm-up", sets: "—", reps: "5–10 min", note: "Jump rope, dynamic stretches", src: CAL, link: null },
+            { name: "Decline Push-ups", sets: "4", reps: "10–15", note: "Feet elevated on chair or box", src: CAL, link: "https://www.youtube.com/watch?v=SKPab2YC8BE", lt: "Tutorial" },
+            { name: "DB Incline Press", sets: "4", reps: "10", note: "5kg · prop torso at angle", src: DB, link: "https://www.youtube.com/watch?v=uUGDRwge4F8", lt: "Tutorial" },
+            { name: "Pull-ups", sets: "4", reps: "8–12", note: "Full range of motion", src: CAL, link: "https://www.youtube.com/watch?v=Y3ntNsIS2Q8", lt: "Tutorial" },
+            { name: "DB Hammer Curl", sets: "3", reps: "12", note: "3kg or 5kg · builds thickness", src: DB, link: "https://www.youtube.com/watch?v=zC3nLlEvin4", lt: "Tutorial" },
+            { name: "Archer Push-ups", sets: "3", reps: "6–10", note: "One arm takes most load", src: CAL, link: "https://www.youtube.com/watch?v=MxVbNel13Ek", lt: "Tutorial" },
+            { name: "Dips", sets: "4", reps: "10–15", note: "Deep range of motion", src: CAL, link: "https://www.youtube.com/watch?v=l41SoWZiowI", lt: "Tutorial" },
+            { name: "DB Rear Delt Fly", sets: "3", reps: "12", note: "2kg · bent forward", src: DB, link: "https://www.youtube.com/watch?v=EA7u4Q_8HQ0", lt: "Tutorial" },
+            { name: "Plank to Push-up", sets: "3", reps: "15–20", note: "Core tight throughout", src: CAL, link: "https://www.youtube.com/watch?v=56vUOad6Irs", lt: "Tutorial" },
+            { name: "DB Lateral Raise", sets: "3", reps: "12", note: "3kg or 5kg", src: DB, link: "https://www.youtube.com/watch?v=3VcKaXpzqRo", lt: "Tutorial" },
+            { name: "Cool down", sets: "—", reps: "5–10 min", note: "Upper body stretches", src: CAL, link: null },
+          ]
+        },
+        {
+          label: "Lower + Core (Day 2 & 3)",
+          title: "Lower Body & Core", sub: "Advanced legs and abs",
+          exercises: [
+            { name: "Warm-up", sets: "—", reps: "5–10 min", note: "Leg swings, hip circles", src: CAL, link: null },
+            { name: "Pistol Squats", sets: "4", reps: "6–10", note: "Hold door frame for balance", src: CAL, link: "https://www.youtube.com/watch?v=tiA23NSUm7A", lt: "Tutorial" },
+            { name: "DB Bulgarian Split", sets: "4", reps: "10–15", note: "Hold 5kg each · rear foot up", src: DB, link: "https://www.youtube.com/shorts/9p5e2BSvoLs", lt: "Tutorial" },
+            { name: "DB Romanian DL", sets: "4", reps: "10", note: "5kg each · slow and deep", src: DB, link: "https://www.youtube.com/watch?v=JCXUYuzwNrM", lt: "Tutorial" },
+            { name: "Single-Leg Bridge", sets: "3", reps: "15–20", note: "Squeeze glutes hard at top", src: CAL, link: "https://www.youtube.com/watch?v=3NXv0Nany-Q", lt: "Tutorial" },
+            { name: "Calf Raises", sets: "3", reps: "25–30", note: "Hold 5kg dumbbells", src: DB, link: "https://www.youtube.com/watch?v=c5Kv6-fnTj8", lt: "Tutorial" },
+            { name: "Hanging Leg Raise", sets: "3", reps: "10–15", note: "Straight legs · slow down", src: CAL, link: "https://www.youtube.com/watch?v=EYe6dc_i4L0", lt: "Tutorial" },
+            { name: "Windshield Wipers", sets: "3", reps: "10–15", note: "Shoulders pinned down", src: CAL, link: "https://www.youtube.com/watch?v=ygwS-vtkhew", lt: "Tutorial" },
+            { name: "DB Russian Twists", sets: "3", reps: "20/side", note: "3kg or 5kg · controlled", src: DB, link: "https://www.youtube.com/watch?v=JyUqwkVpsi8", lt: "Tutorial" },
+            { name: "Cool down", sets: "—", reps: "5–10 min", note: "Quads, hamstrings, flexors", src: CAL, link: null },
+          ]
+        },
+        {
+          label: "Skill Mastery",
+          title: "Skill Mastery", sub: "Muscle-Up & Handstand focus",
+          exercises: [
+            { name: "Handstand Hold", sets: "3", reps: "20–30s", note: "Wall to freestanding", src: CAL, link: "https://www.youtube.com/watch?v=X9fRDlIeGTU", lt: "Tutorial" },
+            { name: "L-Sit Hold", sets: "3", reps: "10–20s", note: "Focus on compression", src: CAL, link: "https://www.youtube.com/watch?v=eywCpp0p7lg", lt: "Tutorial" },
+            { name: "Muscle-Up Prog.", sets: "3", reps: "3–5", note: "Band-assisted or jumping", src: CAL, link: "https://www.youtube.com/watch?v=6v6IsZcvqCA", lt: "Tutorial" },
+            { name: "DB Wrist Curl", sets: "2", reps: "15", note: "2kg · grip for muscle-up", src: DB, link: "https://www.youtube.com/watch?v=_MaXaFr6sHo", lt: "Tutorial" },
+          ]
+        }
+      ]
+    }
+  ]
+};
 
-            <section class="stats-view view-section" id="stats-view" style="display: none;">
-                <div class="view-header">
-                    <h2>Performance Analytics</h2>
-                </div>
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-card-header">Weekly Consistency</div>
-                        <div class="week-chart" id="weekly-consistency-chart">
-                            <!-- JS will inject bars -->
-                        </div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-card-header">Focus Distribution</div>
-                        <div class="focus-list" id="focus-distribution">
-                            <!-- JS will inject distribution -->
-                        </div>
-                    </div>
+let am = 0, ad = 0;
 
-                    <div class="stat-card total-summary">
-                        <div class="summary-item">
-                            <span class="summary-label">Total Workouts</span>
-                            <span class="summary-value" id="stat-total-workouts">0</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Completion Rate</span>
-                            <span class="summary-value" id="stat-completion-rate">0%</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Best Streak</span>
-                            <span class="summary-value" id="stat-best-streak">0 Days</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="settings-view view-section" id="settings-view" style="display: none;">
-                <div class="view-header">
-                    <h2>User Settings</h2>
-                </div>
-
-                <div class="settings-container">
-                    <div class="settings-group">
-                        <h3>Profile</h3>
-                        <div class="setting-item">
-                            <label>User Name</label>
-                            <input type="text" id="user-name-input" placeholder="Enter your name">
-                        </div>
-                        <div class="setting-item">
-                            <label>Fitness Goal</label>
-                            <select id="fitness-goal-select">
-                                <option value="strength">Strength Building</option>
-                                <option value="weight-loss">Weight Loss</option>
-                                <option value="endurance">Endurance</option>
-                                <option value="maintenance">General Health</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="settings-group">
-                        <h3>Preferences</h3>
-                        <div class="setting-item">
-                            <span>Theme Mode</span>
-                            <button id="theme-toggle" class="theme-toggle">
-                                <span class="toggle-icon">Dark Mode</span>
-                            </button>
-                        </div>
-                        <div class="setting-item">
-                            <span>Notifications</span>
-                            <label class="switch">
-                                <input type="checkbox" id="notif-toggle">
-                                <span class="slider round"></span>
-                            </label>
-                        </div>
-                        <div class="setting-item">
-                            <span>Test Setup</span>
-                            <button class="btn btn-secondary" id="test-notif" style="font-size: 10px; padding: 4px 12px;">Send Test Notification</button>
-                        </div>
-                    </div>
-
-                    <div class="settings-actions">
-                        <button class="btn btn-primary" id="save-settings">Save Changes</button>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <!-- Modals -->
-    <div id="notes-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Add Workout Notes</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p id="modal-day-info"></p>
-                <textarea id="day-notes" placeholder="How did it go? (Sets, reps, energy levels...)"></textarea>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary close-modal">Cancel</button>
-                <button class="btn btn-primary" id="save-notes">Save Notes</button>
-            </div>
+function renderAll() {
+  const mtabs = document.getElementById('mtabs');
+  mtabs.innerHTML = data.months.map((m, i) =>
+    `<button class="mtab ${i===am?'active':''}" onclick="setM(${i})">${m.label}</button>`
+  ).join('');
+  
+  const m = data.months[am];
+  document.getElementById('mcontent').innerHTML = `
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:10px;">
+        <div style="display:flex;align-items:center;">
+          <span style="font-size:18px;font-weight:700;color:var(--color-text-primary)">${m.title}</span>
+          <span class="badge ${m.badge}">${m.badgeText}</span>
         </div>
-    </div>
+        <div class="freq-row" style="margin-bottom:0">${m.freq.map(f=>`<span class="freq-tag">${f}</span>`).join('')}</div>
+      </div>
+      <div class="day-tabs" id="dtabs"></div>
+      <div id="dcontent"></div>
+      <div class="tip-box">💡 ${m.tip}</div>
+    </div>`;
+  renderDayTabs();
+  renderDay();
+}
 
-    <div id="details-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="details-title">Workout Details</h3>
-                <button class="close-modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div id="exercise-list-container" class="exercise-list">
-                    <!-- Exercises will be injected here -->
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary close-modal">Got it!</button>
-            </div>
-        </div>
-    </div>
+function renderDayTabs() {
+  const m = data.months[am];
+  document.getElementById('dtabs').innerHTML = m.days.map((d,i) =>
+    `<button class="dtab ${i===ad?'active':''}" onclick="setD(${i})">${d.label}</button>`
+  ).join('');
+}
 
-    <script src="script.js"></script>
+function renderDay() {
+  const d = data.months[am].days[ad];
+  let rows = d.exercises.map(e => {
+    const srcBadge = e.src === DB
+      ? `<span class="src-db">dumbbell</span>`
+      : `<span class="src-cal">calisthenics</span>`;
+    let vid = '—';
+    if (e.link && e.link2) {
+      vid = \`<a class="yt" href="\${e.link}" target="_blank">▶ \${e.lt}</a><div style="height:6px"></div><a class="yt" href="\${e.link2}" target="_blank">▶ \${e.lt2}</a>\`;
+    } else if (e.link) {
+      vid = \`<a class="yt" href="\${e.link}" target="_blank">▶ \${e.lt}</a>\`;
+    }
+    return \`<tr>
+      <td class="ex-name-cell">
+        <span class="ex-name">\${e.name}</span>
+        <div>\${srcBadge}</div>
+        <div class="note">\${e.note}</div>
+      </td>
+      <td style="font-weight:700;color:#fff">\${e.sets}</td>
+      <td style="font-weight:500">\${e.reps}</td>
+      <td>\${vid}</td>
+    </tr>\`;
+  }).join('');
+
+  document.getElementById('dcontent').innerHTML = `
+    <div style="font-size:15px;font-weight:700;color:var(--color-text-primary);margin-bottom:4px;margin-top:1rem">\${d.title}</div>
+    <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:1.25rem">\${d.sub}</div>
+    <div class="table-container">
+      <table>
+        <thead><tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Video</th></tr></thead>
+        <tbody>\${rows}</tbody>
+      </table>
+    </div>`;
+}
+
+function setM(i) { am=i; ad=0; renderAll(); }
+function setD(i) { ad=i; renderDayTabs(); renderDay(); }
+renderAll();
+</script>
 </body>
 </html>
